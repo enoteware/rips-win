@@ -1,0 +1,123 @@
+import { neon } from '@neondatabase/serverless';
+
+const sql = neon(process.env.DATABASE_URL!);
+
+export interface LeaderboardEntry {
+  id: string;
+  player_name: string;
+  rank: number;
+  total_wagered: number;
+  biggest_win: number;
+  current_streak: number;
+  avatar_url: string | null;
+  platform: 'stake_us' | 'stake_com' | 'both';
+  period: 'daily' | 'weekly' | 'monthly' | 'all_time';
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface LeaderboardMetadata {
+  id: string;
+  period: 'daily' | 'weekly' | 'monthly' | 'all_time';
+  last_updated: string;
+  last_updated_by: string;
+  active: boolean;
+}
+
+export async function getLeaderboard(
+  period: string = 'all_time',
+  publishedOnly: boolean = true
+): Promise<LeaderboardEntry[]> {
+  const query = publishedOnly
+    ? `SELECT * FROM leaderboard_entries WHERE period = $1 AND published = true ORDER BY rank ASC`
+    : `SELECT * FROM leaderboard_entries WHERE period = $1 ORDER BY rank ASC`;
+  
+  return await sql(query, [period]) as LeaderboardEntry[];
+}
+
+export async function getMetadata(period: string): Promise<LeaderboardMetadata | null> {
+  const result = await sql(
+    `SELECT * FROM leaderboard_metadata WHERE period = $1 LIMIT 1`,
+    [period]
+  ) as LeaderboardMetadata[];
+  
+  return result[0] || null;
+}
+
+export async function updateMetadata(period: string, updatedBy: string): Promise<LeaderboardMetadata> {
+  const result = await sql(
+    `UPDATE leaderboard_metadata 
+     SET last_updated = NOW(), last_updated_by = $1 
+     WHERE period = $2 
+     RETURNING *`,
+    [updatedBy, period]
+  ) as LeaderboardMetadata[];
+  
+  return result[0];
+}
+
+export async function createEntry(data: {
+  player_name: string;
+  rank: number;
+  total_wagered: number;
+  biggest_win: number;
+  current_streak: number;
+  platform: string;
+  period: string;
+  avatar_url?: string;
+}): Promise<LeaderboardEntry> {
+  const result = await sql(
+    `INSERT INTO leaderboard_entries 
+     (player_name, rank, total_wagered, biggest_win, current_streak, platform, period, avatar_url) 
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+     RETURNING *`,
+    [
+      data.player_name,
+      data.rank,
+      data.total_wagered,
+      data.biggest_win,
+      data.current_streak,
+      data.platform,
+      data.period,
+      data.avatar_url || null,
+    ]
+  ) as LeaderboardEntry[];
+  
+  return result[0];
+}
+
+export async function updateEntry(
+  id: string,
+  data: Partial<LeaderboardEntry>
+): Promise<LeaderboardEntry> {
+  const fields = Object.keys(data).filter(k => k !== 'id');
+  const values = fields.map(f => data[f as keyof typeof data]);
+  
+  const setClause = fields.map((f, i) => `${f} = $${i + 1}`).join(', ');
+  
+  const result = await sql(
+    `UPDATE leaderboard_entries 
+     SET ${setClause}, updated_at = NOW() 
+     WHERE id = $${fields.length + 1} 
+     RETURNING *`,
+    [...values, id]
+  ) as LeaderboardEntry[];
+  
+  return result[0];
+}
+
+export async function deleteEntry(id: string): Promise<void> {
+  await sql(`DELETE FROM leaderboard_entries WHERE id = $1`, [id]);
+}
+
+export async function publishPeriod(period: string, updatedBy: string): Promise<void> {
+  // Publish all entries for this period
+  await sql(
+    `UPDATE leaderboard_entries SET published = true WHERE period = $1`,
+    [period]
+  );
+  
+  // Update metadata
+  await updateMetadata(period, updatedBy);
+}

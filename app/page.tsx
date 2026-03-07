@@ -10,7 +10,6 @@ import { PodiumCard } from '@/components/PodiumCard';
 import { BonusCard } from '@/components/BonusCard';
 import { VideosSection } from '@/components/VideosSection';
 import { CommunitySection } from '@/components/CommunitySection';
-import { RaffleCtaSection } from '@/components/RaffleCtaSection';
 
 const STAKE_TRACKING = '?offer=rips&c=selling';
 
@@ -57,7 +56,7 @@ export default async function Home() {
             Live Casino <span className="text-primary">Action</span> & High Stakes Gambling
           </>
         }
-        subtitle="Experience the adrenaline of high-stakes gambling with our top-tier streamers and exclusive casino rewards."
+        subtitle="Experience the adrenaline of high-stakes gambling with our top-tier Streams and exclusive Stake rewards."
         primaryCta={{ label: 'CLAIM BONUSES', href: '/bonuses' }}
         secondaryCta={{ label: 'VIEW LEADERBOARD', href: '/leaderboard' }}
       />
@@ -68,7 +67,7 @@ export default async function Home() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
             <div>
               <h2 className="text-3xl font-black uppercase tracking-tighter italic">
-                <span className="text-primary">$150,000</span> High Stakes Leaderboard
+                High Stakes Leaderboard
               </h2>
               <p className="text-muted-foreground mt-2">Ranked by total wagered amount this month.</p>
             </div>
@@ -183,7 +182,6 @@ export default async function Home() {
 
       <VideosSection />
       <CommunitySection />
-      <RaffleCtaSection countdown="$10,000" countdownLabel="Weekly draw" />
     </main>
   );
 }

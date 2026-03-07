@@ -8,7 +8,6 @@ import { LOGO } from '@/lib/brand';
 const navLinks = [
   { href: '/leaderboard', label: 'LEADERBOARD' },
   { href: '/bonuses', label: 'BONUSES' },
-  { href: '/raffle', label: 'RAFFLE' },
   { href: '/#videos', label: 'VIDEOS' },
   { href: '/#community', label: 'COMMUNITY' },
 ] as const;

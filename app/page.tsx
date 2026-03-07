@@ -1,13 +1,14 @@
 export const dynamic = 'force-dynamic';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { LOGO } from '@/lib/brand';
 import { getLeaderboard, getMetadata } from "@/lib/db";
 import { getSiteSettingsWithFallback } from "@/lib/site-settings";
 import { formatMoney, formatStreak } from '@/lib/utils';
 import { HeroSection } from '@/components/HeroSection';
-import { PodiumCard } from '@/components/PodiumCard';
-import { BonusCard } from '@/components/BonusCard';
+import { MonolithLeaderboard } from '@/components/MonolithLeaderboard';
+import { TectonicOfferCard } from '@/components/TectonicOfferCard';
 import { VideosSection } from '@/components/VideosSection';
 import { CommunitySection } from '@/components/CommunitySection';
 import { RaffleCtaSection } from '@/components/RaffleCtaSection';
@@ -34,11 +35,6 @@ export default async function Home() {
   const stakeUs = stakeUsLink(site.stake_us_link);
   const stakeCom = stakeComLink(site.stake_com_link);
 
-  const top3 = entries.slice(0, 3);
-  const rest = entries.slice(3);
-  const second = top3[1];
-  const first = top3[0];
-  const third = top3[2];
 
   return (
     <main className="min-h-screen">
@@ -63,90 +59,33 @@ export default async function Home() {
       />
 
       {/* Leaderboard Section */}
-      <section id="leaderboard" className="scroll-mt-20 py-20 bg-background-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-            <div>
-              <h2 className="text-3xl font-black uppercase tracking-tighter italic">
-                <span className="text-primary">$150,000</span> High Stakes Leaderboard
-              </h2>
-              <p className="text-muted-foreground mt-2">Ranked by total wagered amount this month.</p>
+      <section id="leaderboard" className="scroll-mt-20 py-20 bg-background-dark border-t border-border-dark overflow-hidden relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
+          <div className="flex flex-col gap-2 relative z-10">
+            <div className="flex flex-col md:flex-row justify-between items-end gap-4">
+              <div>
+                <h2 className="text-3xl font-black uppercase tracking-tighter italic">
+                  <span className="text-primary">$150,000</span> High Stakes Leaderboard
+                </h2>
+                <p className="text-muted-foreground mt-2">Ranked by total wagered amount this month.</p>
+              </div>
+              {metadata && (
+                <span className="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full border border-primary/20 whitespace-nowrap mb-2">
+                  Updated {new Date(metadata.last_updated).toLocaleDateString()}
+                </span>
+              )}
             </div>
-            {metadata && (
-              <span className="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
-                Updated {new Date(metadata.last_updated).toLocaleDateString()}
-              </span>
-            )}
           </div>
 
-          {/* Podium */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 items-end">
-            {/* 2nd */}
-            <PodiumCard
-              entry={second}
-              place={2}
-              className="order-2 md:order-1 h-64 bg-surface-dark/50 border border-border-dark"
-              barClass="bg-podium-2"
-            />
-            {/* 1st */}
-            <PodiumCard
-              entry={first}
-              place={1}
-              className="order-1 md:order-2 h-80 bg-surface-dark border-2 border-primary/50 podium-1 shadow-glow-lg"
-              barClass="bg-primary"
-            />
-            {/* 3rd */}
-            <PodiumCard
-              entry={third}
-              place={3}
-              className="order-3 h-56 bg-surface-dark/50 border border-border-dark"
-              barClass="bg-podium-3"
-            />
-          </div>
+          <MonolithLeaderboard entries={entries.slice(0, 10)} />
 
-          {/* Table */}
-          <div className="bg-surface-dark rounded-xl overflow-hidden border border-border-dark">
-            <table className="w-full text-left">
-              <thead className="bg-border-dark/50 border-b border-border-dark">
-                <tr>
-                  <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase">Rank</th>
-                  <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase">Player</th>
-                  <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase">Wagered</th>
-                  <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase text-right">Biggest Win</th>
-                  <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase text-right">Streak</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border-dark">
-                {rest.length === 0 && top3.length === 0 ? (
-                  <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">
-                      No leaderboard entries yet.
-                    </td>
-                  </tr>
-                ) : (
-                  rest.map((entry) => (
-                    <tr key={entry.id} className="hover:bg-primary/5 transition-colors">
-                      <td className="px-6 py-4 font-bold text-muted-foreground">#{entry.rank}</td>
-                      <td className="px-6 py-4 flex items-center gap-3 font-medium">
-                        {entry.avatar_url ? (
-                          <img
-                            src={entry.avatar_url}
-                            alt=""
-                            className="size-8 rounded bg-border-dark overflow-hidden object-cover"
-                          />
-                        ) : (
-                          <div className="size-8 rounded bg-border-dark" />
-                        )}
-                        {entry.player_name ?? 'Unknown'}
-                      </td>
-                      <td className="px-6 py-4 font-mono text-muted-foreground">{formatMoney(entry.total_wagered)}</td>
-                      <td className="px-6 py-4 text-right font-bold text-primary">{formatMoney(entry.biggest_win)}</td>
-                      <td className="px-6 py-4 text-right">{formatStreak(entry.current_streak)}</td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+          <div className="flex justify-center mt-8">
+            <Link 
+              href="/leaderboard" 
+              className="inline-flex items-center justify-center bg-primary text-primary-foreground font-black px-8 py-4 rounded-full uppercase tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-glow-lg"
+            >
+              View Full Leaderboard
+            </Link>
           </div>
         </div>
       </section>
@@ -157,25 +96,39 @@ export default async function Home() {
           <h2 className="text-3xl font-black mb-12 uppercase italic tracking-tighter">
             Exclusive <span className="text-primary">Casino Rewards</span>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <BonusCard
-              title={`${welcomeCode} Bonus`}
-              description="Claim your welcome bonus with code RIPS on Stake.us."
-              cta="CLAIM BONUS"
+          <div className="flex flex-col md:flex-row justify-center gap-10 md:gap-4 lg:gap-8 items-center md:items-stretch perspective-[1000px] py-4">
+            <TectonicOfferCard
+              tierName="Welcome"
+              offerType="Initial Deposit"
+              value={<><span className="text-2xl mr-1 align-top text-primary">$</span>25</>}
+              description="Initial tectonic deposit match. Claim your welcome bonus on Stake.us."
+              promoCode={welcomeCode}
+              cta="Ignite Offer"
               href={stakeUs}
-              primary
+              image="/images/bonus_welcome.png"
             />
-            <BonusCard
-              title="Stake.com 200%"
-              description="Double your first deposit with BONUS200 on Stake.com."
-              cta="CLAIM REWARD"
+            
+            <TectonicOfferCard
+              tierName="Deposit Match"
+              offerType="Gilded Tier"
+              value={<>200<span className="text-2xl ml-1 align-top text-primary">%</span></>}
+              description="Pressure-hardened rewards for the elite. Double your first deposit on Stake.com."
+              promoCode="BONUS200"
+              cta="Fracture Now"
               href={stakeCom}
+              highlight={true}
+              image="/images/bonus_deposit.png"
             />
-            <BonusCard
-              title={`RAKEBACK${rakeback}`}
-              description={`Get ${rakeback}% rakeback on every bet, credited instantly.`}
-              cta="ACTIVATE NOW"
+
+            <TectonicOfferCard
+              tierName="Rakeback"
+              offerType="Deep Core"
+              value={<>{rakeback}<span className="text-2xl ml-1 align-top text-primary">%</span></>}
+              description="The ultimate geological event. Get instant rakeback on every single bet you place."
+              promoCode={welcomeCode}
+              cta="Claim Apex"
               href={stakeUs}
+              image="/images/bonus_rakeback.png"
             />
           </div>
         </div>

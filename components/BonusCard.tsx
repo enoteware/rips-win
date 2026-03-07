@@ -5,6 +5,7 @@ export interface BonusCardProps {
   description: string;
   cta: string;
   href: string;
+  image?: string;
   primary?: boolean;
   className?: string;
 }
@@ -14,6 +15,7 @@ export function BonusCard({
   description,
   cta,
   href,
+  image,
   primary,
   className,
 }: BonusCardProps) {
@@ -22,11 +24,20 @@ export function BonusCard({
       className={cn(
         "group relative bg-surface-dark border border-border-dark rounded-xl overflow-hidden",
         "hover:border-primary/50 transition-all duration-300",
-        className
+        className,
       )}
     >
-      <div className="relative h-48 bg-cover bg-center overflow-hidden bg-gradient-to-br from-primary/20 to-surface-dark">
-        <div className="absolute inset-0 bg-gradient-to-t from-surface-dark via-transparent opacity-90" aria-hidden />
+      <div
+        className={cn(
+          "relative h-48 bg-cover bg-center overflow-hidden",
+          !image && "bg-gradient-to-br from-primary/20 to-surface-dark",
+        )}
+        style={image ? { backgroundImage: `url(${image})` } : undefined}
+      >
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-surface-dark via-transparent opacity-90"
+          aria-hidden
+        />
       </div>
       <div className="p-6 relative -mt-12">
         {primary && (
@@ -44,7 +55,7 @@ export function BonusCard({
             "block w-full text-center font-bold py-3 rounded-lg transition-all",
             primary
               ? "bg-primary text-primary-foreground glow-primary group-hover:glow-primary"
-              : "bg-border-dark text-foreground hover:bg-primary hover:text-primary-foreground"
+              : "bg-border-dark text-foreground hover:bg-primary hover:text-primary-foreground",
           )}
         >
           {cta}

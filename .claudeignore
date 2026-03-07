@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+vendor/
+.venv/
+venv/
+
+# Build outputs
+.next/
+.nuxt/
+.output/
+out/
+dist/
+build/
+target/
+
+# Package lock files (large, not useful for AI)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+Cargo.lock
+poetry.lock
+composer.lock
+Gemfile.lock
+
+# Generated/compiled
+*.min.js
+*.min.css
+*.map
+*.d.ts
+
+# Data & media
+*.sqlite
+*.db
+*.csv
+*.tsv
+*.parquet
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.svg
+*.woff
+*.woff2
+*.ttf
+*.eot
+*.mp4
+*.webm
+*.mp3
+
+# Coverage & test artifacts
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+__snapshots__/
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+
+# Next.js
+.next/
+.vercel/

@@ -3,18 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "husky",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "logo:pdf-to-svg": "bash scripts/pdf-to-svg.sh",
+    "stitch:download": "node scripts/stitch-download-screens.mjs",
+    "db:apply-site-settings": "node scripts/apply-site-settings.mjs",
+    "admin:hash-password": "node scripts/hash-admin-password.mjs",
+    "prepare": "husky"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.9.0",
+    "@radix-ui/react-slot": "^1.2.4",
     "bcryptjs": "^2.4.3",
-    "next": "15.1.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "next": "^16.1.6",
     "next-auth": "^4.24.11",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.5.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -22,10 +32,16 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.3.1",
     "eslint": "^8",
     "eslint-config-next": "15.1.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": ["eslint --fix"]
   }
 }

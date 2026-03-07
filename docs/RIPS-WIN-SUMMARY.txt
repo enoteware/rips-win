@@ -1,0 +1,39 @@
+RIPS.WIN PROJECT - QUICK STATUS
+================================
+
+✅ DONE:
+- Neon database: rips-win (long-wind-27935167)
+- Schema applied + 3 test players loaded
+- GitHub repo: https://github.com/enoteware/rips-win
+- Next.js 16 app built (works locally)
+- Vercel project created
+- Env vars configured
+- Simple CMS: admin panel (NextAuth Credentials), leaderboard CRUD + publish, site content (welcome code, rakeback, CTA links) editable in /admin/site; public page reads from site_settings with env fallback
+
+⚠️ IN PROGRESS:
+- Vercel deployment (build errors being fixed)
+- Next.js 16 update pushed to fix security issue
+
+📋 TODO:
+1. Fix Vercel deployment (priority)
+2. Apply site_settings table if new DB: psql "$DATABASE_URL" -f scripts/apply-site-settings.sql
+3. Set NEXTAUTH_URL, NEXTAUTH_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD_HASH for admin login
+4. CSV import (optional)
+5. Connect rips.win domain
+
+📁 FILES:
+- Code: ~/code/rips-win/
+- Docs: ~/eBot/agents/propfirms/RIPS-WIN-*.md
+- Handoff: ~/eBot/agents/propfirms/RIPS-WIN-HANDOFF.md
+
+🔑 DATABASE:
+Set DATABASE_URL from Neon (dashboard or Vercel Neon integration). See docs/SECRETS.md.
+
+🌐 LINKS:
+- GitHub: https://github.com/enoteware/rips-win
+- Vercel: https://vercel.com/noteware/rips-win
+- Neon: https://console.neon.tech (connection string → DATABASE_URL)
+
+👤 CLIENT:
+- Savannah: savmediayt@gmail.com
+- Alex: apstudios@gmail.com (via Savannah)

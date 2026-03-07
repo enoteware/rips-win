@@ -1,114 +1,189 @@
 export const dynamic = 'force-dynamic';
 
-import { getLeaderboard, getMetadata } from '@/lib/db';
+import Image from 'next/image';
+import { LOGO } from '@/lib/brand';
+import { getLeaderboard, getMetadata } from "@/lib/db";
+import { getSiteSettingsWithFallback } from "@/lib/site-settings";
+import { formatMoney, formatStreak } from '@/lib/utils';
+import { HeroSection } from '@/components/HeroSection';
+import { PodiumCard } from '@/components/PodiumCard';
+import { BonusCard } from '@/components/BonusCard';
+import { VideosSection } from '@/components/VideosSection';
+import { CommunitySection } from '@/components/CommunitySection';
+import { RaffleCtaSection } from '@/components/RaffleCtaSection';
+
+const STAKE_TRACKING = '?offer=rips&c=selling';
+
+function stakeUsLink(base: string): string {
+  return base.includes('?') ? base : `${base.replace(/\/$/, '')}${STAKE_TRACKING}`;
+}
+
+function stakeComLink(base: string): string {
+  return base.includes('?') ? base : `${base.replace(/\/$/, '')}${STAKE_TRACKING}`;
+}
 
 export default async function Home() {
   const period = 'all_time';
-  const entries = await getLeaderboard(period, true);
-  const metadata = await getMetadata(period);
+  const [entries, metadata, site] = await Promise.all([
+    getLeaderboard(period, true),
+    getMetadata(period),
+    getSiteSettingsWithFallback(),
+  ]);
+  const welcomeCode = site.welcome_code;
+  const rakeback = site.rakeback_pct;
+  const stakeUs = stakeUsLink(site.stake_us_link);
+  const stakeCom = stakeComLink(site.stake_com_link);
+
+  const top3 = entries.slice(0, 3);
+  const rest = entries.slice(3);
+  const second = top3[1];
+  const first = top3[0];
+  const third = top3[2];
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
-      <div className="container mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-600 text-transparent bg-clip-text">
-            RIPS.WIN
-          </h1>
-          <p className="text-xl text-gray-300 mb-6">
-            Casino Leaderboard
-          </p>
-          
-          {/* Referral Info */}
-          <div className="inline-flex flex-col gap-2 bg-black/30 backdrop-blur-sm rounded-lg p-6 border border-purple-500/30">
-            <div className="text-sm text-gray-400">Welcome Code</div>
-            <div className="text-3xl font-mono font-bold text-purple-400">
-              {process.env.NEXT_PUBLIC_WELCOME_CODE}
-            </div>
-            <div className="text-sm text-gray-400">
-              {process.env.NEXT_PUBLIC_RAKEBACK}% Rakeback
-            </div>
-            <div className="flex gap-4 mt-4">
-              <a
-                href={process.env.NEXT_PUBLIC_STAKE_US_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition-colors"
-              >
-                Stake.us
-              </a>
-              <a
-                href={process.env.NEXT_PUBLIC_STAKE_COM_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-2 bg-pink-600 hover:bg-pink-700 rounded-lg font-semibold transition-colors"
-              >
-                Stake.com
-              </a>
-            </div>
-          </div>
-        </div>
+    <main className="min-h-screen">
+      <HeroSection
+        logo={
+          <Image
+            src={LOGO.main}
+            alt="Rips"
+            width={128}
+            height={128}
+            className="h-32 w-auto drop-shadow-glow-logo"
+          />
+        }
+        title={
+          <>
+            Live Casino <span className="text-primary">Action</span> & High Stakes Gambling
+          </>
+        }
+        subtitle="Experience the adrenaline of high-stakes gambling with our top-tier streamers and exclusive casino rewards."
+        primaryCta={{ label: 'CLAIM BONUSES', href: '/bonuses' }}
+        secondaryCta={{ label: 'VIEW LEADERBOARD', href: '/leaderboard' }}
+      />
 
-        {/* Last Updated */}
-        {metadata && (
-          <div className="text-center text-sm text-gray-400 mb-8">
-            Last updated: {new Date(metadata.last_updated).toLocaleString()}
-          </div>
-        )}
-
-        {/* Leaderboard */}
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-black/40 backdrop-blur-sm rounded-xl border border-purple-500/30 overflow-hidden">
-            {/* Header Row */}
-            <div className="grid grid-cols-5 gap-4 p-4 bg-purple-900/50 font-semibold border-b border-purple-500/30">
-              <div>Rank</div>
-              <div>Player</div>
-              <div className="text-right">Wagered</div>
-              <div className="text-right">Biggest Win</div>
-              <div className="text-right">Streak</div>
+      {/* Leaderboard Section */}
+      <section id="leaderboard" className="scroll-mt-20 py-20 bg-background-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <div>
+              <h2 className="text-3xl font-black uppercase tracking-tighter italic">
+                <span className="text-primary">$150,000</span> High Stakes Leaderboard
+              </h2>
+              <p className="text-muted-foreground mt-2">Ranked by total wagered amount this month.</p>
             </div>
-
-            {/* Entries */}
-            {entries.length === 0 ? (
-              <div className="p-12 text-center text-gray-400">
-                No leaderboard entries yet
-              </div>
-            ) : (
-              entries.map((entry) => (
-                <div
-                  key={entry.id}
-                  className="grid grid-cols-5 gap-4 p-4 border-b border-purple-500/10 hover:bg-purple-900/20 transition-colors"
-                >
-                  <div className="font-bold text-2xl text-purple-400">
-                    #{entry.rank}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {entry.avatar_url && (
-                      <img
-                        src={entry.avatar_url}
-                        alt={entry.player_name}
-                        className="w-8 h-8 rounded-full"
-                      />
-                    )}
-                    <span className="font-semibold">{entry.player_name}</span>
-                  </div>
-                  <div className="text-right text-green-400">
-                    ${entry.total_wagered.toLocaleString()}
-                  </div>
-                  <div className="text-right text-yellow-400">
-                    ${entry.biggest_win.toLocaleString()}
-                  </div>
-                  <div className="text-right">
-                    <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-purple-600/50 text-sm font-semibold">
-                      {entry.current_streak} 🔥
-                    </span>
-                  </div>
-                </div>
-              ))
+            {metadata && (
+              <span className="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
+                Updated {new Date(metadata.last_updated).toLocaleDateString()}
+              </span>
             )}
           </div>
+
+          {/* Podium */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 items-end">
+            {/* 2nd */}
+            <PodiumCard
+              entry={second}
+              place={2}
+              className="order-2 md:order-1 h-64 bg-surface-dark/50 border border-border-dark"
+              barClass="bg-podium-2"
+            />
+            {/* 1st */}
+            <PodiumCard
+              entry={first}
+              place={1}
+              className="order-1 md:order-2 h-80 bg-surface-dark border-2 border-primary/50 podium-1 shadow-glow-lg"
+              barClass="bg-primary"
+            />
+            {/* 3rd */}
+            <PodiumCard
+              entry={third}
+              place={3}
+              className="order-3 h-56 bg-surface-dark/50 border border-border-dark"
+              barClass="bg-podium-3"
+            />
+          </div>
+
+          {/* Table */}
+          <div className="bg-surface-dark rounded-xl overflow-hidden border border-border-dark">
+            <table className="w-full text-left">
+              <thead className="bg-border-dark/50 border-b border-border-dark">
+                <tr>
+                  <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase">Rank</th>
+                  <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase">Player</th>
+                  <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase">Wagered</th>
+                  <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase text-right">Biggest Win</th>
+                  <th className="px-6 py-4 text-xs font-bold text-muted-foreground uppercase text-right">Streak</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border-dark">
+                {rest.length === 0 && top3.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">
+                      No leaderboard entries yet.
+                    </td>
+                  </tr>
+                ) : (
+                  rest.map((entry) => (
+                    <tr key={entry.id} className="hover:bg-primary/5 transition-colors">
+                      <td className="px-6 py-4 font-bold text-muted-foreground">#{entry.rank}</td>
+                      <td className="px-6 py-4 flex items-center gap-3 font-medium">
+                        {entry.avatar_url ? (
+                          <img
+                            src={entry.avatar_url}
+                            alt=""
+                            className="size-8 rounded bg-border-dark overflow-hidden object-cover"
+                          />
+                        ) : (
+                          <div className="size-8 rounded bg-border-dark" />
+                        )}
+                        {entry.player_name ?? 'Unknown'}
+                      </td>
+                      <td className="px-6 py-4 font-mono text-muted-foreground">{formatMoney(entry.total_wagered)}</td>
+                      <td className="px-6 py-4 text-right font-bold text-primary">{formatMoney(entry.biggest_win)}</td>
+                      <td className="px-6 py-4 text-right">{formatStreak(entry.current_streak)}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Exclusive Bonuses */}
+      <section className="py-20 bg-background-dark border-t border-border-dark">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-black mb-12 uppercase italic tracking-tighter">
+            Exclusive <span className="text-primary">Casino Rewards</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <BonusCard
+              title={`${welcomeCode} Bonus`}
+              description="Claim your welcome bonus with code RIPS on Stake.us."
+              cta="CLAIM BONUS"
+              href={stakeUs}
+              primary
+            />
+            <BonusCard
+              title="Stake.com 200%"
+              description="Double your first deposit with BONUS200 on Stake.com."
+              cta="CLAIM REWARD"
+              href={stakeCom}
+            />
+            <BonusCard
+              title={`RAKEBACK${rakeback}`}
+              description={`Get ${rakeback}% rakeback on every bet, credited instantly.`}
+              cta="ACTIVATE NOW"
+              href={stakeUs}
+            />
+          </div>
+        </div>
+      </section>
+
+      <VideosSection />
+      <CommunitySection />
+      <RaffleCtaSection countdown="$10,000" countdownLabel="Weekly draw" />
     </main>
   );
 }

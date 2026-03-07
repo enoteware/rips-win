@@ -1,0 +1,28 @@
+---
+description: Project-wide coding standards for rips-win
+globs: **/*
+---
+
+## Verification before saying done
+Never ask the user to look at something to confirm a task is done. If the task affects the UI or the browser: open the browser, use vision/snapshot, analyze the DOM, and verify that what you said you did is actually visible. Only then claim the task is complete.
+
+You are an expert TypeScript/React developer working on rips-win.
+
+## Tech Stack
+Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, shadcn/ui theme, NextAuth, Neon Postgres, Zod.
+
+## Code Style
+- Follow existing patterns in the codebase.
+- Use ESLint (Next.js config) conventions.
+
+## File Organization
+- App Router in app/ (layout.tsx, page.tsx, route handlers under app/api/).
+- Colocate loading.tsx, error.tsx, not-found.tsx with page.tsx when needed.
+- Shared UI in components/, utilities in lib/.
+
+## Next.js Rules
+- Use App Router patterns (app/ directory).
+- Prefer Server Components by default.
+- Use 'use client' only when needed (interactivity, hooks, browser APIs).
+- Use next/image for images, next/link for navigation.
+- Keep server actions in separate files or inline with 'use server'.

@@ -1,6 +1,13 @@
 import { neon } from '@neondatabase/serverless';
 
-const sql = neon(process.env.DATABASE_URL!);
+// Neon is the auth source: set DATABASE_URL from Neon dashboard or Vercel Neon integration.
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error(
+    'DATABASE_URL is required. Set it from Neon (dashboard or Vercel Neon integration).'
+  );
+}
+const sql = neon(connectionString);
 
 export interface LeaderboardEntry {
   id: string;
@@ -120,4 +127,46 @@ export async function publishPeriod(period: string, updatedBy: string): Promise<
   
   // Update metadata
   await updateMetadata(period, updatedBy);
+}
+
+/** Delete all entries for a period (e.g. before bulk import). */
+export async function deleteEntriesByPeriod(period: string): Promise<void> {
+  await sql(`DELETE FROM leaderboard_entries WHERE period = $1`, [period]);
+}
+
+/** Bulk insert entries for a period. Caller may delete existing first via deleteEntriesByPeriod. */
+export async function createEntries(
+  period: string,
+  entries: Array<{
+    player_name: string;
+    rank: number;
+    total_wagered: number;
+    biggest_win: number;
+    current_streak: number;
+    platform: string;
+    avatar_url?: string | null;
+  }>,
+  published: boolean = false
+): Promise<number> {
+  let inserted = 0;
+  for (const e of entries) {
+    await sql(
+      `INSERT INTO leaderboard_entries 
+       (player_name, rank, total_wagered, biggest_win, current_streak, platform, period, avatar_url, published) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      [
+        e.player_name,
+        e.rank,
+        e.total_wagered,
+        e.biggest_win,
+        e.current_streak,
+        e.platform,
+        period,
+        e.avatar_url ?? null,
+        published,
+      ]
+    );
+    inserted += 1;
+  }
+  return inserted;
 }

@@ -1,3 +1,351 @@
+/* Space Grotesk & Bangers loaded via next/font in app/layout.tsx */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  .theme {
+    --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-display: 'Space Grotesk', var(--font-sans);
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-serif: 'Bangers', 'Impact', cursive;
+    --radius: 0px;
+    --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+    --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+    --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+    --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+    --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+  }
+  :root {
+    --background: #f8ffe6;
+    --foreground: #061102;
+    --card: #f2fed7;
+    --card-foreground: #061102;
+    --popover: #f8ffe6;
+    --popover-foreground: #061102;
+    --primary: #b2fc15;
+    --primary-foreground: #061102;
+    --secondary: #00ae03;
+    --secondary-foreground: #f8ffe6;
+    --muted: #dffea0;
+    --muted-foreground: #255100;
+    --accent: #f2fed7;
+    --accent-foreground: #061102;
+    --destructive: oklch(0.6368 0.2078 25.3313);
+    --destructive-foreground: oklch(1.0000 0 0);
+    --border: #061102;
+    --input: #f8ffe6;
+    --ring: #b2fc15;
+    --chart-1: #00ae03;
+    --chart-2: #b2fc15;
+    --chart-3: #dffea0;
+    --chart-4: #f2fed7;
+    --chart-5: #255100;
+    --radius: 0px;
+    --sidebar: #f8ffe6;
+    --sidebar-foreground: #061102;
+    --sidebar-primary: #b2fc15;
+    --sidebar-primary-foreground: #061102;
+    --sidebar-accent: #dffea0;
+    --sidebar-accent-foreground: #061102;
+    --sidebar-border: #061102;
+    --sidebar-ring: #b2fc15;
+    --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-serif: 'Bangers', 'Impact', cursive;
+    --font-mono: 'JetBrains Mono', monospace;
+    --logo-gradient: linear-gradient(180deg, #00ae03 0%, #b2fc15 45%, #f2fed7 100%);
+    --shadow-hard: 4px 4px 0 0 #000000;
+    --shadow-hard-lg: 8px 8px 0 0 #000000;
+    --shadow-color: #000000;
+    --shadow-opacity: 0.1;
+    --shadow-blur: 10px;
+    --shadow-spread: -2px;
+    --shadow-offset-x: 0px;
+    --shadow-offset-y: 4px;
+    --letter-spacing: -0.01em;
+    --spacing: 0.25rem;
+    --shadow-2xs: 0px 4px 10px -2px hsl(0 0% 0% / 0.05);
+    --shadow-xs: 0px 4px 10px -2px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0px 4px 10px -2px hsl(0 0% 0% / 0.10), 0px 1px 2px -3px hsl(0 0% 0% / 0.10);
+    --shadow: 0px 4px 10px -2px hsl(0 0% 0% / 0.10), 0px 1px 2px -3px hsl(0 0% 0% / 0.10);
+    --shadow-md: 0px 4px 10px -2px hsl(0 0% 0% / 0.10), 0px 2px 4px -3px hsl(0 0% 0% / 0.10);
+    --shadow-lg: 0px 4px 10px -2px hsl(0 0% 0% / 0.10), 0px 4px 6px -3px hsl(0 0% 0% / 0.10);
+    --shadow-xl: 0px 4px 10px -2px hsl(0 0% 0% / 0.10), 0px 8px 10px -3px hsl(0 0% 0% / 0.10);
+    --shadow-2xl: 0px 4px 10px -2px hsl(0 0% 0% / 0.25);
+    --tracking-normal: -0.01em;
+    --podium-2: #94a3b8;
+    --podium-3: #b45309;
+    --social-discord: #5865F2;
+    --social-instagram: linear-gradient(90deg, #a855f7 0%, #ec4899 100%);
+    --glow-primary: 0 0 20px rgba(13, 242, 13, 0.2);
+    --glow-logo: 0 0 30px rgba(13, 242, 13, 0.5);
+    --glow-lg: 0 0 50px rgba(13, 242, 13, 0.15);
+  }
+  .dark {
+    --background: #0a120a;
+    --foreground: #f1f5f9;
+    --card: #142614;
+    --card-foreground: #f1f5f9;
+    --popover: #0a120a;
+    --popover-foreground: #f1f5f9;
+    --primary: #0df20d;
+    --primary-foreground: #0a120a;
+    --secondary: #00ae03;
+    --secondary-foreground: #ffffff;
+    --muted: #1e3a1e;
+    --muted-foreground: #94a3b8;
+    --accent: #142614;
+    --accent-foreground: #0df20d;
+    --destructive: oklch(0.4437 0.1613 26.8994);
+    --destructive-foreground: oklch(1.0000 0 0);
+    --border: #1e3a1e;
+    --input: #142614;
+    --ring: #0df20d;
+    --chart-1: #00ae03;
+    --chart-2: #b2fc15;
+    --chart-3: #dffea0;
+    --chart-4: #f2fed7;
+    --chart-5: #255100;
+    --radius: 0px;
+    --sidebar: #061102;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #b2fc15;
+    --sidebar-primary-foreground: #061102;
+    --sidebar-accent: #031402;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #f2fed7;
+    --sidebar-ring: #f2fed7;
+    --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-serif: 'Bangers', 'Impact', cursive;
+    --font-mono: 'JetBrains Mono', monospace;
+    --logo-gradient: linear-gradient(180deg, #00ae03 0%, #b2fc15 45%, #f2fed7 100%);
+    --shadow-hard: 4px 4px 0 0 #000000;
+    --shadow-hard-lg: 8px 8px 0 0 #000000;
+    --shadow-color: #000000;
+    --shadow-opacity: 0.5;
+    --shadow-blur: 15px;
+    --shadow-spread: -3px;
+    --shadow-offset-x: 0px;
+    --shadow-offset-y: 10px;
+    --letter-spacing: -0.01em;
+    --spacing: 0.25rem;
+    --shadow-2xs: 0px 10px 15px -3px hsl(0 0% 0% / 0.25);
+    --shadow-xs: 0px 10px 15px -3px hsl(0 0% 0% / 0.25);
+    --shadow-sm: 0px 10px 15px -3px hsl(0 0% 0% / 0.50), 0px 1px 2px -4px hsl(0 0% 0% / 0.50);
+    --shadow: 0px 10px 15px -3px hsl(0 0% 0% / 0.50), 0px 1px 2px -4px hsl(0 0% 0% / 0.50);
+    --shadow-md: 0px 10px 15px -3px hsl(0 0% 0% / 0.50), 0px 2px 4px -4px hsl(0 0% 0% / 0.50);
+    --shadow-lg: 0px 10px 15px -3px hsl(0 0% 0% / 0.50), 0px 4px 6px -4px hsl(0 0% 0% / 0.50);
+    --shadow-xl: 0px 10px 15px -3px hsl(0 0% 0% / 0.50), 0px 8px 10px -4px hsl(0 0% 0% / 0.50);
+    --shadow-2xl: 0px 10px 15px -3px hsl(0 0% 0% / 1);
+    --podium-2: #94a3b8;
+    --podium-3: #d97706;
+    --social-discord: #5865F2;
+    --social-instagram: linear-gradient(90deg, #a855f7 0%, #ec4899 100%);
+    --glow-primary: 0 0 20px rgba(13, 242, 13, 0.2);
+    --glow-logo: 0 0 30px rgba(13, 242, 13, 0.5);
+    --glow-lg: 0 0 50px rgba(13, 242, 13, 0.15);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    letter-spacing: var(--tracking-normal);
+  }
+  select,
+  select option {
+    background-color: var(--input);
+    color: var(--foreground);
+  }
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .glow-primary {
+    box-shadow: var(--glow-primary);
+  }
+  .podium-1 {
+    background: linear-gradient(180deg, rgba(13, 242, 13, 0.2) 0%, rgba(10, 18, 10, 0) 100%);
+  }
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+  }
+}
+
+/* Logo entrance + shine (see docs/logo-animation-plan.md) */
+@keyframes logo-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes logo-shine {
+  from {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  to {
+    transform: translateX(100%) skewX(-12deg);
+  }
+}
+
+.animated-logo {
+  opacity: 0;
+  transform-origin: center center;
+  animation: logo-pop-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transition: transform 0.25s ease;
+}
+
+.animated-logo:hover {
+  transform: scale(1.04);
+}
+
+.animated-logo__clip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(255, 255, 255, 0.2) 45%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.2) 55%,
+    transparent 65%,
+    transparent 100%
+  );
+  animation: logo-shine 0.6s ease 0.35s forwards;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-logo,
+  .animated-logo__clip::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .animated-logo {
+    opacity: 1;
+  }
+  .animated-logo:hover {
+    transform: none;
+  }
+}
+
+/* Hero entrance */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-in {
+  opacity: 0;
+  animation: hero-in 0.5s ease-out forwards;
+}
+
+/* Bonus cards staggered entrance */
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.bonus-card {
+  opacity: 0;
+  animation: card-in 0.45s ease-out forwards;
+}
+
+.bonus-card-1 { animation-delay: 0.1s; }
+.bonus-card-2 { animation-delay: 0.2s; }
+.bonus-card-3 { animation-delay: 0.3s; }
+
+/* Raffle section entrance */
+@keyframes raffle-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-raffle-in {
+  opacity: 0;
+  animation: raffle-in 0.5s ease-out 0.2s forwards;
+}
+
+.raffle-slot {
+  opacity: 0;
+  animation: card-in 0.4s ease-out forwards;
+}
+
+.raffle-slot:nth-child(1) { animation-delay: 0.35s; }
+.raffle-slot:nth-child(2) { animation-delay: 0.45s; }
+.raffle-slot:nth-child(3) { animation-delay: 0.55s; }
+.raffle-slot:nth-child(4) { animation-delay: 0.65s; }
+.raffle-slot:nth-child(5) { animation-delay: 0.75s; }
+
+/* Footer CTA entrance */
+@keyframes footer-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-footer-in {
+  opacity: 0;
+  animation: footer-in 0.5s ease-out 0.15s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-in,
+  .animate-raffle-in,
+  .animate-footer-in,
+  .bonus-card,
+  .raffle-slot {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+  .bonus-card:hover,
+  .raffle-slot:hover {
+    transform: none;
+  }
+}
+
+@layer utilities {
+  .bg-logo-gradient {
+    background-image: var(--logo-gradient);
+  }
+
+  .gradient-divider {
+    background-image: var(--logo-gradient);
+  }
+}

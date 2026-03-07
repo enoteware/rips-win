@@ -1,5 +1,21 @@
 import type { Metadata } from "next";
+import Script from "next/script";
+import { Space_Grotesk, Bangers } from "next/font/google";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+const bangers = Bangers({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "RIPS.WIN - Casino Leaderboard",
@@ -12,9 +28,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        {children}
+    <html lang="en" className={`theme dark ${spaceGrotesk.variable} ${bangers.variable}`}>
+      <body className="antialiased bg-background text-foreground font-display">
+        <Script
+          src="https://tweakcn.com/live-preview.min.js"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
+        <div className="flex min-h-screen flex-col">
+          <SiteHeader />
+          <div className="flex-1">{children}</div>
+          <SiteFooter />
+        </div>
       </body>
     </html>
   );

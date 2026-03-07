@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rips CMS - Leaderboard Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df20d",
+                        "background-light": "#f5f8f5",
+                        "background-dark": "#102210",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #283928;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 flex-shrink-0 border-r border-primary/10 bg-background-light dark:bg-background-dark flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary/20 rounded flex items-center justify-center border border-primary/30">
+<img class="w-8 h-8 object-contain" data-alt="Rips Brand Logo green icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUgNUUnwDsHEAPhvhstgRd9NguSZYRsqn18OejRQ8ORi7q3a26NjoDHZBkIRFjs6TWgWE3qiErD7O3mcJRYtdiOWmeZPK4p5ZjyVPwbQTtSlYS8bPNHBfAOHuu95-WTUlOdRuR5HS8OfAJNc0Uu3DOAjqy12WL1XKbqyrRr8SKRuK13S65E-bp1O04WiM9PT97YsJkTi1Xt1dGwYe7bsctLdzXeqopPpjklkzQFHmHUUp--u_bBrL4VxVQEsfwAvC4fG9z0NzpxFoL"/>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-primary">RIPS</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold">Internal CMS</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors rounded" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary border-r-2 border-primary rounded-l-none rounded" href="#">
+<span class="material-symbols-outlined text-[20px]">leaderboard</span>
+<span class="text-sm font-medium">Leaderboards</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors rounded" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span class="text-sm font-medium">Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors rounded" href="#">
+<span class="material-symbols-outlined text-[20px]">card_giftcard</span>
+<span class="text-sm font-medium">Rewards</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors rounded" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-primary/10">
+<div class="flex items-center gap-3 p-2 rounded hover:bg-slate-800 transition-colors cursor-pointer">
+<img class="w-8 h-8 rounded-full border border-primary/50" data-alt="Admin profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUfBNMQcgMWKXeB-QCmGF84DFPwz38indpY7QeMWbzLf1-jnKYgH5WO8SVqOo0EMilNMSFHZ7HA11VXeqIitawfJDBFna5lncYP3mnZrSSQrOz0ZhJSEgfRbx85BXTrQ2SJBwJabN-WKl_SrUDA48LhKUehi_cqwHfzYKKAn2u3XG3X4Bg0a6P3sAvYggHzxtaHwYs6jYz3hyI17fQ8VmVCT1byOtQ_wfywTUbpnbuIlvxHoOrlJCHiJe0rmb4Nti8vKLxqoXHo0mI"/>
+<div class="overflow-hidden">
+<p class="text-xs font-bold truncate">Admin User</p>
+<p class="text-[10px] text-slate-500 uppercase">Super Admin</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-sm">unfold_more</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- Header -->
+<header class="h-16 border-b border-primary/10 flex items-center justify-between px-8 bg-background-light dark:bg-background-dark/50 backdrop-blur-sm z-10">
+<div class="flex items-center gap-4 text-sm font-medium text-slate-500">
+<a class="hover:text-primary" href="#">CMS</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-100">Leaderboards</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary">search</span>
+<input class="bg-primary/5 border border-primary/10 text-sm rounded-lg pl-10 pr-4 py-2 w-64 focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all" placeholder="Search leaderboard or users..." type="text"/>
+</div>
+<button class="bg-primary text-background-dark px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        Create New Leaderboard
+                    </button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<!-- Stats Overview -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white dark:bg-primary/5 border border-primary/10 p-5 rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Participants</span>
+<span class="material-symbols-outlined text-primary text-[20px]">groups</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold tracking-tight">12,450</h3>
+<span class="text-xs font-bold text-primary">+12.5%</span>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 border border-primary/10 p-5 rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Active Prize Pool</span>
+<span class="material-symbols-outlined text-primary text-[20px]">payments</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold tracking-tight">$50,000</h3>
+<span class="text-xs font-bold text-red-500">-5.2%</span>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 border border-primary/10 p-5 rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Current Volume</span>
+<span class="material-symbols-outlined text-primary text-[20px]">show_chart</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold tracking-tight">2.4M</h3>
+<span class="text-xs font-bold text-primary">+18.0%</span>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 border border-primary/10 p-5 rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500">System Health</span>
+<span class="material-symbols-outlined text-primary text-[20px]">dns</span>
+</div>
+<div class="flex items-baseline gap-2">
+<h3 class="text-3xl font-bold tracking-tight">99.9%</h3>
+<span class="text-xs font-bold text-slate-500">Stable</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Leaderboard Table -->
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold tracking-tight border-l-4 border-primary pl-4 uppercase tracking-[0.1em]">Active Competitors</h2>
+<div class="flex gap-2">
+<select class="bg-primary/5 border border-primary/10 text-xs rounded-lg px-3 py-1.5 focus:ring-1 focus:ring-primary outline-none">
+<option>All Rank Groups</option>
+<option>Grandmaster</option>
+<option>Diamond</option>
+<option>Platinum</option>
+</select>
+<button class="p-2 border border-primary/10 rounded-lg hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+</div>
+</div>
+<div class="bg-white dark:bg-primary/5 border border-primary/10 rounded-xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+<th class="px-6 py-4">Rank</th>
+<th class="px-6 py-4">Competitor</th>
+<th class="px-6 py-4">Badge/Level</th>
+<th class="px-6 py-4">Points</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/5">
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 font-bold text-primary">#01</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+<div>
+<p class="text-sm font-bold">Zenith99</p>
+<p class="text-[10px] text-slate-500">zenith.rips@example.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-yellow-500/10 text-yellow-500 text-[10px] font-bold rounded uppercase">Grandmaster</span>
+</td>
+<td class="px-6 py-4 font-bold text-sm">48,290</td>
+<td class="px-6 py-4">
+<span class="w-2 h-2 rounded-full bg-primary inline-block mr-2 shadow-[0_0_8px_#0df20d]"></span>
+<span class="text-xs">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-white" title="View Logs">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-white" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-red-500/20 text-slate-400 hover:text-red-500" title="Disqualify">
+<span class="material-symbols-outlined text-[18px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 font-bold text-slate-500">#02</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+<div>
+<p class="text-sm font-bold">VoidRunner</p>
+<p class="text-[10px] text-slate-500">void.r@example.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-blue-500/10 text-blue-500 text-[10px] font-bold rounded uppercase">Diamond</span>
+</td>
+<td class="px-6 py-4 font-bold text-sm">45,120</td>
+<td class="px-6 py-4">
+<span class="w-2 h-2 rounded-full bg-primary inline-block mr-2 shadow-[0_0_8px_#0df20d]"></span>
+<span class="text-xs">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-white" title="View Logs">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-white" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-red-500/20 text-slate-400 hover:text-red-500" title="Disqualify">
+<span class="material-symbols-outlined text-[18px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4 font-bold text-slate-500">#03</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+<div>
+<p class="text-sm font-bold">PixelDrifter</p>
+<p class="text-[10px] text-slate-500">p.drifter@example.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 bg-slate-400/10 text-slate-400 text-[10px] font-bold rounded uppercase">Platinum</span>
+</td>
+<td class="px-6 py-4 font-bold text-sm">41,880</td>
+<td class="px-6 py-4">
+<span class="w-2 h-2 rounded-full bg-orange-500 inline-block mr-2"></span>
+<span class="text-xs">Pending Review</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-white" title="View Logs">
+<span class="material-symbols-outlined text-[18px]">history</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-white" title="Edit">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg hover:bg-red-500/20 text-slate-400 hover:text-red-500" title="Disqualify">
+<span class="material-symbols-outlined text-[18px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="p-4 bg-slate-50 dark:bg-slate-800/20 border-t border-primary/5 flex items-center justify-between text-[10px] uppercase font-bold text-slate-500 tracking-widest">
+<p>Showing 1-15 of 12,450 competitors</p>
+<div class="flex gap-2">
+<button class="p-1 rounded bg-primary/10 hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="p-1 rounded bg-primary/10 hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Raffle Control & Secondary Section -->
+<div class="col-span-12 lg:col-span-4 space-y-8">
+<!-- Raffle Control Panel -->
+<section class="bg-primary/5 border border-primary/20 rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all"></div>
+<h2 class="text-lg font-bold tracking-tight mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">confirmation_number</span>
+                                Weekly Raffle Control
+                            </h2>
+<div class="space-y-6">
+<div>
+<label class="block text-[10px] uppercase font-bold text-slate-500 mb-2">Current Prize Pool</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary font-bold">$</span>
+<input class="w-full bg-background-dark/50 border border-primary/10 rounded-lg pl-8 pr-4 py-2 font-display text-xl font-bold focus:ring-1 focus:ring-primary outline-none" type="number" value="5000"/>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[10px] uppercase font-bold text-slate-500 mb-2">Next Draw</label>
+<div class="bg-background-dark/50 border border-primary/10 rounded-lg p-2 text-center">
+<p class="text-sm font-bold">14h 22m</p>
+</div>
+</div>
+<div>
+<label class="block text-[10px] uppercase font-bold text-slate-500 mb-2">Ticket Count</label>
+<div class="bg-background-dark/50 border border-primary/10 rounded-lg p-2 text-center">
+<p class="text-sm font-bold">84,120</p>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<button class="w-full bg-primary text-background-dark py-3 rounded-lg font-bold flex items-center justify-center gap-2 hover:brightness-110 transition-all">
+<span class="material-symbols-outlined">auto_awesome</span>
+                                        Trigger Manual Draw
+                                    </button>
+<button class="w-full bg-primary/10 text-primary py-2 rounded-lg font-bold text-sm border border-primary/20 hover:bg-primary/20 transition-all">
+                                        Configure Rules
+                                    </button>
+</div>
+</div>
+</section>
+<!-- System Alerts -->
+<section class="bg-white dark:bg-primary/5 border border-primary/10 rounded-xl p-6">
+<h2 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Integrity Monitoring</h2>
+<div class="space-y-4">
+<div class="flex gap-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+<span class="material-symbols-outlined text-red-500">warning</span>
+<div>
+<p class="text-xs font-bold text-red-500">Suspicious Activity</p>
+<p class="text-[10px] text-slate-400">User 'GhostPlayer' flagged for rapid point gain.</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 bg-primary/10 border border-primary/20 rounded-lg">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<div>
+<p class="text-xs font-bold text-primary">API Sync Success</p>
+<p class="text-[10px] text-slate-400">Main database synced with 0.02ms latency.</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 bg-slate-500/10 border border-slate-500/20 rounded-lg">
+<span class="material-symbols-outlined text-slate-500">info</span>
+<div>
+<p class="text-xs font-bold text-slate-500">Weekly Backup</p>
+<p class="text-[10px] text-slate-400">Scheduled backup completed successfully.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

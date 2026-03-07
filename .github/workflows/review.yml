@@ -1,0 +1,47 @@
+name: Code Review
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  codex-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Codex
+        run: |
+          npm install -g @anthropic-ai/codex 2>/dev/null || true
+          echo "${{ secrets.CODEX_API_KEY }}" > ~/.codex-api-key
+
+      - name: Run Codex Review
+        id: review
+        continue-on-error: true
+        run: |
+          if command -v codex >/dev/null 2>&1 && [ -n "${{ secrets.CODEX_API_KEY }}" ]; then
+            codex review --base ${{ github.event.pull_request.base.ref }} \
+              "Review for security issues, bugs, schema drift, and code hygiene. Format: [SEVERITY] file:line - issue" > review-output.txt
+          else
+            echo "Codex not configured (CODEX_API_KEY secret or CLI missing). Skip review." > review-output.txt
+          fi
+
+      - name: Post Review Comment
+        uses: actions/github-script@v7
+        if: always() && steps.review.outcome != 'cancelled'
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'review-output.txt';
+            const review = fs.existsSync(path) ? fs.readFileSync(path, 'utf8') : 'Review skipped.';
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Codex Code Review\n\n\`\`\`\n${review}\n\`\`\``
+            });

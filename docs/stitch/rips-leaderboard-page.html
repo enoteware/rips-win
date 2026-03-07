@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rips | Community Leaderboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df20d",
+                        "background-light": "#f5f8f5",
+                        "background-dark": "#102210",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+        }
+        .leaderboard-row:nth-child(even) {
+            background-color: rgba(13, 242, 13, 0.03);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Navigation -->
+<header class="border-b border-primary/20 bg-background-light dark:bg-background-dark sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<div class="size-8 bg-primary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-background-dark font-bold">casino</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">RIPS</h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-sm font-medium text-primary" href="#">Casino</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Leaderboard</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Rewards</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-sm font-bold px-4 py-2 hover:text-primary transition-colors">Login</button>
+<button class="bg-primary text-background-dark text-sm font-bold px-6 py-2 rounded shadow-[0_0_15px_rgba(13,242,13,0.3)] hover:scale-105 transition-transform">
+                    Sign Up
+                </button>
+</div>
+</div>
+</header>
+<main class="max-w-5xl mx-auto px-4 py-8">
+<!-- Profile Section -->
+<div class="flex flex-col md:flex-row items-center gap-6 mb-10">
+<div class="relative">
+<div class="size-24 md:size-32 rounded-full border-4 border-primary p-1 bg-background-dark overflow-hidden">
+<img alt="Community Avatar" class="w-full h-full object-cover rounded-full" data-alt="Vibrant neon abstract avatar for SellingRips community" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3NlIReFq-IKe9zsaUno5TcFy5zLGghYSg2Pi_mLZjh4XnAuqaxOKTlZJj9rTXjz6DWLKMP4Br9z8cWWBegCnOlmqPl9EtIISirB3QCOZpRZVeNKIc5tSCmXfkH0CEHmRFfO8PK-R5smYUNxjc3CtcWI4oBu1sfR8oyJMgZmNQoE7m58uLTzzKiiU55C32kzJbGfczJEE8qWAUsi0tDwSS4woRsvoPJUKos4fpJVDbtbi0yFkCmbldrFBmKDUhuV9OkY34S7BoBTe4"/>
+</div>
+<div class="absolute -bottom-2 right-0 bg-primary text-background-dark text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Verified</div>
+</div>
+<div class="flex flex-col items-center md:items-start text-center md:text-left">
+<div class="flex items-center gap-3">
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white">SellingRips</h2>
+<span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded border border-primary/30">COMMUNITY LEADERBOARD</span>
+</div>
+<p class="text-slate-500 dark:text-primary/70 mt-1 font-medium">High-Stakes Racing &amp; Exclusive Rewards</p>
+<div class="flex gap-4 mt-4">
+<div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-sm">group</span>
+                        1,240 Members
+                    </div>
+<div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-primary text-sm">share</span>
+                        Code: <span class="text-primary font-bold">RIPS</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+<div class="bg-white dark:bg-background-dark/50 border border-slate-200 dark:border-primary/20 p-5 rounded-xl">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Prize Pool</p>
+<p class="text-2xl font-bold text-primary">$2,500.00</p>
+</div>
+<div class="bg-white dark:bg-background-dark/50 border border-slate-200 dark:border-primary/20 p-5 rounded-xl">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Duration</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-slate-100">Biweekly</p>
+</div>
+<div class="bg-white dark:bg-background-dark/50 border border-slate-200 dark:border-primary/20 p-5 rounded-xl">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Current Volume</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-slate-100">$256,629</p>
+</div>
+<div class="bg-white dark:bg-background-dark/50 border border-slate-200 dark:border-primary/20 p-5 rounded-xl">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Referral Code</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-slate-100">RIPS</p>
+</div>
+<div class="bg-white dark:bg-background-dark/50 border border-slate-200 dark:border-primary/20 p-5 rounded-xl">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Social</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">cast</span>
+<p class="text-lg font-bold text-slate-900 dark:text-slate-100">SellingRips</p>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark/50 border border-slate-200 dark:border-primary/20 p-5 rounded-xl flex flex-col justify-center">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Raffle Status</p>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-red-500 animate-pulse"></span>
+<p class="text-sm font-bold text-red-500">OFFLINE</p>
+</div>
+</div>
+</div>
+<!-- Timeline Section -->
+<div class="bg-white dark:bg-background-dark/30 border border-slate-200 dark:border-primary/10 rounded-xl p-6 mb-8">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex-1 w-full">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tighter">Season Progress</span>
+<span class="text-xs font-bold text-primary uppercase">Active</span>
+</div>
+<div class="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%] shadow-[0_0_10px_rgba(13,242,13,0.5)]"></div>
+</div>
+</div>
+<div class="flex gap-8 items-center shrink-0">
+<div class="text-center md:text-left">
+<p class="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">Start Date</p>
+<p class="font-bold text-slate-900 dark:text-slate-100">Oct 01, 2023</p>
+</div>
+<div class="h-8 w-px bg-slate-200 dark:bg-primary/20"></div>
+<div class="text-center md:text-left">
+<p class="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">End Date</p>
+<p class="font-bold text-slate-900 dark:text-slate-100">Oct 15, 2023</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Leaderboard Table -->
+<div class="bg-white dark:bg-background-dark border border-slate-200 dark:border-primary/20 rounded-xl overflow-hidden shadow-2xl">
+<div class="p-6 border-b border-slate-200 dark:border-primary/20 flex flex-col md:flex-row justify-between items-center gap-4">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">leaderboard</span>
+                    Top Competitors
+                </h3>
+<div class="relative w-full md:w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="w-full bg-slate-100 dark:bg-background-dark border-slate-200 dark:border-primary/30 rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-primary focus:border-primary" placeholder="Search username..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider border-b border-slate-200 dark:border-primary/10">
+<th class="px-6 py-4">Rank</th>
+<th class="px-6 py-4">User</th>
+<th class="px-6 py-4">Badge</th>
+<th class="px-6 py-4">Points</th>
+<th class="px-6 py-4 text-right">Prize</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-primary/5">
+<!-- Rank 1 -->
+<tr class="leaderboard-row group">
+<td class="px-6 py-5">
+<div class="size-8 rounded bg-yellow-500/20 text-yellow-500 flex items-center justify-center font-bold border border-yellow-500/30">1</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-gradient-to-tr from-primary/20 to-primary flex items-center justify-center overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" data-alt="User profile photo for top ranked player" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY-EHQF8mBziuw45xK_iLyiCZA0kZXxKE5Ox4cVm_dcHablX45O3nl2I6VDwXZIdNvd-exY0BXxH9fZ_a0wDE7uneIZSNIvwi9zi5DMnsJGTzAWtOS8vOSI8grt9y-3CKlPJlTCEzUhwgr7Jk9Y0mXI0leQBSgCxy6JNH3rzwjiKZLCiX9_ayqZvonUqXXCLFlp6hCcramcEqtVaIBpt7qSr36EFWe6AtlR_ejw3I1kUM_RP02-HcUEdwFTEzFVhZhStw5C8Y2hrEF"/>
+</div>
+<span class="font-bold text-slate-900 dark:text-slate-100">Cas******</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 rounded text-[10px] font-black uppercase bg-slate-900 text-primary border border-primary/50 shadow-[0_0_8px_rgba(13,242,13,0.2)]">Jade Elite</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-slate-900 dark:text-slate-100 font-medium">234,007</span>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="text-primary font-bold text-lg">$800.00</span>
+</td>
+</tr>
+<!-- Rank 2 -->
+<tr class="leaderboard-row group">
+<td class="px-6 py-5">
+<div class="size-8 rounded bg-slate-400/20 text-slate-400 flex items-center justify-center font-bold border border-slate-400/30">2</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" data-alt="User profile photo for second ranked player" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh2vOv0cj6zrEBDhumgpAJitJ86RbNEF4eIIkj_9OiL2_cbjexxpOeqUPgaTfA0YTga1ItX-ZleoHZxMBbMWPB5YVeRe8lE05VQQx2Oha5HgLnfPcb4g6SJD6DuzdwdLOlBFf4stb0CNJOWdGnGU0yjZkXxlPbPIV4E2g54FvadcQJ_dYLnwXl-oxIifKtJHQKFlAkJwYeetmQzCw_iMcmee14fO5lrb-dtAwsTKVCQtDnMjGXr4HL_qjr8bGT_BD4wt20e8bgP-gh"/>
+</div>
+<span class="font-bold text-slate-900 dark:text-slate-100">Rip******</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 rounded text-[10px] font-black uppercase bg-slate-200 text-slate-600 border border-slate-400">Platinum</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-slate-900 dark:text-slate-100 font-medium">189,452</span>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="text-primary font-bold text-lg">$500.00</span>
+</td>
+</tr>
+<!-- Rank 3 -->
+<tr class="leaderboard-row group">
+<td class="px-6 py-5">
+<div class="size-8 rounded bg-amber-700/20 text-amber-700 flex items-center justify-center font-bold border border-amber-700/30">3</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" data-alt="User profile photo for third ranked player" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtaevubtho78MIINstjFRwREShqHI8JGthmLOr6cpXuRmIU9kjH9qMmft791bX8VaL_XE-6H12IsiySSYTGn0xfyZ_qrTxdU2fn8omocwJ2nj_BI5LPTCA_rcY7yuw6aW5jzYPLaFdotcdn-fXXBZagf2OkyoMJxkBcVITTGwMVROdb1BtNrwbFTg1_-8Qx_URnRjXM7w4qe4zg00hRx8vnqpykjy2gKia3jgvOQtxhPZ2eo3hw8P_ce2GUzULCk5u_dONeaQn0jSD"/>
+</div>
+<span class="font-bold text-slate-900 dark:text-slate-100">Ace******</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 rounded text-[10px] font-black uppercase bg-amber-100 text-amber-700 border border-amber-300">Gold</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-slate-900 dark:text-slate-100 font-medium">142,881</span>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="text-primary font-bold text-lg">$350.00</span>
+</td>
+</tr>
+<!-- Rank 4 -->
+<tr class="leaderboard-row group">
+<td class="px-6 py-5">
+<div class="size-8 rounded text-slate-500 flex items-center justify-center font-bold">4</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" data-alt="Standard user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4y41h82ZlUV7hYjKQIg7ZTl4uNG89ubmV1KChaIVty580XxvA6h03OpoScm_cvd1Nvp2WJ9Dzl47_dC2Bl0NbqMhzZe9onlLk8su-eGbOwrPN9jMid3ZLWgVbe2voZZjjfKO32_qQnI01j3VxpnPe46fRoaNJ3il5P3XNgPdcDfl3EMuBgbCNyE6CUaqufoRn6FMtxa5acCx58f_7xtxGYmNClSgrTU32Knp_OV60YkUk5gDNLCCY64khFETyneEOrhLYi_WbGkoz"/>
+</div>
+<span class="font-bold text-slate-900 dark:text-slate-100">Bet******</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 rounded text-[10px] font-black uppercase bg-slate-100 text-slate-500 border border-slate-200">Silver</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-slate-900 dark:text-slate-100 font-medium">98,220</span>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="text-primary font-bold text-lg">$200.00</span>
+</td>
+</tr>
+<!-- Rank 5 -->
+<tr class="leaderboard-row group">
+<td class="px-6 py-5">
+<div class="size-8 rounded text-slate-500 flex items-center justify-center font-bold">5</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-800 flex items-center justify-center overflow-hidden">
+<img alt="User" class="w-full h-full object-cover" data-alt="Standard user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2ef9bFCfBBfEWO_W1ufY40JCZ40t4VYJFBlWM5txLfquutaTgY1u1ZTvTuckGgU5LooHvrdjkuSeltNEPCiUFDR1656IzXm1AQ7P-ekyP8m7eRNIdVtJPbZCdXDVWCVCzUqI41wXxBhc0oogU_q7wlJdRKR0DsMm8dMI6C-eAo3iLAk3xj9T9Q8CGWy3fcQbsMS8mgCC9oOaGeOE3qRdgWfxVnkH8sr8e7n3f6_HhckY4QdfFxOnnEnWoPC6w6uf7KaYwlMxOBxSU"/>
+</div>
+<span class="font-bold text-slate-900 dark:text-slate-100">Slo******</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 rounded text-[10px] font-black uppercase bg-slate-100 text-slate-500 border border-slate-200">Silver</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-slate-900 dark:text-slate-100 font-medium">85,419</span>
+</td>
+<td class="px-6 py-5 text-right">
+<span class="text-primary font-bold text-lg">$150.00</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 border-t border-slate-200 dark:border-primary/20 flex justify-between items-center">
+<p class="text-sm text-slate-500">Showing top 5 competitors of 1,240</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm font-bold bg-primary/10 text-primary border border-primary/20 rounded hover:bg-primary hover:text-background-dark transition-colors">1</button>
+<button class="px-3 py-1 text-sm font-bold text-slate-500 hover:text-primary transition-colors">2</button>
+<button class="px-3 py-1 text-sm font-bold text-slate-500 hover:text-primary transition-colors">3</button>
+<button class="px-3 py-1 text-sm font-bold text-slate-500 hover:text-primary transition-colors">...</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="mt-20 border-t border-primary/20 bg-background-light dark:bg-background-dark py-12">
+<div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="col-span-1 md:col-span-2">
+<div class="flex items-center gap-2 mb-4">
+<div class="size-6 bg-primary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-background-dark text-sm font-bold">casino</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">RIPS</h2>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm max-w-sm">
+                    Rips is the ultimate destination for high-stakes casino racing and community leaderboards. Join the elite and claim your rewards today.
+                </p>
+<div class="flex gap-4 mt-6">
+<a class="text-slate-400 hover:text-primary" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-slate-400 hover:text-primary" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+<a class="text-slate-400 hover:text-primary" href="#"><span class="material-symbols-outlined">chat</span></a>
+</div>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold mb-4 uppercase text-xs tracking-widest">Platform</h4>
+<ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary" href="#">Casino Games</a></li>
+<li><a class="hover:text-primary" href="#">Leaderboard</a></li>
+<li><a class="hover:text-primary" href="#">Affiliate</a></li>
+<li><a class="hover:text-primary" href="#">Support</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold mb-4 uppercase text-xs tracking-widest">Legal</h4>
+<ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary" href="#">Terms of Service</a></li>
+<li><a class="hover:text-primary" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-primary" href="#">Responsible Gaming</a></li>
+<li><a class="hover:text-primary" href="#">Fairness</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-primary/10 text-center">
+<p class="text-xs text-slate-600 dark:text-slate-500">© 2023 RIPS Casino Group. All Rights Reserved. Play Responsibly.</p>
+</div>
+</footer>
+</body></html>

@@ -2,10 +2,8 @@ import Image from 'next/image';
 import { ICONS } from '@/lib/brand';
 
 const STATS = [
-  { value: "45k+", label: "Community Members" },
-  { value: "1.2m", label: "Monthly Views" },
-  { value: "800+", label: "Daily Winners" },
-  { value: "$500k+", label: "Bonuses Awarded" },
+  { value: "164k", label: "Community Members" },
+  { value: "5.2m", label: "Monthly Views" },
 ] as const;
 
 export function CommunitySection() {
@@ -25,23 +23,19 @@ export function CommunitySection() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="#"
-                className="bg-social-discord text-foreground flex items-center gap-3 px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform"
-                aria-label="Join Discord"
-              >
-                <Image src={ICONS.discord} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />
-                Discord
-              </a>
-              <a
-                href="#"
+                href="https://kick.com/sellingrips"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-primary text-primary-foreground flex items-center gap-3 px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform"
-                aria-label="Watch on Kick or Twitch"
+                aria-label="Watch on Kick"
               >
                 <Image src={ICONS.stream} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />
                 Kick / Twitch
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/ripstrades"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-social-instagram text-foreground flex items-center gap-3 px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform"
                 aria-label="Follow on Instagram"
               >

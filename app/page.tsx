@@ -91,7 +91,7 @@ export default async function Home() {
       <section className="py-20 bg-background-dark border-t border-border-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-black mb-12 uppercase italic tracking-tighter">
-            Exclusive <span className="text-primary">Casino Rewards</span>
+            Enjoy <span className="text-primary">Exclusive Bonuses</span>
           </h2>
           <div className="flex flex-col md:flex-row justify-center gap-10 md:gap-4 lg:gap-8 items-center md:items-stretch perspective-[1000px] py-4">
             <TectonicOfferCard

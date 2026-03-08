@@ -7,7 +7,6 @@ import { getLeaderboard, getMetadata } from "@/lib/db";
 import { getSiteSettingsWithFallback } from "@/lib/site-settings";
 import { HeroSection } from '@/components/HeroSection';
 import { MonolithLeaderboard } from '@/components/MonolithLeaderboard';
-import { TectonicOfferCard } from '@/components/TectonicOfferCard';
 import { VideosSection } from '@/components/VideosSection';
 import { CommunitySection } from '@/components/CommunitySection';
 
@@ -89,44 +88,55 @@ export default async function Home() {
 
       {/* Exclusive Bonuses */}
       <section className="py-20 bg-background-dark border-t border-border-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-black mb-12 uppercase italic tracking-tighter">
             Enjoy <span className="text-primary">Exclusive Bonuses</span>
           </h2>
-          <div className="flex flex-col md:flex-row justify-center gap-10 md:gap-4 lg:gap-8 items-center md:items-stretch perspective-[1000px] py-4">
-            <TectonicOfferCard
-              tierName="Welcome"
-              offerType="Initial Deposit"
-              value={<><span className="text-2xl mr-1 align-top text-primary">$</span>25</>}
-              description="Initial tectonic deposit match. Claim your welcome bonus on Stake.us."
-              promoCode={welcomeCode}
-              cta="Ignite Offer"
-              href={stakeUs}
-              image="/images/bonus_welcome.png"
-            />
-
-            <TectonicOfferCard
-              tierName="Deposit Match"
-              offerType="Gilded Tier"
-              value={<>200<span className="text-2xl ml-1 align-top text-primary">%</span></>}
-              description="Pressure-hardened rewards for the elite. Double your first deposit on Stake.com."
-              promoCode="BONUS200"
-              cta="Fracture Now"
-              href={stakeCom}
-              highlight={true}
-              image="/images/bonus_deposit.png"
-            />
-
-            <TectonicOfferCard
-              tierName="Rakeback"
-              offerType="Deep Core"
-              value={<>{rakeback}<span className="text-2xl ml-1 align-top text-primary">%</span></>}
-              description="The ultimate geological event. Get instant rakeback on every single bet you place."
-              promoCode={welcomeCode}
-              cta="Claim Apex"
-              href={stakeUs}
-              image="/images/bonus_rakeback.png"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Stake.com */}
+            <div className="flex flex-col overflow-hidden rounded-xl border border-border-dark bg-card">
+              <div className="relative w-full aspect-square">
+                <Image
+                  src="/stakecom-promo.jpg"
+                  alt="Stake.com – GET 3.5% RAKEBACK, USE CODE: RIPS"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+              <div className="p-4">
+                <a
+                  href={stakeCom}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full bg-primary text-primary-foreground text-center font-black uppercase tracking-widest py-3 px-6 rounded-lg hover:opacity-90 transition-opacity shadow-glow-lg"
+                >
+                  CLAIM NOW
+                </a>
+              </div>
+            </div>
+            {/* Stake.us */}
+            <div className="flex flex-col overflow-hidden rounded-xl border border-border-dark bg-card">
+              <div className="relative w-full aspect-square">
+                <Image
+                  src="/stakeus-promo.jpg"
+                  alt="Stake.us – INSTANT 3.5% RAKEBACK, 25 STAKE CASH, 250,000 GOLD COINS, USE CODE: RIPS"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+              <div className="p-4">
+                <a
+                  href={stakeUs}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full bg-primary text-primary-foreground text-center font-black uppercase tracking-widest py-3 px-6 rounded-lg hover:opacity-90 transition-opacity shadow-glow-lg"
+                >
+                  CLAIM NOW
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>

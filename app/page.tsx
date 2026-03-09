@@ -11,7 +11,6 @@ import { MonolithLeaderboard } from '@/components/MonolithLeaderboard';
 import { TectonicOfferCard } from '@/components/TectonicOfferCard';
 import { VideosSection } from '@/components/VideosSection';
 import { CommunitySection } from '@/components/CommunitySection';
-import { RaffleCtaSection } from '@/components/RaffleCtaSection';
 
 const STAKE_TRACKING = '?offer=rips&c=selling';
 
@@ -53,7 +52,7 @@ export default async function Home() {
             Live Casino <span className="text-primary">Action</span> & High Stakes Gambling
           </>
         }
-        subtitle="Experience the adrenaline of high-stakes gambling with our top-tier streamers and exclusive casino rewards."
+        subtitle="Experience the adrenaline of high-stakes gambling with our top-tier Streams and exclusive Stake rewards."
         primaryCta={{ label: 'CLAIM BONUSES', href: '/bonuses' }}
         secondaryCta={{ label: 'VIEW LEADERBOARD', href: '/leaderboard' }}
       />
@@ -136,7 +135,6 @@ export default async function Home() {
 
       <VideosSection />
       <CommunitySection />
-      <RaffleCtaSection countdown="$10,000" countdownLabel="Weekly draw" />
     </main>
   );
 }

@@ -1,10 +1,13 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+
+export const metadata = {
+  title: 'Bonuses - RIPS.WIN',
+  description: 'Exclusive RIPS.WIN bonus offers for Stake.us and Stake.com. Use code RIPS for 3.5% rakeback.',
+};
 
 const welcomeCode = process.env.NEXT_PUBLIC_WELCOME_CODE ?? 'RIPS';
-const rakeback = process.env.NEXT_PUBLIC_RAKEBACK ?? '10';
+const rakeback = process.env.NEXT_PUBLIC_RAKEBACK ?? '3.5';
 
 function stakeUsLink(): string {
   const base = process.env.NEXT_PUBLIC_STAKE_US_LINK ?? 'https://stake.us/';
@@ -16,69 +19,101 @@ function stakeComLink(): string {
   return base.includes('?') ? base : `${base.replace(/\/$/, '')}?offer=rips&c=selling`;
 }
 
-export const metadata = {
-  title: 'Bonuses - RIPS.WIN',
-  description: 'Exclusive RIPS.WIN bonus offers for Stake.us and Stake.com. USA bonuses.',
-};
-
 export default function BonusesPage() {
   return (
     <main className="min-h-screen bg-background py-16">
       <div className="container mx-auto px-4">
-        <h1 className="text-center text-4xl font-bold text-foreground md:text-5xl">
-          ENJOY EXCLUSIVE BONUSES
-        </h1>
-        <p className="mt-3 text-center text-lg text-muted-foreground">
-          USA Bonuses
-        </p>
-        <div className="mx-auto mt-12 grid max-w-4xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          <Card className="overflow-hidden border-2 border-primary bg-primary/10 shadow-hard-lg">
-            <div className="relative h-40 w-full bg-muted">
-              <Image src="/stakeus-promo.jpg" alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-            </div>
-            <CardContent className="p-6">
-              <p className="text-2xl font-bold text-primary">{welcomeCode}</p>
-              <p className="mt-1 text-sm text-muted-foreground">bonus offer</p>
-              <Button asChild className="mt-4 w-full">
-                <a href={stakeUsLink()} target="_blank" rel="noopener noreferrer">
-                  Claim {welcomeCode}
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-          <Card className="overflow-hidden border-2 border-secondary bg-secondary/10 shadow-hard-lg">
-            <div className="relative h-40 w-full bg-muted">
-              <Image src="/stakecom-promo.jpg" alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-            </div>
-            <CardContent className="p-6">
-              <p className="text-2xl font-bold text-secondary">BONUS200</p>
-              <p className="mt-1 text-sm text-muted-foreground">bonus offer</p>
-              <Button asChild variant="secondary" className="mt-4 w-full">
-                <a href={stakeComLink()} target="_blank" rel="noopener noreferrer">
-                  Claim BONUS200
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-          <Card className="overflow-hidden border-2 border-chart-3 bg-chart-3/10 shadow-hard-lg sm:col-span-2 lg:col-span-1">
-            <div className="relative h-40 w-full bg-muted">
-              <Image src="/stakecom-banner.jpg" alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-            </div>
-            <CardContent className="p-6">
-              <p className="text-2xl font-bold text-chart-3">RAKEBACK{rakeback}</p>
-              <p className="mt-1 text-sm text-muted-foreground">bonus offer</p>
-              <Button asChild variant="outline" className="mt-4 w-full border-chart-3 text-chart-3 hover:bg-chart-3 hover:text-background">
-                <a href={stakeUsLink()} target="_blank" rel="noopener noreferrer">
-                  Claim RAKEBACK{rakeback}
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-black uppercase tracking-tighter italic md:text-5xl">
+            Exclusive <span className="text-primary">Bonuses</span>
+          </h1>
+          <p className="mt-3 text-lg text-muted-foreground">
+            Use code <span className="font-mono font-bold text-primary">{welcomeCode}</span> to claim your rewards
+          </p>
         </div>
-        <p className="mt-10 text-center text-muted-foreground">
-          <Link href="/" className="font-semibold text-primary underline-offset-4 hover:underline">
-            Back to home
-          </Link>
+
+        <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
+          {/* Stake.com Card */}
+          <div className="bonus-card bonus-card-1 flex flex-col overflow-hidden border-2 border-border bg-card shadow-hard-lg">
+            <div className="relative h-48 w-full bg-muted">
+              <Image
+                src="/stakecom-promo.jpg"
+                alt="Stake.com"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="flex flex-1 flex-col p-6">
+              <p className="mb-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                Stake.com
+              </p>
+              <h2 className="text-2xl font-black uppercase italic tracking-tighter">
+                Get {rakeback}% Rakeback
+              </h2>
+              <div className="mt-3 flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Use Code:</span>
+                <span className="font-mono font-black text-primary">{welcomeCode}</span>
+              </div>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Sign up on Stake.com with code{' '}
+                <strong className="text-foreground">{welcomeCode}</strong> and receive{' '}
+                {rakeback}% rakeback on every bet — automatically applied.
+              </p>
+              <div className="mt-auto pt-6">
+                <Button asChild className="w-full font-black uppercase tracking-widest">
+                  <a href={stakeComLink()} target="_blank" rel="noopener noreferrer">
+                    Claim on Stake.com
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Stake.us Card */}
+          <div className="bonus-card bonus-card-2 flex flex-col overflow-hidden border-2 border-border bg-card shadow-hard-lg">
+            <div className="relative h-48 w-full bg-muted">
+              <Image
+                src="/stakeus-promo.jpg"
+                alt="Stake.us"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            </div>
+            <div className="flex flex-1 flex-col p-6">
+              <p className="mb-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                Stake.us
+              </p>
+              <h2 className="text-2xl font-black uppercase italic tracking-tighter">
+                Get Instant {rakeback}% Rakeback
+              </h2>
+              <ul className="mt-2 space-y-0.5 text-sm font-semibold text-foreground">
+                <li>$25 Stake Cash</li>
+                <li>250,000 Gold Coins</li>
+              </ul>
+              <div className="mt-3 flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Use Code:</span>
+                <span className="font-mono font-black text-primary">{welcomeCode}</span>
+              </div>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Sign up on Stake.us with code{' '}
+                <strong className="text-foreground">{welcomeCode}</strong> and instantly unlock{' '}
+                {rakeback}% rakeback plus your welcome bonus.
+              </p>
+              <div className="mt-auto pt-6">
+                <Button asChild className="w-full font-black uppercase tracking-widest">
+                  <a href={stakeUsLink()} target="_blank" rel="noopener noreferrer">
+                    Claim on Stake.us
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p className="mt-10 text-center text-xs text-muted-foreground">
+          Must be 21+ and in an eligible location. Gambling involves risk. Please gamble responsibly.
         </p>
       </div>
     </main>

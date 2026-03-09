@@ -1,3 +1,4 @@
+# CI pipeline
 name: CI
 on:
   push:
@@ -28,3 +29,5 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}

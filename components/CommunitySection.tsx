@@ -2,10 +2,8 @@ import Image from 'next/image';
 import { ICONS } from '@/lib/brand';
 
 const STATS = [
-  { value: "45k+", label: "Community Members" },
-  { value: "1.2m", label: "Monthly Views" },
-  { value: "800+", label: "Daily Winners" },
-  { value: "$500k+", label: "Bonuses Awarded" },
+  { value: "164k", label: "Community Members" },
+  { value: "5.2m", label: "Monthly Views" },
 ] as const;
 
 export function CommunitySection() {
@@ -38,7 +36,7 @@ export function CommunitySection() {
                 aria-label="Watch on Kick or Twitch"
               >
                 <Image src={ICONS.stream} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />
-                Kick / Twitch
+                Kick
               </a>
               <a
                 href="#"

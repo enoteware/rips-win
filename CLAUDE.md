@@ -15,8 +15,11 @@
 - `scripts/` — build/utility scripts
 - `tailwind.config.ts`, `components.json` — Tailwind + shadcn config
 
+## Remote / SSH (Cursor on mini)
+Cursor is often connected via SSH to the mini where the repo lives. Commands run on the mini; the dev server listens there. To use it from your local machine: forward port 3000 when connecting (e.g. `ssh -L 3000:localhost:3000 user@mini`) and open http://localhost:3000 locally, or use the mini’s hostname/IP if it’s on the same network.
+
 ## Development Commands
-- **Dev server:** `npm run dev`
+- **Dev server:** `npm run dev` (use `npm run dev -- --webpack` if Turbopack hits permission errors on the mini)
 - **Build:** `npm run build`
 - **Lint:** `npm run lint`
 - **Start (prod):** `npm start`
@@ -30,6 +33,10 @@
 
 ## Admin UI testing (agents)
 When testing admin (login, leaderboard, site settings) in the browser: use credentials from `.env.local` — read `ADMIN_EMAIL` and `ADMIN_PASSWORD` and sign in at `/admin/login`. See `docs/ADMIN-CRUD-TEST.md` for the checklist.
+
+## E2E (Playwright)
+- `npm run test:e2e` — all e2e tests (starts dev server if needed).
+- `npm run test:e2e:admin` — admin leaderboard CRUD only. With server on 3002: `PLAYWRIGHT_BASE_URL=http://localhost:3002 npm run test:e2e:admin`. Requires `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env.local` for authenticated tests.
 
 ## AI Team Configuration
 Agent-to-task mappings and usage: see **`.claude/CLAUDE.md`** (configured by setup-agents).

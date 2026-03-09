@@ -14,7 +14,9 @@ if (!password) {
 }
 
 const hash = await bcrypt.hash(password, 10);
-console.log('Add this to .env.local:');
-console.log('ADMIN_PASSWORD_HASH="' + hash + '"');
+// Escape $ for .env / Vercel so Next.js doesn't expand them
+const escaped = hash.replace(/\$/g, '\\$');
+console.log('Add to .env.local or Vercel env (paste as-is):');
+console.log('ADMIN_PASSWORD_HASH="' + escaped + '"');
 console.log('');
 console.log('Also set: ADMIN_EMAIL=your@email.com');

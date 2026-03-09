@@ -18,19 +18,17 @@
 
 2. **Admin login** (Credentials):
    - `ADMIN_EMAIL` – email you’ll use to sign in (e.g. `admin@example.com`).
-   - `ADMIN_PASSWORD_HASH` – bcrypt hash of your password. Generate one:
+   - `ADMIN_PASSWORD_HASH` – bcrypt hash of your password. Generate one and paste the line it prints (already escaped for .env/Vercel):
      ```bash
      npm run admin:hash-password -- yourpassword
      ```
-     In `.env.local`, **escape each `$` in the hash** so Next.js doesn’t treat it as a variable, e.g.:
-     `ADMIN_PASSWORD_HASH="\$2a\$10\$...restOfHash"`
 
 **Example for local dev (password is `admin`):**
 ```env
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your-openssl-output-here
 ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD_HASH="$2a$10$Zez6Phh2Wbht4pm2YYoK5elyvoXSE9dqQA.p/L.IszPmgaZ1rkXgm"
+ADMIN_PASSWORD_HASH="\$2a\$10\$Zez6Phh2Wbht4pm2YYoK5elyvoXSE9dqQA.p/L.IszPmgaZ1rkXgm"
 ```
 
 Then sign in at **http://localhost:3000/admin/login** with email `admin@example.com` and password `admin`. Change the password in production (generate a new hash and set it in your production env).

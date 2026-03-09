@@ -15,8 +15,11 @@
 - `scripts/` — build/utility scripts
 - `tailwind.config.ts`, `components.json` — Tailwind + shadcn config
 
+## Remote / SSH (Cursor on mini)
+Cursor is often connected via SSH to the mini where the repo lives. Commands run on the mini; the dev server listens there. To use it from your local machine: forward port 3000 when connecting (e.g. `ssh -L 3000:localhost:3000 user@mini`) and open http://localhost:3000 locally, or use the mini’s hostname/IP if it’s on the same network.
+
 ## Development Commands
-- **Dev server:** `npm run dev`
+- **Dev server:** `npm run dev` (use `npm run dev -- --webpack` if Turbopack hits permission errors on the mini)
 - **Build:** `npm run build`
 - **Lint:** `npm run lint`
 - **Start (prod):** `npm start`

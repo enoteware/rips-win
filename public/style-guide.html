@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RIPS.WIN — Style Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@24,400,0&display=swap" rel="stylesheet" />
+  <style>
+    /* ========== DESIGN TOKENS (dark theme) ========== */
+    .theme, .dark {
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-display: 'Space Grotesk', var(--font-sans);
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-serif: 'Bangers', 'Impact', cursive;
+      --radius: 0px;
+      --tracking-normal: -0.01em;
+      --background: #0a120a;
+      --foreground: #f1f5f9;
+      --card: #142614;
+      --card-foreground: #f1f5f9;
+      --primary: #0df20d;
+      --primary-foreground: #0a120a;
+      --secondary: #00ae03;
+      --secondary-foreground: #ffffff;
+      --muted: #1e3a1e;
+      --muted-foreground: #94a3b8;
+      --border: #1e3a1e;
+      --input: #142614;
+      --ring: #0df20d;
+      --destructive: oklch(0.4437 0.1613 26.8994);
+      --destructive-foreground: oklch(1.0000 0 0);
+      --logo-gradient: linear-gradient(180deg, #f2fed7 0%, #b2fc15 55%, #00ae03 100%);
+      --shadow-hard: 4px 4px 0 0 #000000;
+      --shadow-hard-lg: 8px 8px 0 0 #000000;
+      --podium-2: #94a3b8;
+      --podium-3: #d97706;
+      --social-discord: #5865F2;
+      --social-instagram: linear-gradient(90deg, #a855f7 0%, #ec4899 100%);
+      --glow-primary: 0 0 20px rgba(13, 242, 13, 0.2);
+      --glow-logo: 0 0 30px rgba(13, 242, 13, 0.5);
+      --glow-lg: 0 0 50px rgba(13, 242, 13, 0.15);
+    }
+    /* Static Tailwind-style tokens */
+    .bg-background-dark { background-color: #0a120a; }
+    .bg-surface-dark { background-color: #142614; }
+    .border-border-dark { border-color: #1e3a1e; }
+
+    /* Base */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background-color: var(--background);
+      color: var(--foreground);
+      font-family: var(--font-display);
+      letter-spacing: var(--tracking-normal);
+      line-height: 1.5;
+    }
+    .font-display { font-family: var(--font-display); }
+    .font-serif { font-family: var(--font-serif); }
+    .font-mono { font-family: var(--font-mono); }
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: 400;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    /* Animations */
+    @keyframes logo-pop-in {
+      from { opacity: 0; transform: scale(0.88); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes logo-shine {
+      from { transform: translateX(-100%) skewX(-12deg); }
+      to { transform: translateX(100%) skewX(-12deg); }
+    }
+    .animated-logo {
+      opacity: 0;
+      transform-origin: center center;
+      animation: logo-pop-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    .animated-logo__clip { position: relative; overflow: hidden; }
+    .animated-logo__clip::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(105deg, transparent 0%, transparent 35%, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.2) 55%, transparent 65%, transparent 100%);
+      animation: logo-shine 0.6s ease 0.35s forwards;
+      pointer-events: none;
+    }
+    @keyframes hero-in {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-hero-in {
+      opacity: 0;
+      animation: hero-in 0.5s ease-out forwards;
+    }
+    @keyframes card-in {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .bonus-card { opacity: 0; animation: card-in 0.45s ease-out forwards; }
+    .bonus-card-1 { animation-delay: 0.1s; }
+    .bonus-card-2 { animation-delay: 0.2s; }
+    .bonus-card-3 { animation-delay: 0.3s; }
+    @keyframes footer-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-footer-in {
+      opacity: 0;
+      animation: footer-in 0.5s ease-out 0.15s forwards;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .animated-logo, .animated-logo__clip::after,
+      .animate-hero-in, .animate-footer-in, .bonus-card {
+        animation: none !important;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Layout */
+    .sg-wrap { max-width: 1400px; margin: 0 auto; padding: 0 1rem; }
+    .sg-main { display: flex; min-height: 100vh; }
+    .sg-sidebar {
+      position: sticky;
+      top: 0;
+      width: 220px;
+      min-width: 220px;
+      height: 100vh;
+      padding: 1.5rem 0;
+      border-right: 2px solid var(--border);
+      background: var(--background);
+      overflow-y: auto;
+    }
+    .sg-sidebar .brand { font-family: var(--font-serif); font-size: 1.5rem; color: var(--primary); margin-bottom: 1.5rem; padding: 0 1rem; }
+    .sg-sidebar nav { display: flex; flex-direction: column; gap: 0.25rem; }
+    .sg-sidebar a {
+      padding: 0.5rem 1rem;
+      color: var(--muted-foreground);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    .sg-sidebar a:hover { color: var(--primary); }
+    .sg-content { flex: 1; padding: 2rem 2.5rem 4rem; }
+    .sg-section { margin-bottom: 3.5rem; scroll-margin-top: 1rem; }
+    .sg-section h2 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--secondary);
+      margin: 0 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .sg-section h3 { font-size: 1.125rem; font-weight: 700; margin: 1.5rem 0 0.5rem; color: var(--foreground); }
+    .sg-grid { display: grid; gap: 1rem; }
+    .sg-grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .sg-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .sg-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 768px) {
+      .sg-grid-2, .sg-grid-3, .sg-grid-4 { grid-template-columns: 1fr; }
+    }
+
+    /* Color swatches */
+    .sg-swatch {
+      height: 64px;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      padding: 0.5rem;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+    }
+    .sg-swatch-label { background: var(--card); padding: 0.25rem 0.5rem; }
+
+    /* Buttons — Homepage / site CTAs (preferred) */
+    .sg-btn-home {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem 2.5rem;
+      font-size: 1.125rem;
+      font-weight: 800;
+      border: none;
+      border-radius: 0.75rem;
+      transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      font-family: var(--font-display);
+      text-decoration: none;
+    }
+    .sg-btn-home-primary {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      box-shadow: var(--glow-primary);
+    }
+    .sg-btn-home-primary:hover {
+      transform: scale(1.05);
+      box-shadow: var(--glow-primary);
+    }
+    .sg-btn-home-secondary {
+      background: var(--card);
+      color: var(--foreground);
+      border: 1px solid #1e3a1e;
+    }
+    .sg-btn-home-secondary:hover {
+      background: #1e3a1e;
+    }
+    .sg-btn-home-pill {
+      padding: 1rem 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 1rem;
+      box-shadow: var(--glow-lg);
+    }
+    .sg-btn-home-pill:hover {
+      transform: scale(1.05);
+      background: rgba(13, 242, 13, 0.9);
+    }
+
+    /* Buttons — Admin / form (gradient default; same radius as site) */
+    .sg-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      height: 2.25rem;
+      padding: 0 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: 2px solid;
+      border-radius: 0.75rem;
+      transition: all 0.2s;
+      cursor: pointer;
+      font-family: var(--font-display);
+    }
+    .sg-btn-default {
+      background: var(--logo-gradient);
+      color: var(--primary-foreground);
+      border-color: #000;
+      box-shadow: var(--shadow-hard);
+    }
+    .sg-btn-default:hover {
+      transform: translate(4px, 4px);
+      box-shadow: none;
+    }
+    .sg-btn-secondary {
+      background: var(--card);
+      color: var(--foreground);
+      border-color: var(--border);
+      box-shadow: var(--shadow-hard);
+    }
+    .sg-btn-secondary:hover {
+      background: var(--secondary);
+      color: var(--secondary-foreground);
+      transform: translate(4px, 4px);
+      box-shadow: none;
+    }
+    .sg-btn-outline {
+      background: var(--background);
+      color: var(--foreground);
+      border-color: var(--border);
+      box-shadow: var(--shadow-hard);
+    }
+    .sg-btn-outline:hover {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      transform: translate(4px, 4px);
+      box-shadow: none;
+    }
+    .sg-btn-destructive {
+      background: var(--destructive);
+      color: var(--destructive-foreground);
+      border-color: #000;
+      box-shadow: var(--shadow-hard);
+    }
+    .sg-btn-ghost {
+      background: transparent;
+      color: var(--foreground);
+      border-color: transparent;
+      box-shadow: none;
+    }
+    .sg-btn-ghost:hover {
+      border-color: var(--border);
+      background: rgba(13, 242, 13, 0.15);
+      color: var(--primary);
+    }
+
+    /* Card */
+    .sg-card {
+      background: var(--card);
+      color: var(--card-foreground);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow-hard);
+    }
+    .sg-card-header { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.375rem; }
+    .sg-card-title { font-size: 1.5rem; font-weight: 600; color: var(--secondary); }
+    .sg-card-content { padding: 1.5rem; padding-top: 0; }
+    .sg-card-footer { padding: 1.5rem; padding-top: 0; display: flex; align-items: center; }
+
+    /* Badge */
+    .sg-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.125rem 0.625rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border: 2px solid;
+      transition: colors 0.2s;
+    }
+    .sg-badge-default {
+      background: var(--logo-gradient);
+      color: var(--primary-foreground);
+      border-color: #000;
+      box-shadow: var(--shadow-hard);
+    }
+    .sg-badge-secondary {
+      background: rgba(13, 242, 13, 0.15);
+      color: var(--primary);
+      border-color: var(--border);
+    }
+    .sg-badge-outline { color: var(--foreground); border-color: var(--border); background: transparent; }
+    .sg-badge-destructive {
+      background: var(--destructive);
+      color: var(--destructive-foreground);
+      border-color: #000;
+      box-shadow: var(--shadow-hard);
+    }
+
+    /* Input + Label */
+    .sg-label { font-size: 0.875rem; font-weight: 500; color: var(--foreground); display: block; margin-bottom: 0.5rem; }
+    .sg-input {
+      width: 100%;
+      height: 2.25rem;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.875rem;
+      background: var(--input);
+      color: var(--foreground);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow-hard);
+      font-family: var(--font-display);
+    }
+    .sg-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--ring);
+    }
+
+    /* Table */
+    .sg-table-wrap { width: 100%; overflow: auto; border-top: 4px solid var(--border); }
+    .sg-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .sg-table thead tr { border-bottom: 4px solid var(--border); }
+    .sg-table th {
+      height: 2.5rem;
+      padding: 0 0.5rem;
+      text-align: left;
+      font-weight: 500;
+      color: var(--secondary);
+    }
+    .sg-table tbody tr { border-bottom: 2px solid var(--border); transition: background 0.2s; }
+    .sg-table tbody tr:hover { background: rgba(13, 242, 13, 0.1); }
+    .sg-table td { padding: 0.5rem; color: var(--foreground); }
+
+    /* Shadow demos */
+    .sg-shadow-box {
+      width: 120px;
+      height: 80px;
+      background: var(--card);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      padding: 0.5rem;
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+    }
+    .sg-shadow-hard { box-shadow: var(--shadow-hard); }
+    .sg-shadow-hard-lg { box-shadow: var(--shadow-hard-lg); }
+    .sg-shadow-glow { box-shadow: var(--glow-primary); }
+    .sg-shadow-glow-lg { box-shadow: var(--glow-lg); }
+    .sg-shadow-glow-logo { box-shadow: var(--glow-logo); }
+
+    /* Custom component mocks */
+    .sg-podium-card {
+      border-radius: 0.75rem;
+      border: 1px solid #1e3a1e;
+      background: var(--card);
+      padding: 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .sg-podium-card.gold { border-top: 4px solid var(--primary); }
+    .sg-podium-card.silver { border-top: 4px solid var(--podium-2); }
+    .sg-podium-card.bronze { border-top: 4px solid var(--podium-3); }
+    .sg-hero {
+      padding: 4rem 0;
+      border-bottom: 1px solid #1e3a1e;
+      background: radial-gradient(circle at center, rgba(13, 242, 13, 0.1) 0%, #0a120a 50%, #0a120a 100%);
+      text-align: center;
+    }
+    /* Hero CTAs use .sg-btn-home .sg-btn-home-primary / .sg-btn-home-secondary */
+    .sg-header {
+      border-bottom: 1px solid #1e3a1e;
+      background: rgba(10, 18, 10, 0.95);
+      padding: 0 1rem;
+      height: 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sg-footer {
+      background: #0a120a;
+      border-top: 1px solid #1e3a1e;
+      padding: 3rem 1rem;
+    }
+    .sg-footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 2rem; }
+    @media (max-width: 768px) { .sg-footer-grid { grid-template-columns: 1fr; } }
+    .sg-tectonic-card {
+      width: 100%;
+      max-width: 320px;
+      height: 320px;
+      background: #142614;
+      border: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 92%, 88% 100%, 0 100%);
+    }
+    .sg-tectonic-card.highlight { border-color: rgba(13, 242, 13, 0.4); box-shadow: var(--glow-lg); }
+    .sg-tectonic-card .edge { position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: var(--primary); opacity: 0.8; }
+    .sg-tectonic-card .content { padding: 2rem; position: relative; z-index: 2; }
+    .sg-bonus-card {
+      background: #142614;
+      border: 1px solid #1e3a1e;
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+    .sg-bonus-card .img { height: 12rem; background: linear-gradient(135deg, rgba(13,242,13,0.2), #142614); }
+    .sg-bonus-card .body { padding: 1.5rem; margin-top: -3rem; position: relative; }
+    .sg-bonus-card .body .cta {
+      display: block;
+      text-align: center;
+      font-weight: 700;
+      padding: 0.75rem;
+      border-radius: 0.75rem;
+      background: #1e3a1e;
+      color: var(--foreground);
+      text-decoration: none;
+    }
+    .sg-bonus-card.primary .body .cta { background: var(--primary); color: var(--primary-foreground); box-shadow: var(--glow-primary); }
+    .sg-leaderboard-podium {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .sg-podium-slot {
+      background: linear-gradient(to bottom, #142614, #0a120a);
+      border: 1px solid #1e3a1e;
+      padding: 2rem;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      text-align: center;
+    }
+    .sg-podium-slot.silver { border-top: 2px solid var(--podium-2); }
+    .sg-podium-slot.gold { border-top: 2px solid var(--primary); box-shadow: var(--glow-lg); margin-top: -2rem; }
+    .sg-podium-slot.bronze { border-top: 2px solid var(--podium-3); }
+    .sg-leaderboard-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 120px;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #1e3a1e;
+    }
+    .sg-leaderboard-row:hover { background: rgba(255,255,255,0.05); }
+
+    /* Animation controls */
+    .sg-anim-trigger { margin-top: 1rem; }
+    .sg-anim-trigger button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      border: none;
+      cursor: pointer;
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body class="theme dark">
+  <div class="sg-main">
+    <aside class="sg-sidebar" id="nav-sidebar">
+      <div class="brand">RIPS.WIN</div>
+      <nav>
+        <a href="#colors">Color Tokens</a>
+        <a href="#typography">Typography</a>
+        <a href="#shadows">Shadows &amp; Effects</a>
+        <a href="#primitives">UI Primitives</a>
+        <a href="#components">Custom Components</a>
+        <a href="#animations">Animations</a>
+        <a href="#logo-icons">Logo &amp; Icons</a>
+        <a href="#layout">Layout Patterns</a>
+      </nav>
+    </aside>
+    <main class="sg-content">
+      <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Style Guide</h1>
+      <p style="color: var(--muted-foreground); margin-bottom: 2rem;">Design system reference for rips-win. Static HTML — no database.</p>
+
+      <!-- 1. Color Tokens -->
+      <section class="sg-section" id="colors">
+        <h2>1. Color Tokens</h2>
+        <h3>CSS variables (dark theme)</h3>
+        <div class="sg-grid sg-grid-2 sg-grid-4" style="margin-bottom: 1.5rem;">
+          <div>
+            <div class="sg-swatch" style="background: var(--primary);"><span class="sg-swatch-label">--primary</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#0df20d</p>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: var(--secondary);"><span class="sg-swatch-label">--secondary</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#00ae03</p>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: var(--background);"><span class="sg-swatch-label">--background</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#0a120a</p>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: var(--card);"><span class="sg-swatch-label">--card</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#142614</p>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: var(--border);"><span class="sg-swatch-label">--border</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#1e3a1e</p>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: var(--muted);"><span class="sg-swatch-label">--muted</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#1e3a1e</p>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: var(--muted-foreground);"><span class="sg-swatch-label">--muted-foreground</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#94a3b8</p>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: var(--foreground);"><span class="sg-swatch-label">--foreground</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#f1f5f9</p>
+          </div>
+        </div>
+        <h3>Static tokens</h3>
+        <div class="sg-grid sg-grid-3" style="margin-bottom: 1rem;">
+          <div>
+            <div class="sg-swatch" style="background: #0a120a; border-color: #1e3a1e;"><span class="sg-swatch-label">background-dark</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#0a120a</p>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: #142614;"><span class="sg-swatch-label">surface-dark</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#142614</p>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: #1e3a1e;"><span class="sg-swatch-label">border-dark</span></div>
+            <p style="font-size: 0.75rem; margin: 0.25rem 0 0; color: var(--muted-foreground);">#1e3a1e</p>
+          </div>
+        </div>
+        <h3>Podium &amp; social</h3>
+        <div class="sg-grid sg-grid-3">
+          <div>
+            <div class="sg-swatch" style="background: var(--podium-2);"><span class="sg-swatch-label">--podium-2 (silver)</span></div>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: var(--podium-3);"><span class="sg-swatch-label">--podium-3 (bronze)</span></div>
+          </div>
+          <div>
+            <div class="sg-swatch" style="background: var(--social-discord);"><span class="sg-swatch-label">--social-discord</span></div>
+          </div>
+        </div>
+        <h3>Logo gradient</h3>
+        <div class="sg-swatch" style="height: 48px; background: var(--logo-gradient); margin-bottom: 0.5rem;"></div>
+        <p style="font-size: 0.75rem; color: var(--muted-foreground);">Matches logo: top to bottom = #f2fed7 → #b2fc15 → #00ae03 (light to dark)</p>
+        <h3>Glow effects</h3>
+        <div class="sg-grid sg-grid-3">
+          <div class="sg-shadow-box sg-shadow-glow">glow-primary</div>
+          <div class="sg-shadow-box sg-shadow-glow-lg">glow-lg</div>
+          <div class="sg-shadow-box sg-shadow-glow-logo">glow-logo</div>
+        </div>
+      </section>
+
+      <!-- 2. Typography -->
+      <section class="sg-section" id="typography">
+        <h2>2. Typography</h2>
+        <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">All headings use <strong>font-display</strong> (Space Grotesk). Bangers (font-serif) is reserved for brand/decorative use (e.g. style guide sidebar, optional hero accent).</p>
+        <h3>Heading scale (Space Grotesk)</h3>
+        <p class="font-display" style="font-size: 2.25rem; font-weight: 800; text-transform: uppercase; font-style: italic; letter-spacing: -0.025em;">Page title (h1)</p>
+        <p style="font-size: 0.75rem; color: var(--muted-foreground); margin-top: 0.25rem;">text-3xl md:text-4xl font-black uppercase italic tracking-tighter</p>
+        <p class="font-display" style="font-size: 1.875rem; font-weight: 800; text-transform: uppercase; font-style: italic; letter-spacing: -0.025em; margin-top: 1rem;">Section (h2)</p>
+        <p style="font-size: 0.75rem; color: var(--muted-foreground); margin-top: 0.25rem;">text-3xl or text-4xl font-black uppercase italic tracking-tighter</p>
+        <p class="font-display" style="font-size: 1.25rem; font-weight: 800; text-transform: uppercase; margin-top: 1rem;">Card / subsection (h3)</p>
+        <p style="font-size: 0.75rem; color: var(--muted-foreground); margin-top: 0.25rem;">text-2xl font-black uppercase</p>
+        <p class="font-display" style="font-size: 1rem; margin-top: 1rem;">Body text</p>
+        <p class="font-display" style="font-size: 0.875rem; color: var(--muted-foreground);">Muted — secondary copy.</p>
+        <h3>Decorative (Bangers) — optional</h3>
+        <p class="font-serif" style="font-size: 2.5rem;">IMPACT HEADLINE</p>
+        <h3>Mono (JetBrains Mono)</h3>
+        <p class="font-mono" style="font-size: 0.875rem;">$1,234,567 — CODE: WELCOME50</p>
+      </section>
+
+      <!-- 3. Shadows & Effects -->
+      <section class="sg-section" id="shadows">
+        <h2>3. Shadows &amp; Effects</h2>
+        <div class="sg-grid sg-grid-3">
+          <div>
+            <div class="sg-shadow-box sg-shadow-hard">shadow-hard</div>
+            <p style="font-size: 0.75rem; margin-top: 0.5rem; color: var(--muted-foreground);">4px 4px 0 0 #000</p>
+          </div>
+          <div>
+            <div class="sg-shadow-box sg-shadow-hard-lg">shadow-hard-lg</div>
+            <p style="font-size: 0.75rem; margin-top: 0.5rem; color: var(--muted-foreground);">8px 8px 0 0 #000</p>
+          </div>
+          <div>
+            <div class="sg-shadow-box sg-shadow-glow">glow (primary)</div>
+            <p style="font-size: 0.75rem; margin-top: 0.5rem; color: var(--muted-foreground);">0 0 20px rgba(13,242,13,0.2)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. UI Primitives -->
+      <section class="sg-section" id="primitives">
+        <h2>4. UI Primitives</h2>
+        <h3>Button — Homepage / site CTAs (preferred)</h3>
+        <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Solid primary, no gradient. All buttons use the same radius (rounded-xl / 0.75rem). Used in HeroSection, View Full Leaderboard, CommunitySection, TectonicOfferCard.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: center;">
+          <a href="#" class="sg-btn-home sg-btn-home-primary">Primary CTA</a>
+          <a href="#" class="sg-btn-home sg-btn-home-secondary">Secondary CTA</a>
+          <a href="#" class="sg-btn-home sg-btn-home-primary sg-btn-home-pill">Large primary (uppercase)</a>
+        </div>
+        <p style="font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 1.5rem;">Classes: Primary — <code style="background: var(--card); padding: 0.125rem 0.375rem;">bg-primary text-primary-foreground rounded-xl font-black glow-primary hover:scale-105</code>.</p>
+        <h3>Button — Admin / form</h3>
+        <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Same radius (rounded-xl). Only the default variant uses the logo gradient; others use solid colors. Used in admin (LeaderboardAdmin, login, SiteSettingsForm) and forms.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+          <button type="button" class="sg-btn sg-btn-default">Default</button>
+          <button type="button" class="sg-btn sg-btn-secondary">Secondary</button>
+          <button type="button" class="sg-btn sg-btn-outline">Outline</button>
+          <button type="button" class="sg-btn sg-btn-destructive">Destructive</button>
+          <button type="button" class="sg-btn sg-btn-ghost">Ghost</button>
+        </div>
+        <h3>Card</h3>
+        <div style="max-width: 360px;">
+          <div class="sg-card">
+            <div class="sg-card-header">
+              <div class="sg-card-title">Card Title</div>
+              <div style="font-size: 0.875rem; color: var(--muted-foreground);">Card description text.</div>
+            </div>
+            <div class="sg-card-content">Card content goes here.</div>
+            <div class="sg-card-footer">
+              <a href="#" class="sg-btn-home sg-btn-home-primary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Action</a>
+            </div>
+          </div>
+        </div>
+        <h3>Badge</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+          <span class="sg-badge sg-badge-default">Default</span>
+          <span class="sg-badge sg-badge-secondary">Secondary</span>
+          <span class="sg-badge sg-badge-outline">Outline</span>
+          <span class="sg-badge sg-badge-destructive">Destructive</span>
+        </div>
+        <h3>Input + Label</h3>
+        <div style="max-width: 280px;">
+          <label class="sg-label" for="sg-demo-input">Email</label>
+          <input type="text" id="sg-demo-input" class="sg-input" placeholder="you@example.com" />
+        </div>
+        <h3>Table</h3>
+        <div class="sg-table-wrap">
+          <table class="sg-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Wagered</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>01</td>
+                <td>PlayerOne</td>
+                <td>$125,000</td>
+              </tr>
+              <tr>
+                <td>02</td>
+                <td>PlayerTwo</td>
+                <td>$98,500</td>
+              </tr>
+              <tr>
+                <td>03</td>
+                <td>PlayerThree</td>
+                <td>$87,200</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5. Custom Components -->
+      <section class="sg-section" id="components">
+        <h2>5. Custom Components</h2>
+        <h3>PodiumCard</h3>
+        <div class="sg-grid sg-grid-3">
+          <div class="sg-podium-card gold">
+            <div style="font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">#1</div>
+            <div style="width: 4rem; height: 4rem; border-radius: 50%; background: var(--muted); margin-bottom: 0.5rem;"></div>
+            <div style="font-weight: 700;">PlayerOne</div>
+            <div class="font-mono" style="color: var(--primary);">$250,000</div>
+            <div style="margin-top: 1rem; padding: 0.25rem 1rem; background: var(--primary); color: var(--primary-foreground); font-size: 0.875rem; font-weight: 700;">$50,000 Prize</div>
+          </div>
+          <div class="sg-podium-card silver">
+            <div style="font-size: 1.25rem; font-weight: 700;">#2</div>
+            <div style="width: 3rem; height: 3rem; border-radius: 50%; background: var(--muted); margin-bottom: 0.5rem;"></div>
+            <div style="font-weight: 600;">PlayerTwo</div>
+            <div class="font-mono" style="color: var(--muted-foreground);">$180,000</div>
+            <div style="margin-top: 1rem; padding: 0.25rem 1rem; background: rgba(148,163,184,0.2); color: var(--podium-2); font-size: 0.875rem;">$30,000 Prize</div>
+          </div>
+          <div class="sg-podium-card bronze">
+            <div style="font-size: 1.25rem; font-weight: 700;">#3</div>
+            <div style="width: 2.75rem; height: 2.75rem; border-radius: 50%; background: var(--muted); margin-bottom: 0.5rem;"></div>
+            <div style="font-weight: 600;">PlayerThree</div>
+            <div class="font-mono" style="color: var(--muted-foreground);">$120,000</div>
+            <div style="margin-top: 1rem; padding: 0.25rem 1rem; background: rgba(217,119,6,0.2); color: var(--podium-3); font-size: 0.875rem;">$20,000 Prize</div>
+          </div>
+        </div>
+        <h3>TectonicOfferCard</h3>
+        <div class="sg-grid sg-grid-3">
+          <div class="sg-tectonic-card">
+            <div class="edge"></div>
+            <div class="content">
+              <span class="font-mono" style="font-size: 10px; letter-spacing: 4px; color: var(--primary);">BONUS</span>
+              <h4 style="font-size: 1.5rem; font-weight: 800; margin: 0.5rem 0 1rem;">TIER ONE</h4>
+              <div style="font-size: 2.5rem; font-weight: 800; color: var(--foreground);">$500</div>
+              <p style="font-size: 0.875rem; color: rgba(241,245,249,0.7);">Welcome bonus description.</p>
+              <div class="font-mono" style="font-size: 0.75rem; background: rgba(255,255,255,0.05); padding: 0.5rem 0.75rem; border-left: 2px solid var(--primary); margin: 1rem 0;">CODE: WELCOME50</div>
+              <a href="#" style="display: block; text-align: center; padding: 1rem; background: var(--primary); color: var(--primary-foreground); font-weight: 800; font-size: 0.75rem; text-decoration: none; margin-top: 0.5rem;">CLAIM OFFER</a>
+            </div>
+          </div>
+          <div class="sg-tectonic-card highlight">
+            <div class="edge" style="width: 6px; background: var(--logo-gradient);"></div>
+            <div class="content">
+              <span class="font-mono" style="font-size: 10px; letter-spacing: 4px; color: var(--primary);">VIP</span>
+              <h4 style="font-size: 1.5rem; font-weight: 800; margin: 0.5rem 0 1rem; background: var(--logo-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">BEST VALUE</h4>
+              <div style="font-size: 2.5rem; font-weight: 800; color: var(--primary);">$1,000</div>
+              <p style="font-size: 0.875rem; color: rgba(241,245,249,0.7);">Premium welcome package.</p>
+              <div class="font-mono" style="font-size: 0.75rem; background: rgba(255,255,255,0.05); padding: 0.5rem 0.75rem; border-left: 2px solid var(--primary); margin: 1rem 0;">CODE: VIP100</div>
+              <a href="#" style="display: block; text-align: center; padding: 1rem; background: var(--primary); color: var(--primary-foreground); font-weight: 800; font-size: 0.75rem; text-decoration: none; margin-top: 0.5rem; box-shadow: var(--glow-primary);">CLAIM OFFER</a>
+            </div>
+          </div>
+        </div>
+        <h3>BonusCard</h3>
+        <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Two patterns: (1) <code style="background: var(--card); padding: 0.125rem 0.375rem;">BonusCard</code> component — image area h-48 or full-width, gradient overlay, body -mt-12, CTA rounded-xl. (2) Bonuses page — full-width image (w-full h-auto object-contain), no crop; same site primary CTA. Card: rounded-xl, border-2 border-border or border-border-dark, shadow-hard-lg / bg-card.</p>
+        <div class="sg-grid sg-grid-2 sg-grid-3">
+          <div class="sg-bonus-card">
+            <div class="img"></div>
+            <div class="body">
+              <h4 style="font-size: 1.25rem; font-weight: 800; margin: 0 0 0.5rem; text-transform: uppercase;">Stake Welcome</h4>
+              <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Get 200% match on your first deposit.</p>
+              <a href="#" class="cta">Claim</a>
+            </div>
+          </div>
+          <div class="sg-bonus-card primary">
+            <div class="img"></div>
+            <div class="body">
+              <span style="background: var(--primary); color: var(--primary-foreground); font-size: 0.75rem; font-weight: 800; padding: 0.25rem 0.5rem; display: inline-block; margin-bottom: 0.5rem;">BEST VALUE</span>
+              <h4 style="font-size: 1.25rem; font-weight: 800; margin: 0 0 0.5rem; text-transform: uppercase;">VIP Package</h4>
+              <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Exclusive high-roller bonus.</p>
+              <a href="#" class="cta">Claim</a>
+            </div>
+          </div>
+        </div>
+        <h3>HeroSection</h3>
+        <div class="sg-hero">
+          <div style="margin-bottom: 2rem; padding: 1rem; background: rgba(13,242,13,0.05); border: 1px solid rgba(13,242,13,0.2); border-radius: 50%; width: 120px; height: 120px; margin-left: auto; margin-right: auto; display: flex; align-items: center; justify-content: center;">Logo</div>
+          <h1 class="font-serif" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase;">RIPS.WIN</h1>
+          <p style="font-size: 1.25rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto 2rem;">The world's premier destination for live casino streaming.</p>
+          <a href="#" class="sg-btn-home sg-btn-home-primary">SIGN UP</a>
+          <a href="#" class="sg-btn-home sg-btn-home-secondary">LEADERBOARD</a>
+        </div>
+        <h3>SiteHeader (mock)</h3>
+        <div class="sg-header">
+          <div style="font-weight: 700; color: var(--primary); font-size: 1.25rem;">RIPS</div>
+          <nav style="display: flex; gap: 1.5rem; font-size: 0.875rem;">
+            <a href="#" style="color: var(--foreground); text-decoration: none;">LEADERBOARD</a>
+            <a href="#" style="color: var(--foreground); text-decoration: none;">BONUSES</a>
+            <a href="#" style="color: var(--foreground); text-decoration: none;">RAFFLE</a>
+          </nav>
+          <div style="display: flex; gap: 1rem;">
+            <a href="#" style="color: var(--foreground); font-size: 0.875rem; font-weight: 700;">LOGIN</a>
+            <a href="#" class="sg-btn-home sg-btn-home-primary" style="padding: 0.5rem 1.25rem; font-size: 0.875rem;">SIGN UP</a>
+          </div>
+        </div>
+        <h3>SiteFooter (mock)</h3>
+        <div class="sg-footer">
+          <div class="sg-footer-grid sg-wrap">
+            <div>
+              <div style="font-weight: 700; color: var(--primary); margin-bottom: 1rem;">RIPS</div>
+              <p style="font-size: 0.875rem; color: var(--muted-foreground);">Premier destination for live casino streaming.</p>
+            </div>
+            <div>
+              <h5 style="font-weight: 700; font-size: 0.875rem; text-transform: uppercase; margin-bottom: 1rem;">Platform</h5>
+              <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.875rem; color: var(--muted-foreground);">
+                <li><a href="#" style="color: inherit; text-decoration: none;">Games</a></li>
+                <li><a href="#" style="color: inherit; text-decoration: none;">Leaderboard</a></li>
+              </ul>
+            </div>
+            <div>
+              <h5 style="font-weight: 700; font-size: 0.875rem; text-transform: uppercase; margin-bottom: 1rem;">Support</h5>
+              <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.875rem; color: var(--muted-foreground);">
+                <li><a href="#" style="color: inherit; text-decoration: none;">Help Center</a></li>
+              </ul>
+            </div>
+            <div>
+              <h5 style="font-weight: 700; font-size: 0.875rem; text-transform: uppercase; margin-bottom: 1rem;">Legal</h5>
+              <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.875rem; color: var(--muted-foreground);">
+                <li><a href="#" style="color: inherit; text-decoration: none;">Terms</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="sg-wrap" style="padding-top: 2rem; border-top: 1px solid #1e3a1e; display: flex; justify-content: space-between; align-items: center;">
+            <p style="font-size: 0.75rem; color: var(--muted-foreground); margin: 0;">© 2025 Rips Gaming.</p>
+          </div>
+        </div>
+        <h3>MonolithLeaderboard (mock)</h3>
+        <div class="sg-leaderboard-podium">
+          <div class="sg-podium-slot silver">
+            <span class="font-mono" style="position: absolute; top: 1rem; left: 1rem; font-size: 2rem; opacity: 0.1;">02</span>
+            <div style="font-weight: 700; margin-bottom: 0.5rem;">PlayerTwo</div>
+            <div class="font-mono" style="font-size: 0.875rem; color: var(--muted-foreground);">$180,000</div>
+          </div>
+          <div class="sg-podium-slot gold">
+            <span class="font-mono" style="position: absolute; top: 1rem; left: 1rem; font-size: 2rem; opacity: 0.15; color: var(--primary);">01</span>
+            <div style="font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">PlayerOne</div>
+            <div class="font-mono" style="font-size: 0.875rem; color: var(--muted-foreground);">$250,000</div>
+          </div>
+          <div class="sg-podium-slot bronze">
+            <span class="font-mono" style="position: absolute; top: 1rem; left: 1rem; font-size: 2rem; opacity: 0.1;">03</span>
+            <div style="font-weight: 700; margin-bottom: 0.5rem;">PlayerThree</div>
+            <div class="font-mono" style="font-size: 0.875rem; color: var(--muted-foreground);">$120,000</div>
+          </div>
+        </div>
+        <div style="border: 1px solid #1e3a1e; background: rgba(10,18,10,0.5);">
+          <div class="sg-leaderboard-row">
+            <span class="font-mono" style="color: var(--muted-foreground);">04</span>
+            <span style="font-weight: 600;">PlayerFour</span>
+            <span class="font-mono" style="text-align: right;">$95,000</span>
+          </div>
+          <div class="sg-leaderboard-row">
+            <span class="font-mono" style="color: var(--muted-foreground);">05</span>
+            <span style="font-weight: 600;">PlayerFive</span>
+            <span class="font-mono" style="text-align: right;">$88,000</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Animations -->
+      <section class="sg-section" id="animations">
+        <h2>6. Animations</h2>
+        <h3>logo-pop-in + logo-shine</h3>
+        <div id="anim-logo-container">
+          <div class="animated-logo__clip" style="width: 100px; height: 100px; margin: 1rem 0;">
+            <div class="animated-logo" style="width: 100%; height: 100%; background: var(--logo-gradient); border: 2px solid var(--border);"></div>
+          </div>
+        </div>
+        <button type="button" style="margin-top: 0.5rem; padding: 0.5rem 1rem; font-size: 0.875rem; background: var(--primary); color: var(--primary-foreground); border: none; cursor: pointer;" onclick="replayLogo()">Replay</button>
+        <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-top: 0.5rem;">Respects prefers-reduced-motion.</p>
+        <h3>hero-in</h3>
+        <div id="anim-hero-container">
+          <div class="animate-hero-in" id="anim-hero" style="padding: 1.5rem; background: var(--card); border: 2px solid var(--border); max-width: 300px;">Hero block entrance</div>
+        </div>
+        <button type="button" style="margin-top: 0.5rem; padding: 0.5rem 1rem; font-size: 0.875rem; background: var(--primary); color: var(--primary-foreground); border: none; cursor: pointer;" onclick="replayHero()">Replay</button>
+        <h3>card-in (staggered)</h3>
+        <div id="anim-cards-container" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <div class="bonus-card bonus-card-1" style="width: 120px; height: 80px; background: var(--card); border: 2px solid var(--border);"></div>
+          <div class="bonus-card bonus-card-2" style="width: 120px; height: 80px; background: var(--card); border: 2px solid var(--border);"></div>
+          <div class="bonus-card bonus-card-3" style="width: 120px; height: 80px; background: var(--card); border: 2px solid var(--border);"></div>
+        </div>
+        <button type="button" style="margin-top: 0.5rem; padding: 0.5rem 1rem; font-size: 0.875rem; background: var(--primary); color: var(--primary-foreground); border: none; cursor: pointer;" onclick="replayCards()">Replay</button>
+        <h3>footer-in</h3>
+        <div id="anim-footer-container">
+          <div class="animate-footer-in" id="anim-footer" style="padding: 1rem; background: var(--card); border: 2px solid var(--border); max-width: 300px;">Footer CTA entrance</div>
+        </div>
+        <button type="button" style="margin-top: 0.5rem; padding: 0.5rem 1rem; font-size: 0.875rem; background: var(--primary); color: var(--primary-foreground); border: none; cursor: pointer;" onclick="replayFooter()">Replay</button>
+      </section>
+      <script>
+        function replayAnimation(id, className) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          el.classList.remove(className);
+          el.offsetHeight;
+          el.classList.add(className);
+        }
+        function replayLogo() {
+          var container = document.getElementById('anim-logo-container');
+          var clip = container.firstElementChild;
+          if (!clip) return;
+          var clone = clip.cloneNode(true);
+          container.replaceChild(clone, clip);
+        }
+        function replayHero() { replayAnimation('anim-hero', 'animate-hero-in'); }
+        function replayCards() {
+          var c = document.getElementById('anim-cards-container');
+          var cards = Array.from(c.children);
+          cards.forEach(function (card) {
+            c.replaceChild(card.cloneNode(true), card);
+          });
+        }
+        function replayFooter() { replayAnimation('anim-footer', 'animate-footer-in'); }
+      </script>
+
+      <!-- 7. Logo & Icons -->
+      <section class="sg-section" id="logo-icons">
+        <h2>7. Logo &amp; Icons</h2>
+        <h3>Logo variants</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+          <div>
+            <img src="/rips-logo.svg" alt="RIPS main" width="96" height="96" style="max-height: 80px; width: auto;" />
+            <p style="font-size: 0.75rem; margin-top: 0.5rem; color: var(--muted-foreground);">LOGO.main — /rips-logo.svg</p>
+          </div>
+          <div>
+            <img src="/rips-logo-ai.svg" alt="RIPS hero" width="96" height="96" style="max-height: 80px; width: auto;" />
+            <p style="font-size: 0.75rem; margin-top: 0.5rem; color: var(--muted-foreground);">LOGO.hero — /rips-logo-ai.svg</p>
+          </div>
+          <div>
+            <img src="/rips-logo-alt.svg" alt="RIPS alt" width="96" height="96" style="max-height: 80px; width: auto;" />
+            <p style="font-size: 0.75rem; margin-top: 0.5rem; color: var(--muted-foreground);">LOGO.alt — /rips-logo-alt.svg</p>
+          </div>
+        </div>
+        <h3>Icon inventory (lib/brand.ts)</h3>
+        <div class="sg-grid sg-grid-4">
+          <div style="text-align: center;"><img src="/icons/discord.svg" alt="" width="24" height="24" /><p style="font-size: 0.75rem; margin-top: 0.25rem;">discord</p></div>
+          <div style="text-align: center;"><img src="/icons/instagram.svg" alt="" width="24" height="24" /><p style="font-size: 0.75rem; margin-top: 0.25rem;">instagram</p></div>
+          <div style="text-align: center;"><img src="/icons/stream.svg" alt="" width="24" height="24" /><p style="font-size: 0.75rem; margin-top: 0.25rem;">stream</p></div>
+          <div style="text-align: center;"><img src="/icons/globe.svg" alt="" width="24" height="24" /><p style="font-size: 0.75rem; margin-top: 0.25rem;">globe</p></div>
+          <div style="text-align: center;"><img src="/icons/mail.svg" alt="" width="24" height="24" /><p style="font-size: 0.75rem; margin-top: 0.25rem;">mail</p></div>
+          <div style="text-align: center;"><img src="/icons/chat.svg" alt="" width="24" height="24" /><p style="font-size: 0.75rem; margin-top: 0.25rem;">chat</p></div>
+          <div style="text-align: center;"><img src="/icons/leaderboard.svg" alt="" width="24" height="24" /><p style="font-size: 0.75rem; margin-top: 0.25rem;">leaderboard</p></div>
+          <div style="text-align: center;"><img src="/icons/raffle.svg" alt="" width="24" height="24" /><p style="font-size: 0.75rem; margin-top: 0.25rem;">raffle</p></div>
+          <div style="text-align: center;"><img src="/icons/play.svg" alt="" width="24" height="24" /><p style="font-size: 0.75rem; margin-top: 0.25rem;">play</p></div>
+          <div style="text-align: center;"><img src="/icons/trophy.svg" alt="" width="24" height="24" /><p style="font-size: 0.75rem; margin-top: 0.25rem;">trophy</p></div>
+        </div>
+      </section>
+
+      <!-- 8. Layout Patterns -->
+      <section class="sg-section" id="layout">
+        <h2>8. Layout Patterns</h2>
+        <h3>3-col offer cards</h3>
+        <div class="sg-grid sg-grid-3">
+          <div class="sg-card" style="padding: 1.5rem;">Offer 1</div>
+          <div class="sg-card" style="padding: 1.5rem;">Offer 2</div>
+          <div class="sg-card" style="padding: 1.5rem;">Offer 3</div>
+        </div>
+        <h3>4-col video grid</h3>
+        <div class="sg-grid sg-grid-4">
+          <div class="sg-card" style="padding: 1rem; text-align: center;">Video 1</div>
+          <div class="sg-card" style="padding: 1rem; text-align: center;">Video 2</div>
+          <div class="sg-card" style="padding: 1rem; text-align: center;">Video 3</div>
+          <div class="sg-card" style="padding: 1rem; text-align: center;">Video 4</div>
+        </div>
+        <h3>2×2 stats grid</h3>
+        <div class="sg-grid sg-grid-2" style="max-width: 400px;">
+          <div class="sg-card" style="padding: 1.5rem; text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">45k+</div>
+            <div style="font-size: 0.875rem; color: var(--muted-foreground);">Members</div>
+          </div>
+          <div class="sg-card" style="padding: 1.5rem; text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">1.2m</div>
+            <div style="font-size: 0.875rem; color: var(--muted-foreground);">Views</div>
+          </div>
+          <div class="sg-card" style="padding: 1.5rem; text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">800+</div>
+            <div style="font-size: 0.875rem; color: var(--muted-foreground);">Winners</div>
+          </div>
+          <div class="sg-card" style="padding: 1.5rem; text-align: center;">
+            <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">$500k+</div>
+            <div style="font-size: 0.875rem; color: var(--muted-foreground);">Bonuses</div>
+          </div>
+        </div>
+        <h3>Section divider</h3>
+        <div style="height: 4px; background: var(--border); margin: 1rem 0;"></div>
+        <p style="font-size: 0.875rem; color: var(--muted-foreground);">Table wrapper: border-t-4 border-border. Table header row: border-b-4.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

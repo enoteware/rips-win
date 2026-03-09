@@ -35,6 +35,13 @@ There is currently no dedicated unit/integration test suite in the repo. Quality
 
 For API/UI changes, include a quick manual verification note in your PR (example: `GET /api/leaderboard?period=all_time` returns 200 and expected JSON).
 
+### Testing the admin section (agents)
+When testing the admin UI (login, leaderboard CRUD, site settings) in the browser or automated flows:
+
+- **Credentials:** Read `.env.local` for `ADMIN_EMAIL` and `ADMIN_PASSWORD` and use them to log in at `/admin/login`. Do not hardcode credentials in code or commits.
+- **Dev server:** The **Run Task → Dev Server** task runs on **port 3099** (`npm run dev:local`) to avoid conflicts with other Node apps. Test at `http://localhost:3099`. For default port 3000 use `npm run dev`.
+- **Checklist:** See `docs/ADMIN-CRUD-TEST.md` for a full CRUD test checklist.
+
 ## Commit & Pull Request Guidelines
 Follow the existing commit style from history: short, imperative summaries (for example, `Add Stake.us promo graphic`).
 

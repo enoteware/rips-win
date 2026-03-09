@@ -1,7 +1,7 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') ?? '/admin';
   const [email, setEmail] = useState('');
@@ -32,8 +31,8 @@ export default function AdminLoginPage() {
         setLoading(false);
         return;
       }
-      router.push(callbackUrl);
-      router.refresh();
+      // Full page navigation so middleware/layout see the new session cookie
+      window.location.href = callbackUrl;
     } catch {
       setError('Something went wrong.');
       setLoading(false);
@@ -41,10 +40,10 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md border-border bg-card shadow-hard-lg">
+    <main className="flex min-h-screen w-full items-center justify-center bg-background p-4">
+      <Card className="w-full max-w-md border-2 border-border bg-card shadow-hard">
         <CardHeader>
-          <h1 className="text-xl font-semibold text-foreground">Admin login</h1>
+          <h1 className="font-display text-xl font-semibold text-foreground">Admin login</h1>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-4">

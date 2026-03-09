@@ -14,9 +14,11 @@ Thumbs.db
 .vscode/.browse.db*
 .vscode/.ropeproject
 
-# Environment
+# Environment (keep .env.example committed as template)
 .env
 .env.local
+.env.development
+.env.production
 .env.*.local
 
 # Node.js

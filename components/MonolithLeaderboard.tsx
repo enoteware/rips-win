@@ -59,11 +59,11 @@ export function MonolithLeaderboard({ entries }: { entries: Entry[] }) {
             className="sheen absolute inset-0 pointer-events-none bg-[size:200%_200%]"
             style={{ background: `linear-gradient(125deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%)` }}
           />
-          <span className="font-mono text-5xl md:text-[4rem] font-light absolute top-4 left-6 md:-top-2 md:left-2 opacity-10">02</span>
+<span className="font-display text-5xl md:text-[4rem] font-light absolute top-4 left-6 md:-top-2 md:left-2 opacity-10">02</span>
           
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 mb-3 z-10 text-podium-2 opacity-90"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
 
-          <div className="font-bold text-lg md:text-xl text-center mb-2 z-10 uppercase tracking-tight">{second?.player_name || '---'}</div>
+          <div className="font-display font-bold text-lg md:text-xl text-center mb-2 z-10 uppercase tracking-tight">{second?.player_name || '---'}</div>
           <div className="font-mono text-muted-foreground text-sm z-10">{second ? formatMoney(second.total_wagered) : '---'}</div>
         </div>
 
@@ -78,11 +78,11 @@ export function MonolithLeaderboard({ entries }: { entries: Entry[] }) {
             style={{ background: `linear-gradient(125deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%)` }}
           />
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-          <span className="font-mono text-5xl md:text-[4rem] font-light absolute top-4 left-6 md:-top-2 md:left-2 opacity-[0.15] text-primary">01</span>
+<span className="font-display text-5xl md:text-[4rem] font-light absolute top-4 left-6 md:-top-2 md:left-2 opacity-[0.15] text-primary">01</span>
           
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 md:w-16 md:h-16 mb-4 z-10 text-primary drop-shadow-glow-logo"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
 
-          <div className="font-black text-xl md:text-2xl text-center mb-2 z-10 text-primary drop-shadow-glow-logo uppercase tracking-tighter">{first?.player_name || '---'}</div>
+          <div className="font-display font-black text-xl md:text-2xl text-center mb-2 z-10 text-primary drop-shadow-glow-logo uppercase tracking-tighter">{first?.player_name || '---'}</div>
           <div className="font-mono text-muted-foreground text-sm z-10">{first ? formatMoney(first.total_wagered) : '---'}</div>
         </div>
 
@@ -96,11 +96,11 @@ export function MonolithLeaderboard({ entries }: { entries: Entry[] }) {
             className="sheen absolute inset-0 pointer-events-none bg-[size:200%_200%]"
             style={{ background: `linear-gradient(125deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%)` }}
           />
-          <span className="font-mono text-5xl md:text-[4rem] font-light absolute top-4 left-6 md:-top-2 md:left-2 opacity-10">03</span>
+<span className="font-display text-5xl md:text-[4rem] font-light absolute top-4 left-6 md:-top-2 md:left-2 opacity-10">03</span>
           
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 mb-3 z-10 text-podium-3 opacity-90"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
 
-          <div className="font-bold text-lg md:text-xl text-center mb-2 z-10 uppercase tracking-tight">{third?.player_name || '---'}</div>
+          <div className="font-display font-bold text-lg md:text-xl text-center mb-2 z-10 uppercase tracking-tight">{third?.player_name || '---'}</div>
           <div className="font-mono text-muted-foreground text-sm z-10">{third ? formatMoney(third.total_wagered) : '---'}</div>
         </div>
       </section>
@@ -123,7 +123,7 @@ export function MonolithLeaderboard({ entries }: { entries: Entry[] }) {
                 </span>
                 
                 {/* Player Name */}
-                <span className="font-semibold text-base md:text-lg tracking-tight flex items-center gap-3 uppercase">
+                <span className="font-display font-semibold text-base md:text-lg tracking-tight flex items-center gap-3 uppercase">
                     {entry.player_name || 'Unknown'}
                 </span>
                 

@@ -55,7 +55,7 @@
     --font-sans: 'Inter', -apple-system, sans-serif;
     --font-serif: 'Bangers', 'Impact', cursive;
     --font-mono: 'JetBrains Mono', monospace;
-    --logo-gradient: linear-gradient(180deg, #00ae03 0%, #b2fc15 45%, #f2fed7 100%);
+    --logo-gradient: linear-gradient(180deg, #f2fed7 0%, #b2fc15 55%, #00ae03 100%);
     --shadow-hard: 4px 4px 0 0 #000000;
     --shadow-hard-lg: 8px 8px 0 0 #000000;
     --shadow-color: #000000;
@@ -120,7 +120,7 @@
     --font-sans: 'Inter', -apple-system, sans-serif;
     --font-serif: 'Bangers', 'Impact', cursive;
     --font-mono: 'JetBrains Mono', monospace;
-    --logo-gradient: linear-gradient(180deg, #00ae03 0%, #b2fc15 45%, #f2fed7 100%);
+    --logo-gradient: linear-gradient(180deg, #f2fed7 0%, #b2fc15 55%, #00ae03 100%);
     --shadow-hard: 4px 4px 0 0 #000000;
     --shadow-hard-lg: 8px 8px 0 0 #000000;
     --shadow-color: #000000;

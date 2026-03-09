@@ -52,7 +52,7 @@ export function BonusCard({
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
-            "block w-full text-center font-bold py-3 rounded-lg transition-all",
+            "block w-full text-center font-bold py-3 rounded-xl transition-all",
             primary
               ? "bg-primary text-primary-foreground glow-primary group-hover:glow-primary"
               : "bg-border-dark text-foreground hover:bg-primary hover:text-primary-foreground",

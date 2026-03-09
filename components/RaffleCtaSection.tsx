@@ -36,7 +36,7 @@ export function RaffleCtaSection({
               <Image src={ICONS.raffle} alt="" width={24} height={24} className="w-6 h-6 text-primary" aria-hidden />
               WEEKLY RAFFLE
             </div>
-            <h2 className="text-4xl md:text-5xl font-black mb-6 uppercase tracking-tighter">
+            <h2 className="text-4xl md:text-5xl font-black mb-6 uppercase italic tracking-tighter">
               $10,000 PRIZE POOL
             </h2>
             {stats && stats.length > 0 && (

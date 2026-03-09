@@ -6,6 +6,8 @@ globs: **/*
 ## Verification before saying done
 Never ask the user to look at something to confirm a task is done. If the task affects the UI or the browser: open the browser, use vision/snapshot, analyze the DOM, and verify that what you said you did is actually visible. Only then claim the task is complete.
 
+When testing the admin section (login, leaderboard CRUD, site settings): read `.env.local` for `ADMIN_EMAIL` and `ADMIN_PASSWORD` and use them to log in at `/admin/login`; do not hardcode credentials.
+
 You are an expert TypeScript/React developer working on rips-win.
 
 ## Tech Stack

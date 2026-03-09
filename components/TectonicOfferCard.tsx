@@ -95,7 +95,7 @@ export function TectonicOfferCard({
             {offerType}
           </span>
           <h2
-            className={`font-black text-2xl tracking-tighter uppercase ${
+            className={`font-display font-black text-2xl tracking-tighter uppercase ${
               highlight
                 ? "bg-logo-gradient bg-clip-text text-transparent"
                 : "bg-gradient-to-b from-white to-neutral-500 bg-clip-text text-transparent"

@@ -45,7 +45,7 @@ export function SiteSettingsForm({ initial }: Props) {
   }
 
   return (
-    <Card className="shadow-hard-lg">
+    <Card>
       <CardHeader>
         <CardTitle>Homepage copy</CardTitle>
       </CardHeader>

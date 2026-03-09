@@ -17,7 +17,7 @@ export function CommunitySection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl font-black mb-6 uppercase tracking-tighter">
+            <h2 className="font-display text-4xl font-black mb-6 uppercase italic tracking-tighter">
               Join the <span className="text-primary">Rips</span> Squad
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
@@ -26,7 +26,7 @@ export function CommunitySection() {
             <div className="flex flex-wrap gap-4">
               <a
                 href="#"
-                className="bg-social-discord text-foreground flex items-center gap-3 px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform"
+                className="bg-social-discord text-foreground flex items-center gap-3 px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform"
                 aria-label="Join Discord"
               >
                 <Image src={ICONS.discord} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />
@@ -34,7 +34,7 @@ export function CommunitySection() {
               </a>
               <a
                 href="#"
-                className="bg-primary text-primary-foreground flex items-center gap-3 px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform"
+                className="bg-primary text-primary-foreground flex items-center gap-3 px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform"
                 aria-label="Watch on Kick or Twitch"
               >
                 <Image src={ICONS.stream} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />
@@ -42,7 +42,7 @@ export function CommunitySection() {
               </a>
               <a
                 href="#"
-                className="bg-social-instagram text-foreground flex items-center gap-3 px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform"
+                className="bg-social-instagram text-foreground flex items-center gap-3 px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform"
                 aria-label="Follow on Instagram"
               >
                 <Image src={ICONS.instagram} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />

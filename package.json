@@ -5,6 +5,7 @@
   "scripts": {
     "prepare": "husky",
     "dev": "next dev",
+    "dev:local": "PORT=3099 next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
@@ -12,10 +13,12 @@
     "stitch:download": "node scripts/stitch-download-screens.mjs",
     "db:apply-site-settings": "node scripts/apply-site-settings.mjs",
     "admin:hash-password": "node scripts/hash-admin-password.mjs",
-    "prepare": "husky"
+    "test:e2e": "playwright test",
+    "test:e2e:admin": "playwright test e2e/admin-leaderboard.spec.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.9.0",
+    "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
@@ -28,6 +31,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -42,6 +46,8 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": ["eslint --fix"]
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix"
+    ]
   }
 }

@@ -36,7 +36,7 @@ export function HeroSection({
           <div className="mb-8 p-4 bg-primary/5 rounded-full border border-primary/20">
             {logo}
           </div>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-6 uppercase italic">
+          <h1 className="font-display text-5xl md:text-7xl font-black tracking-tight mb-6 uppercase italic">
             {title}
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mb-10">

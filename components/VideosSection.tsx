@@ -12,7 +12,7 @@ export function VideosSection() {
   return (
     <section id="videos" className="scroll-mt-20 py-20 bg-background-dark border-t border-border-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-black mb-12 uppercase italic tracking-tighter">
+        <h2 className="font-display text-3xl font-black mb-12 uppercase italic tracking-tighter">
           High Stakes <span className="text-primary">Highlights</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -32,7 +32,7 @@ export function VideosSection() {
                   {video.duration}
                 </div>
               </div>
-              <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors">
+              <h3 className="font-display font-black text-lg uppercase mb-1 group-hover:text-primary transition-colors">
                 {video.title}
               </h3>
               <p className="text-muted-foreground text-sm">

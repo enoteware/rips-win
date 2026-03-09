@@ -151,7 +151,7 @@ export default function RafflePage() {
           <div>
             <div className="flex items-center bg-background-dark border border-border-dark p-2 rounded-full mb-3 shadow-inner">
               <button
-                className="w-12 h-12 rounded-full bg-surface-dark border border-border-dark flex items-center justify-center font-black text-xl hover:bg-white/5 transition-colors focus:outline-none"
+                className="w-12 h-12 rounded-xl bg-surface-dark border border-border-dark flex items-center justify-center font-black text-xl hover:bg-white/5 transition-colors focus:outline-none"
                 onClick={() => adjustQty(-1)}
               >
                 &minus;
@@ -164,13 +164,13 @@ export default function RafflePage() {
                 min="1"
               />
               <button
-                className="w-12 h-12 rounded-full bg-surface-dark border border-border-dark flex items-center justify-center font-black text-xl hover:bg-white/5 transition-colors focus:outline-none"
+                className="w-12 h-12 rounded-xl bg-surface-dark border border-border-dark flex items-center justify-center font-black text-xl hover:bg-white/5 transition-colors focus:outline-none"
                 onClick={() => adjustQty(1)}
               >
                 +
               </button>
             </div>
-            <button className="w-full bg-primary text-primary-foreground py-6 rounded-full font-black text-xl uppercase tracking-wider transition-all hover:-translate-y-1 hover:bg-primary/90 focus:scale-[0.98] glow-primary shadow-glow-lg border-2 border-primary">
+            <button className="w-full bg-primary text-primary-foreground py-6 rounded-xl font-black text-xl uppercase tracking-wider transition-all hover:scale-105 hover:bg-primary/90 focus:scale-[0.98] glow-primary shadow-glow-lg">
               Secure Tickets
             </button>
           </div>

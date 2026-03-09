@@ -1,5 +1,8 @@
 You are an expert TypeScript/React developer working on rips-win.
 
+## Admin testing (browser / UI)
+When testing admin login or admin CRUD in the browser: read `.env.local` for `ADMIN_EMAIL` and `ADMIN_PASSWORD` and use those to sign in at `/admin/login`. Do not commit or hardcode credentials.
+
 ## Tech Stack
 Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, shadcn/ui theme, NextAuth, Neon Postgres, Zod.
 

@@ -63,7 +63,7 @@ export default async function Home() {
           <div className="flex flex-col gap-2 relative z-10">
             <div className="flex flex-col md:flex-row justify-between items-end gap-4">
               <div>
-                <h2 className="text-3xl font-black uppercase tracking-tighter italic">
+                <h2 className="font-display text-3xl font-black uppercase tracking-tighter italic">
                   <span className="text-primary">$150,000</span> High Stakes Leaderboard
                 </h2>
                 <p className="text-muted-foreground mt-2">Ranked by total wagered amount this month.</p>
@@ -81,7 +81,7 @@ export default async function Home() {
           <div className="flex justify-center mt-8">
             <Link 
               href="/leaderboard" 
-              className="inline-flex items-center justify-center bg-primary text-primary-foreground font-black px-8 py-4 rounded-full uppercase tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-glow-lg"
+              className="inline-flex items-center justify-center bg-primary text-primary-foreground font-black px-8 py-4 rounded-xl uppercase tracking-widest hover:bg-primary/90 transition-all hover:scale-105 shadow-glow-lg"
             >
               View Full Leaderboard
             </Link>
@@ -92,7 +92,7 @@ export default async function Home() {
       {/* Exclusive Bonuses */}
       <section className="py-20 bg-background-dark border-t border-border-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-black mb-12 uppercase italic tracking-tighter">
+          <h2 className="font-display text-3xl font-black mb-12 uppercase italic tracking-tighter">
             Exclusive <span className="text-primary">Casino Rewards</span>
           </h2>
           <div className="flex flex-col md:flex-row justify-center gap-10 md:gap-4 lg:gap-8 items-center md:items-stretch perspective-[1000px] py-4">

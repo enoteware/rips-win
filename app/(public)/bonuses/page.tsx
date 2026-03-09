@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 
 export const metadata = {
   title: 'Bonuses - RIPS.WIN',
@@ -35,12 +34,13 @@ export default function BonusesPage() {
         <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
           {/* Stake.com Card */}
           <div className="bonus-card bonus-card-1 flex flex-col overflow-hidden border-2 border-border bg-card shadow-hard-lg">
-            <div className="relative h-48 w-full bg-muted">
+            <div className="relative w-full bg-muted">
               <Image
                 src="/stakecom-promo.jpg"
                 alt="Stake.com"
-                fill
-                className="object-cover"
+                width={800}
+                height={450}
+                className="w-full h-auto object-contain"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
@@ -61,23 +61,27 @@ export default function BonusesPage() {
                 {rakeback}% rakeback on every bet — automatically applied.
               </p>
               <div className="mt-auto pt-6">
-                <Button asChild className="w-full font-black uppercase tracking-widest">
-                  <a href={stakeComLink()} target="_blank" rel="noopener noreferrer">
-                    Claim on Stake.com
-                  </a>
-                </Button>
+                <a
+                  href={stakeComLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center bg-primary text-primary-foreground rounded-xl font-black py-3 px-6 uppercase tracking-widest glow-primary hover:scale-105 transition-transform"
+                >
+                  Claim on Stake.com
+                </a>
               </div>
             </div>
           </div>
 
           {/* Stake.us Card */}
           <div className="bonus-card bonus-card-2 flex flex-col overflow-hidden border-2 border-border bg-card shadow-hard-lg">
-            <div className="relative h-48 w-full bg-muted">
+            <div className="relative w-full bg-muted">
               <Image
                 src="/stakeus-promo.jpg"
                 alt="Stake.us"
-                fill
-                className="object-cover"
+                width={800}
+                height={450}
+                className="w-full h-auto object-contain"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
@@ -102,11 +106,14 @@ export default function BonusesPage() {
                 {rakeback}% rakeback plus your welcome bonus.
               </p>
               <div className="mt-auto pt-6">
-                <Button asChild className="w-full font-black uppercase tracking-widest">
-                  <a href={stakeUsLink()} target="_blank" rel="noopener noreferrer">
-                    Claim on Stake.us
-                  </a>
-                </Button>
+                <a
+                  href={stakeUsLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center bg-primary text-primary-foreground rounded-xl font-black py-3 px-6 uppercase tracking-widest glow-primary hover:scale-105 transition-transform"
+                >
+                  Claim on Stake.us
+                </a>
               </div>
             </div>
           </div>

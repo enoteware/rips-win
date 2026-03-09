@@ -2,10 +2,14 @@ import { getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+const isLocalDev = process.env.NODE_ENV === 'development';
+
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   if (!path.startsWith('/admin')) return NextResponse.next();
   if (path === '/admin/login') return NextResponse.next();
+
+  if (isLocalDev) return NextResponse.next();
 
   const token = await getToken({
     req: request,

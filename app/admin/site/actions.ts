@@ -2,15 +2,14 @@
 
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
-import { authOptions } from '@/lib/auth';
+import { authOptions, isLocalDevBypass } from '@/lib/auth';
 import { updateSiteSettings } from '@/lib/site-settings';
 import { siteSettingsSchema, type SiteSettingsInput } from '@/lib/validations';
 
 async function requireAdmin() {
+  if (isLocalDevBypass()) return;
   const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    throw new Error('Unauthorized');
-  }
+  if (!session?.user?.email) throw new Error('Unauthorized');
 }
 
 export type ActionResult = { ok: true } | { ok: false; error: string };

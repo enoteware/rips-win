@@ -55,13 +55,13 @@ export function SiteHeader() {
             </Link>
             <Link
               href="/bonuses"
-              className="bg-primary text-primary-foreground text-sm font-bold px-6 py-2 rounded-lg glow-primary hidden md:inline-block hover:opacity-90 transition-opacity"
+              className="bg-primary text-primary-foreground text-sm font-bold px-6 py-2 rounded-xl glow-primary hidden md:inline-block hover:opacity-90 transition-opacity"
             >
               SIGN UP
             </Link>
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border-dark bg-card text-foreground hover:text-primary md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border-dark bg-card text-foreground hover:text-primary md:hidden"
               onClick={() => setMenuOpen((o) => !o)}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"

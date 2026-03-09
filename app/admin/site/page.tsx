@@ -7,7 +7,7 @@ export default async function AdminSitePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-serif text-2xl font-bold tracking-tight text-secondary md:text-3xl">
+        <h1 className="font-display text-2xl font-black uppercase tracking-tighter text-secondary md:text-3xl">
           Site content
         </h1>
         <div className="mt-2 h-2 w-24 border-2 border-border bg-logo-gradient shadow-hard" aria-hidden />

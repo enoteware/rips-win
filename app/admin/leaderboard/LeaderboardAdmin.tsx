@@ -23,6 +23,16 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 const PLATFORMS = ['stake_us', 'stake_com', 'both'] as const;
 
@@ -43,6 +53,8 @@ export function LeaderboardAdmin({
   const [message, setMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
   const [adding, setAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [deletePending, setDeletePending] = useState<LeaderboardEntry | null>(null);
+  const [publishDialogOpen, setPublishDialogOpen] = useState(false);
 
   async function handleCreate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -90,9 +102,9 @@ export function LeaderboardAdmin({
     }
   }
 
-  async function handleDelete(id: string) {
-    if (!confirm('Delete this entry?')) return;
+  async function handleDeleteConfirm(id: string) {
     const result = await deleteEntryAction(id);
+    setDeletePending(null);
     if (result.ok) {
       setMessage({ type: 'ok', text: 'Entry deleted.' });
       router.refresh();
@@ -101,8 +113,9 @@ export function LeaderboardAdmin({
     }
   }
 
-  async function handlePublish() {
+  async function handlePublishConfirm() {
     const result = await publishPeriodAction(initialPeriod);
+    setPublishDialogOpen(false);
     if (result.ok) {
       setMessage({ type: 'ok', text: 'Leaderboard published.' });
       router.refresh();
@@ -115,7 +128,7 @@ export function LeaderboardAdmin({
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="font-serif text-2xl font-bold tracking-tight text-secondary md:text-3xl">
+          <h1 className="font-display text-2xl font-black uppercase tracking-tighter text-secondary md:text-3xl">
             Leaderboard Management
           </h1>
           <div className="mt-2 h-2 w-24 border-2 border-border bg-logo-gradient shadow-hard" aria-hidden />
@@ -125,7 +138,7 @@ export function LeaderboardAdmin({
           <select
             value={initialPeriod}
             onChange={(e) => router.push(`/admin/leaderboard?period=${e.target.value}`)}
-            className="h-9 rounded-none border-2 border-border bg-input text-foreground px-3 text-sm"
+            className="font-display h-9 min-w-[10rem] rounded-xl border-2 border-border bg-input text-foreground px-3 text-sm shadow-hard"
           >
             {periods.map((p) => (
               <option key={p} value={p}>
@@ -133,7 +146,7 @@ export function LeaderboardAdmin({
               </option>
             ))}
           </select>
-          <Button onClick={handlePublish}>Publish this period</Button>
+          <Button onClick={() => setPublishDialogOpen(true)}>Publish this period</Button>
         </div>
       </div>
 
@@ -157,8 +170,47 @@ export function LeaderboardAdmin({
         </p>
       )}
 
+      <AlertDialog open={!!deletePending} onOpenChange={(open) => !open && setDeletePending(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete leaderboard entry?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {deletePending
+                ? `This will permanently delete the entry for "${deletePending.player_name ?? 'Unknown'}" (rank #${deletePending.rank}). This cannot be undone.`
+                : 'This action cannot be undone.'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => deletePending && handleDeleteConfirm(deletePending.id)}
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={publishDialogOpen} onOpenChange={setPublishDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Publish this period?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Publish all entries for <strong>{initialPeriod.replace('_', ' ')}</strong>? They will appear on the public leaderboard.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handlePublishConfirm}>
+              Publish
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       {adding ? (
-        <Card className="shadow-hard-lg">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Add entry</CardTitle>
             <Button variant="ghost" size="sm" onClick={() => setAdding(false)}>
@@ -192,7 +244,7 @@ export function LeaderboardAdmin({
                 <select
                   id="add_platform"
                   name="platform"
-                  className="h-9 w-full rounded-none border-2 border-border bg-input text-foreground px-3 text-sm"
+                  className="font-display h-9 w-full rounded-xl border-2 border-border bg-input text-foreground px-3 text-sm shadow-hard"
                 >
                   {PLATFORMS.map((p) => (
                     <option key={p} value={p}>
@@ -215,7 +267,7 @@ export function LeaderboardAdmin({
         <Button onClick={() => setAdding(true)}>Add entry</Button>
       )}
 
-      <Card className="shadow-hard-lg">
+      <Card>
         <CardContent className="p-0">
           {initialEntries.length === 0 ? (
             <div className="p-8 text-center text-muted-foreground">
@@ -242,21 +294,22 @@ export function LeaderboardAdmin({
                       <TableCell colSpan={8}>
                         <form
                           onSubmit={(e) => handleUpdate(e, entry.id)}
-                          className="grid gap-2 rounded border border-border p-4 sm:grid-cols-4"
+                          className="grid gap-2 rounded-xl border-2 border-border bg-card/50 p-4 sm:grid-cols-4"
+                          aria-label="Edit entry"
                         >
-                          <Input name="player_name" defaultValue={entry.player_name} required />
-                          <Input name="rank" type="number" min={1} defaultValue={entry.rank} required />
-                          <Input name="total_wagered" type="number" min={0} defaultValue={entry.total_wagered} />
-                          <Input name="biggest_win" type="number" min={0} defaultValue={entry.biggest_win} />
-                          <Input name="current_streak" type="number" min={0} defaultValue={entry.current_streak} />
+                          <Input name="player_name" defaultValue={entry.player_name} required aria-label="Player name" />
+                          <Input name="rank" type="number" min={1} defaultValue={entry.rank} required aria-label="Rank" />
+                          <Input name="total_wagered" type="number" min={0} defaultValue={entry.total_wagered} aria-label="Total wagered" />
+                          <Input name="biggest_win" type="number" min={0} defaultValue={entry.biggest_win} aria-label="Biggest win" />
+                          <Input name="current_streak" type="number" min={0} defaultValue={entry.current_streak} aria-label="Current streak" />
                           <select
                             name="platform"
                             defaultValue={entry.platform}
-                            className="h-9 rounded-none border-2 border-border bg-input text-foreground px-3 text-sm"
+                            className="font-display h-9 w-full rounded-xl border-2 border-border bg-input text-foreground px-3 text-sm shadow-hard"
                           >
                             {PLATFORMS.map((p) => (
                               <option key={p} value={p}>
-                                {p}
+                                {p.replace('_', ' ')}
                               </option>
                             ))}
                           </select>
@@ -309,7 +362,7 @@ export function LeaderboardAdmin({
                             variant="ghost"
                             size="sm"
                             className="text-destructive"
-                            onClick={() => handleDelete(entry.id)}
+                            onClick={() => setDeletePending(entry)}
                           >
                             Delete
                           </Button>

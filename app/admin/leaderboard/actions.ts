@@ -15,12 +15,12 @@ import {
   leaderboardUpdateSchema,
   type LeaderboardEntryInput,
 } from '@/lib/validations';
+import { isLocalDevBypass } from '@/lib/auth';
 
-async function requireAdmin() {
+async function requireAdmin(): Promise<string> {
+  if (isLocalDevBypass()) return 'dev@local';
   const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    throw new Error('Unauthorized');
-  }
+  if (!session?.user?.email) throw new Error('Unauthorized');
   return session.user.email;
 }
 

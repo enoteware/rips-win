@@ -1,22 +1,8 @@
 export const dynamic = 'force-dynamic';
 
-import Image from 'next/image';
-import Link from 'next/link';
 import { getMetadata, getLeaderboard } from '@/lib/db';
 import { getSiteSettingsWithFallback } from '@/lib/site-settings';
 import { MonolithLeaderboard } from '@/components/MonolithLeaderboard';
-
-function formatMoney(value: number | string | null | undefined): string {
-  const n = value != null ? Number(value) : NaN;
-  if (Number.isNaN(n) || n === 0) return '—';
-  return `$${Number(n).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
-}
-
-function formatStreak(value: number | null | undefined): string {
-  const n = value != null ? Number(value) : 0;
-  if (n <= 0) return '—';
-  return `${n} 🔥`;
-}
 
 export default async function LeaderboardPage() {
   const period = 'all_time';
@@ -32,7 +18,7 @@ export default async function LeaderboardPage() {
         {/* Header / Title */}
         <div className="mb-10">
           <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-3xl font-bold text-foreground">Casino Leaderboard</h1>
+            <h1 className="text-3xl font-black uppercase italic tracking-tighter text-foreground md:text-4xl">Casino Leaderboard</h1>
             <span className="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded border border-primary/30">
               CODE: {site.welcome_code}
             </span>

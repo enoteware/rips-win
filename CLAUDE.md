@@ -28,5 +28,8 @@
 <!-- Added 2025-03-06: agent env has no GitHub credentials -->
 - `git push` and `gh pr create` run in an environment without GitHub auth; push and PR creation must be done by the user in their local terminal when using /ship.
 
+## Admin UI testing (agents)
+When testing admin (login, leaderboard, site settings) in the browser: use credentials from `.env.local` — read `ADMIN_EMAIL` and `ADMIN_PASSWORD` and sign in at `/admin/login`. See `docs/ADMIN-CRUD-TEST.md` for the checklist.
+
 ## AI Team Configuration
 Agent-to-task mappings and usage: see **`.claude/CLAUDE.md`** (configured by setup-agents).

@@ -56,7 +56,7 @@ export default function RafflePage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-background-dark text-foreground font-sans overflow-x-hidden flex flex-col justify-center items-center py-20 px-4 relative">
+    <main className="public-page min-h-screen text-foreground font-sans overflow-x-hidden flex flex-col justify-center items-center py-20 px-4 relative">
       <Link href="/" className="absolute top-8 left-8 font-mono text-sm text-primary hover:underline uppercase z-50">
         &larr; Return to Base
       </Link>

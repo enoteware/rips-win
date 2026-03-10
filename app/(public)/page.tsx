@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { LOGO } from '@/lib/brand';
 import { getLeaderboard, getMetadata } from "@/lib/db";
 import { getSiteSettingsWithFallback } from "@/lib/site-settings";
-import { formatMoney, formatStreak } from '@/lib/utils';
+import { getBonusCards } from '@/lib/bonuses';
+import { getClips } from '@/lib/clips';
+import { getSocialLinks } from '@/lib/social-links';
 import { HeroSection } from '@/components/HeroSection';
 import { MonolithLeaderboard } from '@/components/MonolithLeaderboard';
 import { TectonicOfferCard } from '@/components/TectonicOfferCard';
@@ -24,16 +26,18 @@ function stakeComLink(base: string): string {
 
 export default async function Home() {
   const period = 'all_time';
-  const [entries, metadata, site] = await Promise.all([
+  const [entries, metadata, site, homepageBonuses, clips, socialLinks] = await Promise.all([
     getLeaderboard(period, true),
     getMetadata(period),
     getSiteSettingsWithFallback(),
+    getBonusCards(true, true),
+    getClips(true),
+    getSocialLinks(true),
   ]);
   const welcomeCode = site.welcome_code;
   const rakeback = site.rakeback_pct;
   const stakeUs = stakeUsLink(site.stake_us_link);
   const stakeCom = stakeComLink(site.stake_com_link);
-
 
   return (
     <main className="min-h-screen">
@@ -58,7 +62,7 @@ export default async function Home() {
       />
 
       {/* Leaderboard Section */}
-      <section id="leaderboard" className="scroll-mt-20 py-20 bg-background-dark border-t border-border-dark overflow-hidden relative">
+      <section id="leaderboard" className="public-section scroll-mt-20 py-20 border-t border-border-dark overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
           <div className="flex flex-col gap-2 relative z-10">
             <div className="flex flex-col md:flex-row justify-between items-end gap-4">
@@ -90,51 +94,68 @@ export default async function Home() {
       </section>
 
       {/* Exclusive Bonuses */}
-      <section className="py-20 bg-background-dark border-t border-border-dark">
+      <section className="public-section py-20 border-t border-border-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-display text-3xl font-black mb-12 uppercase italic tracking-tighter">
             Exclusive <span className="text-primary">Casino Rewards</span>
           </h2>
           <div className="flex flex-col md:flex-row justify-center gap-10 md:gap-4 lg:gap-8 items-center md:items-stretch perspective-[1000px] py-4">
-            <TectonicOfferCard
-              tierName="Welcome"
-              offerType="Initial Deposit"
-              value={<><span className="text-2xl mr-1 align-top text-primary">$</span>25</>}
-              description="Initial tectonic deposit match. Claim your welcome bonus on Stake.us."
-              promoCode={welcomeCode}
-              cta="Ignite Offer"
-              href={stakeUs}
-              image="/images/bonus_welcome.png"
-            />
-            
-            <TectonicOfferCard
-              tierName="Deposit Match"
-              offerType="Gilded Tier"
-              value={<>200<span className="text-2xl ml-1 align-top text-primary">%</span></>}
-              description="Pressure-hardened rewards for the elite. Double your first deposit on Stake.com."
-              promoCode="BONUS200"
-              cta="Fracture Now"
-              href={stakeCom}
-              highlight={true}
-              image="/images/bonus_deposit.png"
-            />
-
-            <TectonicOfferCard
-              tierName="Rakeback"
-              offerType="Deep Core"
-              value={<>{rakeback}<span className="text-2xl ml-1 align-top text-primary">%</span></>}
-              description="The ultimate geological event. Get instant rakeback on every single bet you place."
-              promoCode={welcomeCode}
-              cta="Claim Apex"
-              href={stakeUs}
-              image="/images/bonus_rakeback.png"
-            />
+            {homepageBonuses.length > 0 ? (
+              homepageBonuses.map((card, i) => (
+                <TectonicOfferCard
+                  key={card.id}
+                  tierName={card.headline}
+                  offerType={card.subtitle || ''}
+                  value={card.badge_text || ''}
+                  description={card.description || ''}
+                  promoCode={card.promo_code || welcomeCode}
+                  cta={card.cta_text}
+                  href={card.cta_link}
+                  highlight={i === 1}
+                  image={card.image_url || undefined}
+                />
+              ))
+            ) : (
+              <>
+                <TectonicOfferCard
+                  tierName="Welcome"
+                  offerType="Initial Deposit"
+                  value={<><span className="text-2xl mr-1 align-top text-primary">$</span>25</>}
+                  description="Initial tectonic deposit match. Claim your welcome bonus on Stake.us."
+                  promoCode={welcomeCode}
+                  cta="Ignite Offer"
+                  href={stakeUs}
+                  image="/images/bonus_welcome.png"
+                />
+                <TectonicOfferCard
+                  tierName="Deposit Match"
+                  offerType="Gilded Tier"
+                  value={<>200<span className="text-2xl ml-1 align-top text-primary">%</span></>}
+                  description="Pressure-hardened rewards for the elite. Double your first deposit on Stake.com."
+                  promoCode="BONUS200"
+                  cta="Fracture Now"
+                  href={stakeCom}
+                  highlight={true}
+                  image="/images/bonus_deposit.png"
+                />
+                <TectonicOfferCard
+                  tierName="Rakeback"
+                  offerType="Deep Core"
+                  value={<>{rakeback}<span className="text-2xl ml-1 align-top text-primary">%</span></>}
+                  description="The ultimate geological event. Get instant rakeback on every single bet you place."
+                  promoCode={welcomeCode}
+                  cta="Claim Apex"
+                  href={stakeUs}
+                  image="/images/bonus_rakeback.png"
+                />
+              </>
+            )}
           </div>
         </div>
       </section>
 
-      <VideosSection />
-      <CommunitySection />
+      <VideosSection clips={clips} />
+      <CommunitySection socialLinks={socialLinks} />
     </main>
   );
 }

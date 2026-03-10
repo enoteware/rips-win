@@ -40,3 +40,12 @@ When testing admin (login, leaderboard, site settings) in the browser: use crede
 
 ## AI Team Configuration
 Agent-to-task mappings and usage: see **`.claude/CLAUDE.md`** (configured by setup-agents).
+
+
+
+## Offer site info
+
+Raw links for hiso ffers
+https://stake.com/?offer=rips&c=selling
+
+https://stake.us/?offer=rips&c=selling

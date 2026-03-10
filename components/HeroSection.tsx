@@ -26,8 +26,7 @@ export function HeroSection({
   return (
     <section
       className={cn(
-        "relative overflow-hidden py-24 lg:py-32 border-b border-border-dark",
-        "bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background-dark to-background-dark",
+        "public-hero py-24 lg:py-32 border-b border-border-dark",
         className
       )}
     >

@@ -19,7 +19,7 @@ Use this checklist to verify all admin CRUD flows in the UI. Dev server: `npm ru
 
 - [ ] Go to **/admin/leaderboard**
 - [ ] Confirm period selector (all_time, daily, weekly, monthly) works
-- [ ] Confirm table shows: Rank, Player, Wagered, Biggest win, Streak, Platform, Published, Actions
+- [ ] Confirm table shows: Rank, Player, Wagered, Published, Actions (Biggest win, Streak, Platform are hidden)
 - [ ] If no entries, confirm message: "No entries for this period."
 
 **Create**

@@ -43,9 +43,15 @@ Agent-to-task mappings and usage: see **`.claude/CLAUDE.md`** (configured by set
 
 
 
-## Offer site info
+## Affiliate Links
+<!-- Updated 2026-03-10: all outbound links must carry affiliate tracking -->
+- Every external/outbound link on the public site MUST use Stake affiliate tracking URLs.
+- **Stake.us:** `https://stake.us/?offer=rips&c=selling`
+- **Stake.com:** `https://stake.com/?offer=rips&c=selling`
+- No `href="#"` placeholders — use the appropriate Stake URL instead.
+- External links open in a new tab (`target="_blank" rel="noopener noreferrer"`).
 
-Raw links for hiso ffers
-https://stake.com/?offer=rips&c=selling
-
-https://stake.us/?offer=rips&c=selling
+## Client/Server Code Separation
+<!-- Added 2026-03-10: caused DATABASE_URL runtime error in browser -->
+- Never import from `lib/` files that initialize `neon()` (or any server-only code) in client components.
+- If a client component needs a utility from a `lib/` file that also has DB code, extract the utility into a separate client-safe module (e.g. `lib/youtube.ts`).

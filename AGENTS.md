@@ -54,6 +54,16 @@ Follow the existing commit style from history: short, imperative summaries (for 
 - **Remote Postgres only:** Use Neon for both dev and prod. No local Postgres or Docker DB.
 - **Neon is the auth source:** Set `DATABASE_URL` from the Neon dashboard in `.env.local` for dev. For production, use the Vercel Neon integration so `DATABASE_URL` is injected automatically.
 
+## Invoi (tasks / projects)
+When creating or querying tasks in Invoi (app.noteware.dev) for this repo, use:
+
+- **Client:** PropFirms.gg — `client_id`: **175**
+- **Project:** Rips.win Casino Site — `project_id`: **41**
+- **API base:** `https://app.noteware.dev/api/agent`
+- **Auth:** Read `INVOI_AGENT_TOKEN` from `.env.local`; send as header `x-agent-key`. Do not hardcode the token. See `.env.example` for bootstrap (1Password: `op://Agent Vault/Invoi Agent API/API KEY`).
+
+Agents can use these IDs from this doc; no need to query the API to resolve project/client for rips-win.
+
 ## Security & Configuration Tips
 - Never commit `.env*` files or secrets.
 - Required runtime values include `DATABASE_URL` and public `NEXT_PUBLIC_*` variables used by `app/page.tsx`.

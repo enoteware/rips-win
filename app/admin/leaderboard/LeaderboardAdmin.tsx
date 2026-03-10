@@ -280,9 +280,6 @@ export function LeaderboardAdmin({
                   <TableHead>Rank</TableHead>
                   <TableHead>Player</TableHead>
                   <TableHead className="text-right">Wagered</TableHead>
-                  <TableHead className="text-right">Biggest win</TableHead>
-                  <TableHead className="text-right">Streak</TableHead>
-                  <TableHead>Platform</TableHead>
                   <TableHead>Published</TableHead>
                   <TableHead className="w-[120px]">Actions</TableHead>
                 </TableRow>
@@ -291,29 +288,51 @@ export function LeaderboardAdmin({
                 {initialEntries.map((entry) =>
                   editingId === entry.id ? (
                     <TableRow key={entry.id}>
-                      <TableCell colSpan={8}>
+                      <TableCell colSpan={5}>
                         <form
                           onSubmit={(e) => handleUpdate(e, entry.id)}
-                          className="grid gap-2 rounded-xl border-2 border-border bg-card/50 p-4 sm:grid-cols-4"
+                          className="grid gap-4 rounded-xl border-2 border-border bg-card/50 p-4 sm:grid-cols-2 lg:grid-cols-4"
                           aria-label="Edit entry"
                         >
-                          <Input name="player_name" defaultValue={entry.player_name} required aria-label="Player name" />
-                          <Input name="rank" type="number" min={1} defaultValue={entry.rank} required aria-label="Rank" />
-                          <Input name="total_wagered" type="number" min={0} defaultValue={entry.total_wagered} aria-label="Total wagered" />
-                          <Input name="biggest_win" type="number" min={0} defaultValue={entry.biggest_win} aria-label="Biggest win" />
-                          <Input name="current_streak" type="number" min={0} defaultValue={entry.current_streak} aria-label="Current streak" />
-                          <select
-                            name="platform"
-                            defaultValue={entry.platform}
-                            className="font-display h-9 w-full rounded-xl border-2 border-border bg-input text-foreground px-3 text-sm shadow-hard"
-                          >
-                            {PLATFORMS.map((p) => (
-                              <option key={p} value={p}>
-                                {p.replace('_', ' ')}
-                              </option>
-                            ))}
-                          </select>
-                          <Input name="avatar_url" type="url" defaultValue={entry.avatar_url ?? ''} className="sm:col-span-2" />
+                          <div className="space-y-2">
+                            <Label htmlFor={`edit-${entry.id}-player_name`}>Player name</Label>
+                            <Input id={`edit-${entry.id}-player_name`} name="player_name" defaultValue={entry.player_name} required />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor={`edit-${entry.id}-rank`}>Rank</Label>
+                            <Input id={`edit-${entry.id}-rank`} name="rank" type="number" min={1} defaultValue={entry.rank} required />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor={`edit-${entry.id}-total_wagered`}>Total wagered</Label>
+                            <Input id={`edit-${entry.id}-total_wagered`} name="total_wagered" type="number" min={0} defaultValue={entry.total_wagered} />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor={`edit-${entry.id}-biggest_win`}>Biggest win</Label>
+                            <Input id={`edit-${entry.id}-biggest_win`} name="biggest_win" type="number" min={0} defaultValue={entry.biggest_win} />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor={`edit-${entry.id}-current_streak`}>Current streak</Label>
+                            <Input id={`edit-${entry.id}-current_streak`} name="current_streak" type="number" min={0} defaultValue={entry.current_streak} />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor={`edit-${entry.id}-platform`}>Platform</Label>
+                            <select
+                              id={`edit-${entry.id}-platform`}
+                              name="platform"
+                              defaultValue={entry.platform}
+                              className="font-display h-9 w-full rounded-xl border-2 border-border bg-input text-foreground px-3 text-sm shadow-hard"
+                            >
+                              {PLATFORMS.map((p) => (
+                                <option key={p} value={p}>
+                                  {p.replace('_', ' ')}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="space-y-2 sm:col-span-2">
+                            <Label htmlFor={`edit-${entry.id}-avatar_url`}>Avatar URL (optional)</Label>
+                            <Input id={`edit-${entry.id}-avatar_url`} name="avatar_url" type="url" defaultValue={entry.avatar_url ?? ''} />
+                          </div>
                           <div className="flex gap-2 sm:col-span-4">
                             <Button type="submit" size="sm">
                               Save
@@ -337,11 +356,6 @@ export function LeaderboardAdmin({
                       <TableCell className="text-right">
                         ${Number(entry.total_wagered).toLocaleString()}
                       </TableCell>
-                      <TableCell className="text-right">
-                        ${Number(entry.biggest_win).toLocaleString()}
-                      </TableCell>
-                      <TableCell className="text-right">{entry.current_streak}</TableCell>
-                      <TableCell>{entry.platform}</TableCell>
                       <TableCell>
                         {entry.published ? (
                           <Badge variant="secondary">Yes</Badge>

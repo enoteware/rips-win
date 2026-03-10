@@ -3,18 +3,21 @@ import Link from 'next/link';
 import { LOGO, ICONS } from '@/lib/brand';
 import type { SocialLink } from '@/lib/social-links';
 
+const STAKE_US = 'https://stake.us/?offer=rips&c=selling';
+const STAKE_COM = 'https://stake.com/?offer=rips&c=selling';
+
 const footerPlatform = [
-  { href: '#', label: 'Games' },
-  { href: '/leaderboard', label: 'Leaderboard' },
-  { href: '/bonuses', label: 'Promotions' },
-  { href: '#', label: 'Affiliate' },
+  { href: STAKE_US, label: 'Games', external: true },
+  { href: '/leaderboard', label: 'Leaderboard', external: false },
+  { href: '/bonuses', label: 'Promotions', external: false },
+  { href: STAKE_COM, label: 'Affiliate', external: true },
 ] as const;
 
 const footerSupport = [
-  { href: '#', label: 'Help Center' },
-  { href: '#', label: 'Contact Us' },
-  { href: '#', label: 'Responsible Gaming' },
-  { href: '#', label: 'Fairness' },
+  { href: STAKE_US, label: 'Help Center', external: true },
+  { href: STAKE_US, label: 'Contact Us', external: true },
+  { href: STAKE_US, label: 'Responsible Gaming', external: true },
+  { href: STAKE_US, label: 'Fairness', external: true },
 ] as const;
 
 const footerLegal = [
@@ -44,10 +47,10 @@ export function SiteFooter({ socialLinks = [] }: SiteFooterProps) {
           <div>
             <h5 className="font-bold mb-6 text-foreground uppercase text-sm">Platform</h5>
             <ul className="space-y-4 text-muted-foreground text-sm">
-              {footerPlatform.map(({ href, label }) => (
+              {footerPlatform.map(({ href, label, external }) => (
                 <li key={label}>
-                  {href.startsWith('#') ? (
-                    <a href={href} className="hover:text-primary transition-colors">
+                  {external ? (
+                    <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
                       {label}
                     </a>
                   ) : (
@@ -62,11 +65,17 @@ export function SiteFooter({ socialLinks = [] }: SiteFooterProps) {
           <div>
             <h5 className="font-bold mb-6 text-foreground uppercase text-sm">Support</h5>
             <ul className="space-y-4 text-muted-foreground text-sm">
-              {footerSupport.map(({ href, label }) => (
+              {footerSupport.map(({ href, label, external }) => (
                 <li key={label}>
-                  <a href={href} className="hover:text-primary transition-colors">
-                    {label}
-                  </a>
+                  {external ? (
+                    <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                      {label}
+                    </a>
+                  ) : (
+                    <a href={href} className="hover:text-primary transition-colors">
+                      {label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -107,11 +116,11 @@ export function SiteFooter({ socialLinks = [] }: SiteFooterProps) {
                 })
               : (
                 <>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors flex items-center justify-center w-8 h-8" aria-label="Website">
+                  <a href={STAKE_US} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors flex items-center justify-center w-8 h-8" aria-label="Stake.us">
                     <Image src={ICONS.globe} alt="" width={20} height={20} className="w-5 h-5" />
                   </a>
-                  <a href="#" className="text-muted-foreground hover:text-primary transition-colors flex items-center justify-center w-8 h-8" aria-label="Email">
-                    <Image src={ICONS.mail} alt="" width={20} height={20} className="w-5 h-5" />
+                  <a href={STAKE_COM} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors flex items-center justify-center w-8 h-8" aria-label="Stake.com">
+                    <Image src={ICONS.globe} alt="" width={20} height={20} className="w-5 h-5" />
                   </a>
                 </>
               )}

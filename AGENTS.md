@@ -68,3 +68,11 @@ Agents can use these IDs from this doc; no need to query the API to resolve proj
 - Never commit `.env*` files or secrets.
 - Required runtime values include `DATABASE_URL` and public `NEXT_PUBLIC_*` variables used by `app/page.tsx`.
 - Prefer server-side data access in `lib/` and avoid exposing sensitive logic in client components.
+
+
+## Offer site info
+
+Raw links for hiso ffers
+https://stake.com/?offer=rips&c=selling
+
+https://stake.us/?offer=rips&c=selling

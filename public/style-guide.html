@@ -113,12 +113,16 @@
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    @keyframes sg-cta-shine-pass {
+      0%, 18% { transform: translateX(-170%) skewX(-18deg); }
+      42%, 100% { transform: translateX(320%) skewX(-18deg); }
+    }
     .animate-footer-in {
       opacity: 0;
       animation: footer-in 0.5s ease-out 0.15s forwards;
     }
     @media (prefers-reduced-motion: reduce) {
-      .animated-logo, .animated-logo__clip::after,
+      .animated-logo, .animated-logo__clip::after, .sg-btn-home-shine::after,
       .animate-hero-in, .animate-footer-in, .bonus-card {
         animation: none !important;
         opacity: 1;
@@ -196,6 +200,8 @@
       cursor: pointer;
       font-family: var(--font-display);
       text-decoration: none;
+      position: relative;
+      overflow: hidden;
     }
     .sg-btn-home-primary {
       background: var(--primary);
@@ -224,6 +230,17 @@
     .sg-btn-home-pill:hover {
       transform: scale(1.05);
       background: rgba(13, 242, 13, 0.9);
+    }
+    .sg-btn-home-shine::after {
+      content: '';
+      position: absolute;
+      inset: -30% auto -30% -55%;
+      width: 42%;
+      pointer-events: none;
+      opacity: 0.55;
+      background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.1) 28%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.1) 72%, transparent 100%);
+      transform: translateX(-170%) skewX(-18deg);
+      animation: sg-cta-shine-pass 3.8s ease-in-out infinite;
     }
 
     /* Buttons — Admin / form (gradient default; same radius as site) */
@@ -634,13 +651,14 @@
       <section class="sg-section" id="primitives">
         <h2>4. UI Primitives</h2>
         <h3>Button — Homepage / site CTAs (preferred)</h3>
-        <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Solid primary, no gradient. All buttons use the same radius (rounded-xl / 0.75rem). Used in HeroSection, View Full Leaderboard, CommunitySection, TectonicOfferCard.</p>
+        <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Solid primary, no gradient. All buttons use the same radius (rounded-xl / 0.75rem). The marquee site CTA uses the same base treatment plus a subtle shine. In code this is the shared <code style="background: var(--card); padding: 0.125rem 0.375rem;">buttonVariants({ variant: 'site' })</code> primitive.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: center;">
           <a href="#" class="sg-btn-home sg-btn-home-primary">Primary CTA</a>
           <a href="#" class="sg-btn-home sg-btn-home-secondary">Secondary CTA</a>
           <a href="#" class="sg-btn-home sg-btn-home-primary sg-btn-home-pill">Large primary (uppercase)</a>
+          <a href="#" class="sg-btn-home sg-btn-home-primary sg-btn-home-shine" style="padding: 0.875rem 1.5rem; font-size: 0.875rem; letter-spacing: 0.04em;">Header CTA Shine</a>
         </div>
-        <p style="font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 1.5rem;">Classes: Primary — <code style="background: var(--card); padding: 0.125rem 0.375rem;">bg-primary text-primary-foreground rounded-xl font-black glow-primary hover:scale-105</code>.</p>
+        <p style="font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 1.5rem;">Classes: Primary — <code style="background: var(--card); padding: 0.125rem 0.375rem;">bg-primary text-primary-foreground rounded-xl font-black glow-primary hover:scale-105</code>. Header/site CTA — <code style="background: var(--card); padding: 0.125rem 0.375rem;">variant: 'site'</code> with the animated shine overlay.</p>
         <h3>Button — Admin / form</h3>
         <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Same radius (rounded-xl). Only the default variant uses the logo gradient; others use solid colors. Used in admin (LeaderboardAdmin, login, SiteSettingsForm) and forms.</p>
         <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
@@ -784,20 +802,20 @@
           <div style="margin-bottom: 2rem; padding: 1rem; background: rgba(13,242,13,0.05); border: 1px solid rgba(13,242,13,0.2); border-radius: 50%; width: 120px; height: 120px; margin-left: auto; margin-right: auto; display: flex; align-items: center; justify-content: center;">Logo</div>
           <h1 class="font-serif" style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase;">RIPS.WIN</h1>
           <p style="font-size: 1.25rem; color: var(--muted-foreground); max-width: 32rem; margin: 0 auto 2rem;">The world's premier destination for live casino streaming.</p>
-          <a href="#" class="sg-btn-home sg-btn-home-primary">SIGN UP</a>
+          <a href="#" class="sg-btn-home sg-btn-home-primary sg-btn-home-shine">CLAIM BONUSES</a>
           <a href="#" class="sg-btn-home sg-btn-home-secondary">LEADERBOARD</a>
         </div>
         <h3>SiteHeader (mock)</h3>
         <div class="sg-header">
-          <div style="font-weight: 700; color: var(--primary); font-size: 1.25rem;">RIPS</div>
+          <div style="font-weight: 700; color: var(--primary); font-size: 1.5rem;">RIPS</div>
           <nav style="display: flex; gap: 1.5rem; font-size: 0.875rem;">
             <a href="#" style="color: var(--foreground); text-decoration: none;">LEADERBOARD</a>
             <a href="#" style="color: var(--foreground); text-decoration: none;">BONUSES</a>
-            <a href="#" style="color: var(--foreground); text-decoration: none;">RAFFLE</a>
+            <a href="#" style="color: var(--foreground); text-decoration: none;">VIDEOS</a>
+            <a href="#" style="color: var(--foreground); text-decoration: none;">COMMUNITY</a>
           </nav>
-          <div style="display: flex; gap: 1rem;">
-            <a href="#" style="color: var(--foreground); font-size: 0.875rem; font-weight: 700;">LOGIN</a>
-            <a href="#" class="sg-btn-home sg-btn-home-primary" style="padding: 0.5rem 1.25rem; font-size: 0.875rem;">SIGN UP</a>
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="#" class="sg-btn-home sg-btn-home-primary sg-btn-home-shine" style="padding: 0.75rem 1.5rem; font-size: 0.875rem; letter-spacing: 0.04em;">CLAIM BONUSES</a>
           </div>
         </div>
         <h3>SiteFooter (mock)</h3>

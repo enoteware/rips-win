@@ -30,6 +30,30 @@ export default async function AdminLayout({
               Leaderboard
             </Link>
             <Link
+              href="/admin/bonuses"
+              className="text-muted-foreground hover:text-foreground text-sm"
+            >
+              Bonuses
+            </Link>
+            <Link
+              href="/admin/clips"
+              className="text-muted-foreground hover:text-foreground text-sm"
+            >
+              Clips
+            </Link>
+            <Link
+              href="/admin/socials"
+              className="text-muted-foreground hover:text-foreground text-sm"
+            >
+              Socials
+            </Link>
+            <Link
+              href="/admin/pages"
+              className="text-muted-foreground hover:text-foreground text-sm"
+            >
+              Pages
+            </Link>
+            <Link
               href="/admin/site"
               className="text-muted-foreground hover:text-foreground text-sm"
             >

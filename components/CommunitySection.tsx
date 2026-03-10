@@ -1,16 +1,28 @@
 import Image from 'next/image';
 import { ICONS } from '@/lib/brand';
+import type { SocialLink } from '@/lib/social-links';
 
 const STATS = [
   { value: "164k", label: "Community Members" },
   { value: "5.2m", label: "Monthly Views" },
 ] as const;
 
-export function CommunitySection() {
+const PLATFORM_COLORS: Record<string, string> = {
+  discord: 'bg-social-discord',
+  kick: 'bg-primary',
+  twitch: 'bg-primary',
+  instagram: 'bg-social-instagram',
+};
+
+interface CommunitySectionProps {
+  socialLinks: SocialLink[];
+}
+
+export function CommunitySection({ socialLinks }: CommunitySectionProps) {
   return (
     <section
       id="community"
-      className="scroll-mt-20 py-20 bg-background-dark border-y border-border-dark"
+      className="public-section scroll-mt-20 py-20 border-y border-border-dark"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -22,30 +34,23 @@ export function CommunitySection() {
               Catch the best live streams, enter exclusive gambling giveaways, and connect with the squad.
             </p>
             <div className="flex flex-wrap gap-4">
-              <a
-                href="#"
-                className="bg-social-discord text-foreground flex items-center gap-3 px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform"
-                aria-label="Join Discord"
-              >
-                <Image src={ICONS.discord} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />
-                Discord
-              </a>
-              <a
-                href="#"
-                className="bg-primary text-primary-foreground flex items-center gap-3 px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform"
-                aria-label="Watch on Kick or Twitch"
-              >
-                <Image src={ICONS.stream} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />
-                Kick
-              </a>
-              <a
-                href="#"
-                className="bg-social-instagram text-foreground flex items-center gap-3 px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform"
-                aria-label="Follow on Instagram"
-              >
-                <Image src={ICONS.instagram} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />
-                Instagram
-              </a>
+              {socialLinks.map((link) => {
+                const iconSrc = ICONS[link.icon as keyof typeof ICONS] || ICONS.globe;
+                const bgColor = PLATFORM_COLORS[link.platform] || 'bg-primary';
+                return (
+                  <a
+                    key={link.id}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${bgColor} text-foreground flex items-center gap-3 px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform`}
+                    aria-label={link.label}
+                  >
+                    <Image src={iconSrc} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />
+                    {link.label}
+                  </a>
+                );
+              })}
             </div>
           </div>
           <div className="grid grid-cols-2 gap-6">

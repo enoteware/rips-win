@@ -11,6 +11,8 @@ const buttonVariants = cva(
       variant: {
         default:
           "border-black bg-logo-gradient text-primary-foreground shadow-hard hover:-translate-y-0 hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
+        site:
+          "cta-shine border border-primary/40 bg-primary text-primary-foreground font-black tracking-wide glow-primary hover:scale-[1.03]",
         destructive:
           "border-black bg-destructive text-destructive-foreground shadow-hard hover:translate-x-1 hover:translate-y-1 hover:shadow-none",
         outline:

@@ -67,9 +67,8 @@ export default async function Home() {
             <div className="flex flex-col md:flex-row justify-between items-end gap-4">
               <div>
                 <h2 className="font-display text-3xl font-black uppercase tracking-tighter italic">
-                  <span className="text-primary">$150,000</span> High Stakes Leaderboard
+                  Leaderboard
                 </h2>
-                <p className="text-muted-foreground mt-2">Ranked by total wagered amount this month.</p>
               </div>
               {metadata && (
                 <span className="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full border border-primary/20 whitespace-nowrap mb-2">

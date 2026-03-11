@@ -1,0 +1,30 @@
+{
+  "homepageFull": {
+    "status": 200,
+    "cache_url": "https://cache.screenshotone.com/a4f744ac7b42eaf6eb11e0d2e1325c124fbfedb3f8bed21c2ee29040f05d9e9b.png",
+    "screenshot_url": "https://cache.screenshotone.com/a4f744ac7b42eaf6eb11e0d2e1325c124fbfedb3f8bed21c2ee29040f05d9e9b.png",
+    "error_code": null,
+    "error_message": null
+  },
+  "bonuses": {
+    "status": 200,
+    "cache_url": "https://cache.screenshotone.com/673fca1df6d46975d67bc4b50804dd3cf782a3e2fe94411d5d4235ee55e87283.png",
+    "screenshot_url": "https://cache.screenshotone.com/673fca1df6d46975d67bc4b50804dd3cf782a3e2fe94411d5d4235ee55e87283.png",
+    "error_code": null,
+    "error_message": null
+  },
+  "clips": {
+    "status": 200,
+    "cache_url": "https://cache.screenshotone.com/d600af40fca0ebfbaa2d43e9af764553ef4ddfb30088bf1412ecec469d0b72c3.png",
+    "screenshot_url": "https://cache.screenshotone.com/d600af40fca0ebfbaa2d43e9af764553ef4ddfb30088bf1412ecec469d0b72c3.png",
+    "error_code": null,
+    "error_message": null
+  },
+  "footer": {
+    "status": 200,
+    "cache_url": "https://cache.screenshotone.com/c7388fb03101415d4b8d9c4b1eb121edc6b60b2d7955adc4da9d6909c07a7727.png",
+    "screenshot_url": "https://cache.screenshotone.com/c7388fb03101415d4b8d9c4b1eb121edc6b60b2d7955adc4da9d6909c07a7727.png",
+    "error_code": null,
+    "error_message": null
+  }
+}

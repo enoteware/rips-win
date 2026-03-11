@@ -10,6 +10,7 @@ This folder contains all project documentation and database schema files.
 - **`rips-win-api-routes.md`** - API endpoints reference and database queries
 - **`RIPS-WIN-HANDOFF.md`** - Developer handoff documentation (comprehensive)
 - **`RIPS-WIN-SUMMARY.txt`** - Quick status summary
+- **`client-updates/`** - Client-facing recap exports, screenshots, and generators for sendable update packages
 - **`stitch/`** - Stitch design assets (screen images and HTML). See `stitch/README.md` for how to re-download via `npm run stitch:download`.
 
 ## Quick Links

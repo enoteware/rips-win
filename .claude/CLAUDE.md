@@ -15,6 +15,7 @@
 | **React / Next.js components, performance, patterns** | Apply **react-best-practices** (Vercel) or **vercel-react-best-practices** skill when writing or refactoring UI. |
 | **Backend, API design, DB, auth** | Use Agent with `subagent_type=backend-expert` or `backend-expert-bertrand`; reference **Neon Postgres** and Prisma skills if adding DB layers. |
 | **Tailwind / theme / design tokens** | Use **tailwind-v4** skill if upgrading; follow existing `tailwind.config.ts` and `app/globals.css` (tweakcn) for this project. |
+| **Client-facing update recap / sendable HTML export** | Use the **client-update-export** skill. Prefer a single `rips-win-client-update-YYYY-MM-DD.html` file with ScreenshotOne CDN screenshots and production outbound links. |
 | **Push with quality checks** | Use **git-push-with-checks** skill so lint/typecheck/build run before push. |
 | **Schema / migrations (if Prisma added later)** | Run `schema:generate` / migrations per Prisma docs; use **migration-best-practices** and **schema-conventions** rules if requested. |
 
@@ -22,6 +23,7 @@
 
 - **Subagents:** In Cursor, agent invocation uses the built-in Agent/task tool (e.g. `mcp_task` with `subagent_type=...`). Ask for “run this with the code reviewer” or “explore the codebase for X” and the agent will pick the right subagent.
 - **Skills:** Reference skills by name when relevant (e.g. “follow react-best-practices”, “use the Neon skill for connection setup”).
+- **Client exports:** For polished client recap deliverables, invoke or reference `client-update-export` so the agent follows the one-file HTML + CDN screenshot workflow.
 
 ## Example prompts
 

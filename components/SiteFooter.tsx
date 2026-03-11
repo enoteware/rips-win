@@ -1,24 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { MarketGuidanceBanner } from '@/components/MarketGuidanceBanner';
 import { LOGO, ICONS } from '@/lib/brand';
 import type { SocialLink } from '@/lib/social-links';
-
-const STAKE_US = 'https://stake.us/?offer=rips&c=selling';
-const STAKE_COM = 'https://stake.com/?offer=rips&c=selling';
-
-const footerPlatform = [
-  { href: STAKE_US, label: 'Games', external: true },
-  { href: '/leaderboard', label: 'Leaderboard', external: false },
-  { href: '/bonuses', label: 'Promotions', external: false },
-  { href: STAKE_COM, label: 'Affiliate', external: true },
-] as const;
-
-const footerSupport = [
-  { href: STAKE_US, label: 'Help Center', external: true },
-  { href: STAKE_US, label: 'Contact Us', external: true },
-  { href: STAKE_US, label: 'Responsible Gaming', external: true },
-  { href: STAKE_US, label: 'Fairness', external: true },
-] as const;
+import type { Market, MarketSource } from '@/lib/stake';
 
 const footerLegal = [
   { href: '/terms', label: 'Terms of Service' },
@@ -28,12 +13,39 @@ const footerLegal = [
 
 interface SiteFooterProps {
   socialLinks?: SocialLink[];
+  market: Market;
+  source: MarketSource;
+  country: string | null;
+  stakeUrl: string;
+  marketLabel: string;
 }
 
-export function SiteFooter({ socialLinks = [] }: SiteFooterProps) {
+export function SiteFooter({
+  socialLinks = [],
+  market,
+  source,
+  country,
+  stakeUrl,
+  marketLabel,
+}: SiteFooterProps) {
+  const footerPlatform = [
+    { href: stakeUrl, label: 'Games', external: true },
+    { href: '/leaderboard', label: 'Leaderboard', external: false },
+    { href: '/bonuses', label: 'Promotions', external: false },
+    { href: stakeUrl, label: 'Affiliate', external: true },
+  ] as const;
+
+  const footerSupport = [
+    { href: stakeUrl, label: 'Help Center', external: true },
+    { href: stakeUrl, label: 'Contact Us', external: true },
+    { href: stakeUrl, label: 'Responsible Gaming', external: true },
+    { href: stakeUrl, label: 'Fairness', external: true },
+  ] as const;
+
   return (
-    <footer className="public-section border-t border-border-dark py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="public-section border-t border-border-dark pb-12">
+      <MarketGuidanceBanner market={market} source={source} country={country} />
+      <div className="max-w-7xl mx-auto px-4 pt-12 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center gap-2 mb-6">
@@ -95,7 +107,7 @@ export function SiteFooter({ socialLinks = [] }: SiteFooterProps) {
         </div>
         <div className="pt-8 border-t border-border-dark flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-muted-foreground text-xs">
-            © {new Date().getFullYear()} Rips Gaming. All rights reserved. Gambling can be addictive. Please play responsibly.
+            © {new Date().getFullYear()} Rips Gaming. All rights reserved. Gambling can be addictive. Please play responsibly. Use the {marketLabel} link for your region.
           </p>
           <div className="flex gap-4">
             {socialLinks.length > 0
@@ -116,10 +128,7 @@ export function SiteFooter({ socialLinks = [] }: SiteFooterProps) {
                 })
               : (
                 <>
-                  <a href={STAKE_US} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors flex items-center justify-center w-8 h-8" aria-label="Stake.us">
-                    <Image src={ICONS.globe} alt="" width={20} height={20} className="w-5 h-5" />
-                  </a>
-                  <a href={STAKE_COM} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors flex items-center justify-center w-8 h-8" aria-label="Stake.com">
+                  <a href={stakeUrl} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors flex items-center justify-center w-8 h-8" aria-label={marketLabel}>
                     <Image src={ICONS.globe} alt="" width={20} height={20} className="w-5 h-5" />
                   </a>
                 </>

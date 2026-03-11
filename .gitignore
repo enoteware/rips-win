@@ -48,3 +48,4 @@ test-results/
 # Design source zips (reference only, do not commit)
 *.zip
 .env*.local
+pf-gg-chat/

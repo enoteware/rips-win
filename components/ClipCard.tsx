@@ -2,7 +2,8 @@
 
 import { useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
-import { extractYouTubeId } from '@/lib/youtube';
+import { extractYouTubeId, isYouTubeShortsUrl } from '@/lib/youtube';
+import { cn } from '@/lib/utils';
 import { ICONS } from '@/lib/brand';
 
 interface ClipCardProps {
@@ -14,6 +15,7 @@ export function ClipCard({ title, youtubeUrl }: ClipCardProps) {
   const [playing, setPlaying] = useState(false);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const videoId = extractYouTubeId(youtubeUrl);
+  const isShort = isYouTubeShortsUrl(youtubeUrl);
 
   const handleMouseEnter = useCallback(() => {
     hoverTimer.current = setTimeout(() => setPlaying(true), 200);
@@ -38,7 +40,10 @@ export function ClipCard({ title, youtubeUrl }: ClipCardProps) {
 
   return (
     <div
-      className="group relative flex-shrink-0 w-[200px] sm:w-[220px] aspect-[9/16] rounded-2xl overflow-hidden border border-border-dark bg-surface-dark cursor-pointer"
+      className={cn(
+        'group relative flex-shrink-0 h-[356px] sm:h-[392px] rounded-2xl overflow-hidden border border-border-dark bg-surface-dark cursor-pointer',
+        isShort ? 'aspect-[9/16]' : 'aspect-video'
+      )}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleTap}
@@ -61,7 +66,7 @@ export function ClipCard({ title, youtubeUrl }: ClipCardProps) {
             alt={title}
             fill
             className="object-cover"
-            sizes="220px"
+            sizes={isShort ? '(max-width: 640px) 200px, 220px' : '(max-width: 640px) 633px, 697px'}
             unoptimized
           />
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />

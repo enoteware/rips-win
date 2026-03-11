@@ -11,3 +11,7 @@ export function extractYouTubeId(url: string): string | null {
   }
   return null;
 }
+
+export function isYouTubeShortsUrl(url: string): boolean {
+  return /youtube\.com\/shorts\//.test(url);
+}

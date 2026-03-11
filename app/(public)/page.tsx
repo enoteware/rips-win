@@ -4,40 +4,39 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { LOGO } from '@/lib/brand';
 import { getLeaderboard, getMetadata } from "@/lib/db";
-import { getSiteSettingsWithFallback } from "@/lib/site-settings";
 import { getBonusCards } from '@/lib/bonuses';
 import { getClips } from '@/lib/clips';
 import { getSocialLinks } from '@/lib/social-links';
+import { getStakeContext } from '@/lib/market';
+import { resolveStakeUrlForMarket } from '@/lib/stake';
+import { BonusesSection } from '@/components/BonusesSection';
 import { HeroSection } from '@/components/HeroSection';
 import { MonolithLeaderboard } from '@/components/MonolithLeaderboard';
-import { TectonicOfferCard } from '@/components/TectonicOfferCard';
 import { VideosSection } from '@/components/VideosSection';
 import { CommunitySection } from '@/components/CommunitySection';
 
-const STAKE_TRACKING = '?offer=rips&c=selling';
-
-function stakeUsLink(base: string): string {
-  return base.includes('?') ? base : `${base.replace(/\/$/, '')}${STAKE_TRACKING}`;
-}
-
-function stakeComLink(base: string): string {
-  return base.includes('?') ? base : `${base.replace(/\/$/, '')}${STAKE_TRACKING}`;
-}
-
 export default async function Home() {
   const period = 'all_time';
-  const [entries, metadata, site, homepageBonuses, clips, socialLinks] = await Promise.all([
+  const [entries, metadata, bonusCards, clips, socialLinks, stakeContext] = await Promise.all([
     getLeaderboard(period, true),
     getMetadata(period),
-    getSiteSettingsWithFallback(),
-    getBonusCards(true, true),
+    getBonusCards(true),
     getClips(true),
     getSocialLinks(true),
+    getStakeContext(),
   ]);
-  const welcomeCode = site.welcome_code;
-  const rakeback = site.rakeback_pct;
-  const stakeUs = stakeUsLink(site.stake_us_link);
-  const stakeCom = stakeComLink(site.stake_com_link);
+
+  const homepageBonusItems = bonusCards.map((card) => ({
+    id: card.id,
+    headline: card.headline,
+    subtitle: card.subtitle,
+    description: card.description,
+    imageUrl: card.image_url,
+    ctaText: card.cta_text,
+    ctaLink: resolveStakeUrlForMarket(card.cta_link, stakeContext.market, stakeContext),
+    promoCode: card.promo_code,
+    badgeText: card.badge_text,
+  }));
 
   return (
     <main className="min-h-screen">
@@ -93,66 +92,14 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Exclusive Bonuses */}
-      <section className="public-section py-20 border-t border-border-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-display text-3xl font-black mb-12 uppercase italic tracking-tighter">
-            Exclusive <span className="text-primary">Casino Rewards</span>
-          </h2>
-          <div className="flex flex-col md:flex-row justify-center gap-10 md:gap-4 lg:gap-8 items-center md:items-stretch perspective-[1000px] py-4">
-            {homepageBonuses.length > 0 ? (
-              homepageBonuses.map((card, i) => (
-                <TectonicOfferCard
-                  key={card.id}
-                  tierName={card.headline}
-                  offerType={card.subtitle || ''}
-                  value={card.badge_text || ''}
-                  description={card.description || ''}
-                  promoCode={card.promo_code || welcomeCode}
-                  cta={card.cta_text}
-                  href={card.cta_link}
-                  highlight={i === 1}
-                  image={card.image_url || undefined}
-                />
-              ))
-            ) : (
-              <>
-                <TectonicOfferCard
-                  tierName="Welcome"
-                  offerType="Initial Deposit"
-                  value={<><span className="text-2xl mr-1 align-top text-primary">$</span>25</>}
-                  description="Initial tectonic deposit match. Claim your welcome bonus on Stake.us."
-                  promoCode={welcomeCode}
-                  cta="Ignite Offer"
-                  href={stakeUs}
-                  image="/images/bonus_welcome.png"
-                />
-                <TectonicOfferCard
-                  tierName="Deposit Match"
-                  offerType="Gilded Tier"
-                  value={<>200<span className="text-2xl ml-1 align-top text-primary">%</span></>}
-                  description="Pressure-hardened rewards for the elite. Double your first deposit on Stake.com."
-                  promoCode="BONUS200"
-                  cta="Fracture Now"
-                  href={stakeCom}
-                  highlight={true}
-                  image="/images/bonus_deposit.png"
-                />
-                <TectonicOfferCard
-                  tierName="Rakeback"
-                  offerType="Deep Core"
-                  value={<>{rakeback}<span className="text-2xl ml-1 align-top text-primary">%</span></>}
-                  description="The ultimate geological event. Get instant rakeback on every single bet you place."
-                  promoCode={welcomeCode}
-                  cta="Claim Apex"
-                  href={stakeUs}
-                  image="/images/bonus_rakeback.png"
-                />
-              </>
-            )}
-          </div>
-        </div>
-      </section>
+      <BonusesSection
+        cards={homepageBonusItems}
+        title={<>Exclusive <span className="text-primary">Casino Rewards</span></>}
+        className="public-section py-20 border-t border-border-dark"
+        containerClassName="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        gridClassName="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 xl:grid-cols-3"
+        showDisclaimer={false}
+      />
 
       <VideosSection clips={clips} />
       <CommunitySection socialLinks={socialLinks} />

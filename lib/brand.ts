@@ -17,6 +17,8 @@ export const ICONS = {
   /** Stream / play (Kick, Twitch, etc.) */
   stream: "/icons/stream.svg",
   globe: "/icons/globe.svg",
+  globeEmoji: "/icons/globe-emoji.svg",
+  flagUsEmoji: "/icons/flag-us-emoji.svg",
   mail: "/icons/mail.svg",
   chat: "/icons/chat.svg",
   /** Leaderboard / trophy */

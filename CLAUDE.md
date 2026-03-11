@@ -55,3 +55,19 @@ Agent-to-task mappings and usage: see **`.claude/CLAUDE.md`** (configured by set
 <!-- Added 2026-03-10: caused DATABASE_URL runtime error in browser -->
 - Never import from `lib/` files that initialize `neon()` (or any server-only code) in client components.
 - If a client component needs a utility from a `lib/` file that also has DB code, extract the utility into a separate client-safe module (e.g. `lib/youtube.ts`).
+
+## Public Content Gotchas
+<!-- Added 2026-03-11 after homepage/footer/clips updates -->
+- Homepage bonuses should reuse the shared public bonuses cards/component and the same published bonus set as `/bonuses`; do not reintroduce separate homepage-only bonus card markup unless explicitly requested.
+- Public clips can mix YouTube Shorts and standard videos. Preserve portrait `9:16` for `/shorts/` URLs and landscape `16:9` for standard videos while keeping consistent card heights in the carousel.
+- Market routing is soft guidance only: detect US vs international for Stake link defaults, allow manual override, and do not treat region detection as access control or geo-blocking.
+
+## Client Update Export Gotchas
+<!-- Added 2026-03-11 after ScreenshotOne-based client export workflow -->
+- For client-facing recap exports, prefer a single sendable HTML file under `docs/client-updates/YYYY-MM-DD/` named like `rips-win-client-update-YYYY-MM-DD.html`.
+- Final sendable HTML should default to ScreenshotOne CDN `cache_url` images unless the user explicitly asks for an embedded-image variant.
+- Final outbound links in the sendable HTML should point to production unless the user explicitly asks for preview/dev links.
+- If ScreenshotOne selector captures are unreliable on the live site, a reliable fallback is to POST raw HTML containing base64-embedded local screenshots to ScreenshotOne and then use the returned CDN `cache_url` values in the export.
+- When POSTing to ScreenshotOne, send JSON with correct types and use `wait_until` as an array (for example `['load']`).
+- Telegram may open the HTML file but fail to reliably open remote screenshot URLs from inside that local attachment; if that delivery path matters, create a separate embedded-image fallback file instead of replacing the main CDN export.
+- Never expose or commit `SS_ONE_API` or `SS_ONE_API_SECRET`.

@@ -7,11 +7,27 @@ const STATS = [
   { value: "5.2m", label: "Monthly Views" },
 ] as const;
 
-const PLATFORM_COLORS: Record<string, string> = {
-  discord: 'bg-social-discord',
-  kick: 'bg-primary',
-  twitch: 'bg-primary',
-  instagram: 'bg-social-instagram',
+const PLATFORM_STYLES: Record<string, { buttonClassName: string; label: string }> = {
+  discord: {
+    buttonClassName: 'bg-social-discord text-white',
+    label: 'Discord',
+  },
+  instagram: {
+    buttonClassName: 'bg-social-instagram text-white',
+    label: 'Instagram',
+  },
+  kick: {
+    buttonClassName: 'bg-[#53FC18] text-[#0B0E0F]',
+    label: 'Kick',
+  },
+  twitch: {
+    buttonClassName: 'bg-[#9146FF] text-white',
+    label: 'Twitch',
+  },
+  youtube: {
+    buttonClassName: 'bg-[#FF0000] text-white',
+    label: 'YouTube',
+  },
 };
 
 interface CommunitySectionProps {
@@ -35,19 +51,22 @@ export function CommunitySection({ socialLinks }: CommunitySectionProps) {
             </p>
             <div className="flex flex-wrap gap-4">
               {socialLinks.map((link) => {
+                const platform = link.platform.toLowerCase();
                 const iconSrc = ICONS[link.icon as keyof typeof ICONS] || ICONS.globe;
-                const bgColor = PLATFORM_COLORS[link.platform] || 'bg-primary';
+                const platformStyle = PLATFORM_STYLES[platform];
+                const buttonClassName = platformStyle?.buttonClassName || 'bg-primary text-primary-foreground';
+                const displayLabel = platformStyle?.label || link.label;
                 return (
                   <a
                     key={link.id}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`${bgColor} text-foreground flex items-center gap-3 px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform`}
-                    aria-label={link.label}
+                    className={`${buttonClassName} flex min-w-[210px] items-center justify-center gap-3 rounded-xl px-6 py-3 font-bold shadow-hard transition-transform hover:scale-105`}
+                    aria-label={displayLabel}
                   >
                     <Image src={iconSrc} alt="" width={24} height={24} className="w-6 h-6 shrink-0" aria-hidden />
-                    {link.label}
+                    {displayLabel}
                   </a>
                 );
               })}

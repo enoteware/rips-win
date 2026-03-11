@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { getStakeContext } from '@/lib/market';
 import { getSocialLinks } from "@/lib/social-links";
 
 /**
@@ -9,13 +10,23 @@ import { getSocialLinks } from "@/lib/social-links";
 export default async function PublicLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const socialLinks = await getSocialLinks(true);
+  const [socialLinks, stakeContext] = await Promise.all([
+    getSocialLinks(true),
+    getStakeContext(),
+  ]);
 
   return (
     <div className="public-shell flex min-h-screen flex-col">
       <SiteHeader />
       <div className="flex-1">{children}</div>
-      <SiteFooter socialLinks={socialLinks} />
+      <SiteFooter
+        socialLinks={socialLinks}
+        market={stakeContext.market}
+        source={stakeContext.source}
+        country={stakeContext.country}
+        stakeUrl={stakeContext.defaultStakeUrl}
+        marketLabel={stakeContext.marketLabel}
+      />
     </div>
   );
 }

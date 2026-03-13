@@ -71,3 +71,18 @@ Agent-to-task mappings and usage: see **`.claude/CLAUDE.md`** (configured by set
 - When POSTing to ScreenshotOne, send JSON with correct types and use `wait_until` as an array (for example `['load']`).
 - Telegram may open the HTML file but fail to reliably open remote screenshot URLs from inside that local attachment; if that delivery path matters, create a separate embedded-image fallback file instead of replacing the main CDN export.
 - Never expose or commit `SS_ONE_API` or `SS_ONE_API_SECRET`.
+- ScreenshotOne **cannot reach localhost** — use Playwright for local dev server screenshots and ScreenshotOne only for public URLs.
+- ScreenshotOne keys live in `.env.local` as `SS_ONE_API` and `SS_ONE_API_SECRET`.
+
+## Design System
+
+<!-- Added 2026-03-13: Cabrzy-style design refresh -->
+- Primary brand color is `#53FC18` (Kick green) — matches logo gradient hue range. Do NOT revert to `#b2fc15`.
+- All glow rgba values must match the current primary: `rgba(83, 252, 24, ...)`.
+- Background tokens are near-black (`#080808`) — not green-tinted. Do not re-introduce green backgrounds.
+- Button base class uses `rounded-xl border-2` (see `components/ui/button.tsx`). Any custom button-like element must match these tokens.
+- `BonusesSection` accepts `compactCards` (image-led, hides text body) and `showTextList` (stacked text list below cards). Homepage uses both.
+- LIVE NOW nav button is spoofed — links to `kick.com/rips`. Update the href when the actual stream URL is confirmed.
+- Hero dead-space is controlled via `pb-[20vh]` on the content wrapper. Adjust there, not via padding/margin on individual elements.
+- Topographic ripple animation class is `.topo-ripple` in `globals.css` — 10s ease-in-out loop. Respects `prefers-reduced-motion`.
+- Leaderboard prizes are frontend-only (no DB column) — stored in the `PRIZES` constant in `MonolithLeaderboard.tsx`.

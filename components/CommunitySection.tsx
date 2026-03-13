@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ICONS } from '@/lib/brand';
+import { SocialMarquee } from '@/components/SocialMarquee';
 import type { SocialLink } from '@/lib/social-links';
 
 const STATS = [
@@ -10,23 +11,23 @@ const STATS = [
 const PLATFORM_STYLES: Record<string, { buttonClassName: string; label: string }> = {
   discord: {
     buttonClassName: 'bg-social-discord text-white',
-    label: 'Discord',
+    label: 'Join Discord',
   },
   instagram: {
     buttonClassName: 'bg-social-instagram text-white',
-    label: 'Instagram',
+    label: 'Follow Instagram',
   },
   kick: {
     buttonClassName: 'bg-[#53FC18] text-[#0B0E0F]',
-    label: 'Kick',
+    label: 'Follow Stream',
   },
   twitch: {
     buttonClassName: 'bg-[#9146FF] text-white',
-    label: 'Twitch',
+    label: 'Follow Stream',
   },
   youtube: {
     buttonClassName: 'bg-[#FF0000] text-white',
-    label: 'YouTube',
+    label: 'Follow YouTube',
   },
 };
 
@@ -38,16 +39,21 @@ export function CommunitySection({ socialLinks }: CommunitySectionProps) {
   return (
     <section
       id="community"
-      className="public-section scroll-mt-20 py-20 border-y border-border-dark"
+      className="public-section scroll-mt-20 py-20 border-y border-border-dark overflow-hidden"
     >
+      {/* Scrolling brand icon marquee */}
+      <div className="mb-12">
+        <SocialMarquee />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="font-display text-4xl font-black mb-6 uppercase italic tracking-tighter">
-              Join the <span className="text-primary">Rips</span> Squad
+            <h2 className="font-display text-5xl md:text-6xl font-black mb-4 uppercase italic tracking-tighter">
+              Don&apos;t miss a <span className="text-primary">RIPS</span> update.
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Catch the best live streams, enter exclusive gambling giveaways, and connect with the squad.
+              Check out all of our social platforms to stay connected.
             </p>
             <div className="flex flex-wrap gap-4">
               {socialLinks.map((link) => {

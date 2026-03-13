@@ -19,9 +19,9 @@ export default {
           mid: "#b2fc15",
           end: "#f2fed7",
         },
-        "background-dark": "#0a120a",
-        "surface-dark": "#142614",
-        "border-dark": "#1e3a1e",
+        "background-dark": "#080808",
+        "surface-dark": "#111111",
+        "border-dark": "#252525",
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",

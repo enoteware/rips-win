@@ -12,6 +12,7 @@ import { resolveStakeUrlForMarket } from '@/lib/stake';
 import { BonusesSection } from '@/components/BonusesSection';
 import { HeroSection } from '@/components/HeroSection';
 import { MonolithLeaderboard } from '@/components/MonolithLeaderboard';
+import { LeaderboardCountdown } from '@/components/LeaderboardCountdown';
 import { VideosSection } from '@/components/VideosSection';
 import { CommunitySection } from '@/components/CommunitySection';
 
@@ -45,9 +46,9 @@ export default async function Home() {
           <Image
             src={LOGO.main}
             alt="Rips"
-            width={128}
-            height={128}
-            className="h-32 w-auto drop-shadow-glow-logo"
+            width={600}
+            height={400}
+            className="w-[60vw] md:w-[50vw] max-w-[600px] h-auto"
           />
         }
         title={
@@ -55,7 +56,7 @@ export default async function Home() {
             Live Casino <span className="text-primary">Action</span> & High Stakes Gambling
           </>
         }
-        subtitle="Experience the adrenaline of high-stakes gambling with our top-tier Streams and exclusive Stake rewards."
+        subtitle="Official Website"
         primaryCta={{ label: 'CLAIM BONUSES', href: '/bonuses' }}
         secondaryCta={{ label: 'VIEW LEADERBOARD', href: '/leaderboard' }}
       />
@@ -63,21 +64,22 @@ export default async function Home() {
       {/* Leaderboard Section */}
       <section id="leaderboard" className="public-section scroll-mt-20 py-20 border-t border-border-dark overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
-          <div className="flex flex-col gap-2 relative z-10">
-            <div className="flex flex-col md:flex-row justify-between items-end gap-4">
-              <div>
-                <h2 className="font-display text-3xl font-black uppercase tracking-tighter italic">
-                  Leaderboard
-                </h2>
-              </div>
-              {metadata && (
-                <span className="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full border border-primary/20 whitespace-nowrap mb-2">
-                  Updated {new Date(metadata.last_updated).toLocaleDateString()}
-                </span>
-              )}
+          <div className="flex flex-col items-center text-center relative z-10 gap-3">
+            {/* Prize pool amount — Cabrzy-style giant neon number */}
+            <div className="font-display text-7xl md:text-9xl font-black text-primary drop-shadow-glow-logo leading-none tracking-tighter italic">
+              $1,000
             </div>
+            <h2 className="font-display text-2xl md:text-4xl font-black uppercase tracking-widest italic text-foreground/90">
+              Monthly Leaderboard
+            </h2>
+            {metadata && (
+              <span className="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full border border-primary/20 whitespace-nowrap">
+                Updated {new Date(metadata.last_updated).toLocaleDateString()}
+              </span>
+            )}
           </div>
 
+          <LeaderboardCountdown />
           <MonolithLeaderboard entries={entries.slice(0, 10)} />
 
           <div className="flex justify-center mt-8">
@@ -93,11 +95,13 @@ export default async function Home() {
 
       <BonusesSection
         cards={homepageBonusItems}
-        title={<>Exclusive <span className="text-primary">Casino Rewards</span></>}
+        title={<>Enjoy Exclusive <span className="text-primary">Bonuses</span></>}
         className="public-section py-20 border-t border-border-dark"
         containerClassName="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        gridClassName="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 xl:grid-cols-3"
+        gridClassName="mx-auto flex flex-wrap justify-center max-w-6xl gap-8 [&>*]:w-full [&>*]:md:w-[calc(50%-1rem)] [&>*]:xl:w-[calc(33.333%-1.375rem)]"
         showDisclaimer={false}
+        compactCards
+        showTextList
       />
 
       <VideosSection clips={clips} />

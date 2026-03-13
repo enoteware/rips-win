@@ -2,6 +2,19 @@
 
 import { formatMoney } from "@/lib/utils";
 
+const PRIZES: Record<number, number> = {
+  1: 350,
+  2: 200,
+  3: 125,
+  4: 90,
+  5: 70,
+  6: 50,
+  7: 40,
+  8: 30,
+  9: 25,
+  10: 20,
+};
+
 interface Entry {
   id: string | number;
   rank: number;
@@ -65,6 +78,7 @@ export function MonolithLeaderboard({ entries }: { entries: Entry[] }) {
 
           <div className="font-display font-bold text-lg md:text-xl text-center mb-2 z-10 uppercase tracking-tight">{second?.player_name || '---'}</div>
           <div className="font-mono text-muted-foreground text-sm z-10">{second ? formatMoney(second.total_wagered) : '---'}</div>
+          {second && <div className="font-mono text-xs font-bold text-podium-2 bg-podium-2/10 border border-podium-2/20 px-2 py-0.5 mt-2 z-10">${PRIZES[2]}</div>}
         </div>
 
         {/* Gold */}
@@ -84,6 +98,7 @@ export function MonolithLeaderboard({ entries }: { entries: Entry[] }) {
 
           <div className="font-display font-black text-xl md:text-2xl text-center mb-2 z-10 text-primary drop-shadow-glow-logo uppercase tracking-tighter">{first?.player_name || '---'}</div>
           <div className="font-mono text-muted-foreground text-sm z-10">{first ? formatMoney(first.total_wagered) : '---'}</div>
+          {first && <div className="font-mono text-xs font-bold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 mt-2 z-10">${PRIZES[1]}</div>}
         </div>
 
         {/* Bronze */}
@@ -102,6 +117,7 @@ export function MonolithLeaderboard({ entries }: { entries: Entry[] }) {
 
           <div className="font-display font-bold text-lg md:text-xl text-center mb-2 z-10 uppercase tracking-tight">{third?.player_name || '---'}</div>
           <div className="font-mono text-muted-foreground text-sm z-10">{third ? formatMoney(third.total_wagered) : '---'}</div>
+          {third && <div className="font-mono text-xs font-bold text-podium-3 bg-podium-3/10 border border-podium-3/20 px-2 py-0.5 mt-2 z-10">${PRIZES[3]}</div>}
         </div>
       </section>
 
@@ -110,27 +126,36 @@ export function MonolithLeaderboard({ entries }: { entries: Entry[] }) {
         {rest.length === 0 ? (
             <div className="p-8 text-center text-muted-foreground font-mono">No supplementary strata found.</div>
         ) : rest.map((entry) => (
-            <div 
+            <div
                 key={entry.id}
-                className="grid grid-cols-[50px_1fr_100px] md:grid-cols-[80px_1fr_120px] items-center p-4 md:p-5 md:px-8 border-b border-border-dark last:border-b-0 transition-all duration-300 relative hover:bg-white/5 hover:pl-6 md:hover:pl-10 group"
+                className="grid grid-cols-[50px_1fr_auto_auto] md:grid-cols-[80px_1fr_auto_auto] items-center p-4 md:p-5 md:px-8 gap-x-3 md:gap-x-5 border-b border-border-dark last:border-b-0 transition-all duration-300 relative hover:bg-white/5 hover:pl-6 md:hover:pl-10 group"
             >
                 {/* Hover Line */}
                 <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
+
                 {/* Rank */}
                 <span className="font-mono text-muted-foreground text-sm md:text-base">
                     {entry.rank.toString().padStart(2, '0')}
                 </span>
-                
+
                 {/* Player Name */}
                 <span className="font-display font-semibold text-base md:text-lg tracking-tight flex items-center gap-3 uppercase">
                     {entry.player_name || 'Unknown'}
                 </span>
-                
+
                 {/* Score */}
                 <span className="font-mono text-right text-sm md:text-base text-foreground font-medium">
                     {formatMoney(entry.total_wagered)}
                 </span>
+
+                {/* Prize */}
+                {PRIZES[entry.rank] ? (
+                    <span className="font-mono text-xs font-bold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 whitespace-nowrap">
+                        ${PRIZES[entry.rank]}
+                    </span>
+                ) : (
+                    <span />
+                )}
             </div>
         ))}
       </section>

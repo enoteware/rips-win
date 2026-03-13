@@ -79,44 +79,44 @@
     --podium-3: #b45309;
     --social-discord: #5865F2;
     --social-instagram: linear-gradient(135deg, #f9ce34 0%, #ee2a7b 50%, #6228d7 100%);
-    --glow-primary: 0 0 20px rgba(13, 242, 13, 0.2);
-    --glow-logo: 0 0 30px rgba(13, 242, 13, 0.5);
-    --glow-lg: 0 0 50px rgba(13, 242, 13, 0.15);
+    --glow-primary: 0 0 20px rgba(83, 252, 24, 0.25);
+    --glow-logo: 0 0 40px rgba(83, 252, 24, 0.65);
+    --glow-lg: 0 0 60px rgba(83, 252, 24, 0.18);
   }
   .dark {
-    --background: #0a120a;
+    --background: #080808;
     --foreground: #f1f5f9;
-    --card: #142614;
+    --card: #0f0f0f;
     --card-foreground: #f1f5f9;
-    --popover: #0a120a;
+    --popover: #0a0a0a;
     --popover-foreground: #f1f5f9;
-    --primary: #0df20d;
-    --primary-foreground: #0a120a;
+    --primary: #53FC18;
+    --primary-foreground: #080808;
     --secondary: #00ae03;
     --secondary-foreground: #ffffff;
-    --muted: #1e3a1e;
+    --muted: #181818;
     --muted-foreground: #94a3b8;
-    --accent: #142614;
-    --accent-foreground: #0df20d;
+    --accent: #0f0f0f;
+    --accent-foreground: #53FC18;
     --destructive: oklch(0.4437 0.1613 26.8994);
     --destructive-foreground: oklch(1.0000 0 0);
-    --border: #1e3a1e;
-    --input: #142614;
-    --ring: #0df20d;
+    --border: #252525;
+    --input: #111111;
+    --ring: #53FC18;
     --chart-1: #00ae03;
-    --chart-2: #b2fc15;
+    --chart-2: #53FC18;
     --chart-3: #dffea0;
     --chart-4: #f2fed7;
     --chart-5: #255100;
     --radius: 0px;
-    --sidebar: #061102;
+    --sidebar: #080808;
     --sidebar-foreground: #ffffff;
-    --sidebar-primary: #b2fc15;
-    --sidebar-primary-foreground: #061102;
-    --sidebar-accent: #031402;
+    --sidebar-primary: #53FC18;
+    --sidebar-primary-foreground: #080808;
+    --sidebar-accent: #111111;
     --sidebar-accent-foreground: #ffffff;
-    --sidebar-border: #f2fed7;
-    --sidebar-ring: #f2fed7;
+    --sidebar-border: #252525;
+    --sidebar-ring: #53FC18;
     --font-sans: 'Inter', -apple-system, sans-serif;
     --font-serif: 'Bangers', 'Impact', cursive;
     --font-mono: 'JetBrains Mono', monospace;
@@ -143,9 +143,9 @@
     --podium-3: #d97706;
     --social-discord: #5865F2;
     --social-instagram: linear-gradient(135deg, #f9ce34 0%, #ee2a7b 50%, #6228d7 100%);
-    --glow-primary: 0 0 20px rgba(13, 242, 13, 0.2);
-    --glow-logo: 0 0 30px rgba(13, 242, 13, 0.5);
-    --glow-lg: 0 0 50px rgba(13, 242, 13, 0.15);
+    --glow-primary: 0 0 24px rgba(83, 252, 24, 0.35);
+    --glow-logo: 0 0 50px rgba(83, 252, 24, 0.75);
+    --glow-lg: 0 0 70px rgba(83, 252, 24, 0.22);
   }
   body {
     background-color: var(--background);
@@ -164,7 +164,7 @@
     box-shadow: var(--glow-primary);
   }
   .podium-1 {
-    background: linear-gradient(180deg, rgba(13, 242, 13, 0.2) 0%, rgba(10, 18, 10, 0) 100%);
+    background: linear-gradient(180deg, rgba(83, 252, 24, 0.22) 0%, rgba(8, 8, 8, 0) 100%);
   }
   .material-symbols-outlined {
     font-family: 'Material Symbols Outlined';
@@ -180,11 +180,11 @@
   .public-shell {
     position: relative;
     isolation: isolate;
-    background-color: #071007;
+    background-color: #080808;
     background-image:
-      radial-gradient(circle at top center, rgba(13, 242, 13, 0.14) 0%, transparent 30%),
-      radial-gradient(circle at 18% 12%, rgba(178, 252, 21, 0.08) 0%, transparent 24%),
-      linear-gradient(180deg, rgba(4, 10, 4, 0.98) 0%, rgba(8, 16, 8, 1) 34%, rgba(10, 18, 10, 1) 100%);
+      radial-gradient(circle at top center, rgba(83, 252, 24, 0.1) 0%, transparent 30%),
+      radial-gradient(circle at 18% 12%, rgba(83, 252, 24, 0.05) 0%, transparent 24%),
+      linear-gradient(180deg, rgba(4, 4, 4, 0.98) 0%, rgba(8, 8, 8, 1) 34%, rgba(8, 8, 8, 1) 100%);
   }
 
   .public-shell::before,
@@ -204,7 +204,7 @@
     opacity: 0.35;
     background-image:
       linear-gradient(180deg, rgba(242, 254, 215, 0.03) 0%, transparent 18%, transparent 82%, rgba(13, 242, 13, 0.02) 100%),
-      repeating-linear-gradient(135deg, rgba(178, 252, 21, 0.02) 0 1px, transparent 1px 24px),
+      repeating-linear-gradient(135deg, rgba(83, 252, 24, 0.02) 0 1px, transparent 1px 24px),
       repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.01) 0 1px, transparent 1px 28px);
   }
 
@@ -234,22 +234,22 @@
   }
 
   .public-hero {
-    background-color: rgba(8, 17, 8, 0.84);
+    background-color: rgba(8, 8, 8, 0.9);
     background-image:
-      radial-gradient(circle at 50% 0%, rgba(13, 242, 13, 0.14) 0%, rgba(13, 242, 13, 0.07) 18%, transparent 44%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(8, 17, 8, 0.08) 8%, rgba(8, 17, 8, 0.94) 60%, rgba(8, 17, 8, 1) 100%);
+      radial-gradient(circle at 50% 0%, rgba(83, 252, 24, 0.12) 0%, rgba(83, 252, 24, 0.05) 18%, transparent 44%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(8, 8, 8, 0.08) 8%, rgba(8, 8, 8, 0.96) 60%, rgba(8, 8, 8, 1) 100%);
   }
 
   .public-hero::before {
     opacity: 0.45;
     background-image:
       linear-gradient(180deg, rgba(242, 254, 215, 0.05) 0%, transparent 28%),
-      repeating-linear-gradient(135deg, rgba(178, 252, 21, 0.028) 0 1px, transparent 1px 26px),
+      repeating-linear-gradient(135deg, rgba(83, 252, 24, 0.028) 0 1px, transparent 1px 26px),
       repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 48px);
   }
 
   .public-section {
-    background-color: rgba(8, 17, 8, 0.86);
+    background-color: rgba(8, 8, 8, 0.92);
     backdrop-filter: blur(2px);
   }
 
@@ -258,26 +258,26 @@
     background-image:
       linear-gradient(180deg, rgba(242, 254, 215, 0.03) 0%, transparent 24%),
       linear-gradient(0deg, rgba(13, 242, 13, 0.025) 0%, transparent 26%),
-      repeating-linear-gradient(135deg, rgba(178, 252, 21, 0.022) 0 1px, transparent 1px 28px);
+      repeating-linear-gradient(135deg, rgba(83, 252, 24, 0.022) 0 1px, transparent 1px 28px);
   }
 
   .public-page {
-    background-color: rgba(8, 17, 8, 0.74);
+    background-color: rgba(8, 8, 8, 0.92);
     background-image:
-      radial-gradient(circle at top center, rgba(13, 242, 13, 0.1) 0%, transparent 26%),
-      linear-gradient(180deg, rgba(8, 17, 8, 0.88) 0%, rgba(10, 18, 10, 0.96) 100%);
+      radial-gradient(circle at top center, rgba(83, 252, 24, 0.08) 0%, transparent 26%),
+      linear-gradient(180deg, rgba(8, 8, 8, 0.9) 0%, rgba(8, 8, 8, 0.97) 100%);
   }
 
   .public-page::before {
     opacity: 0.32;
     background-image:
       linear-gradient(180deg, rgba(242, 254, 215, 0.03) 0%, transparent 22%),
-      repeating-linear-gradient(90deg, rgba(178, 252, 21, 0.018) 0 1px, transparent 1px 42px),
+      repeating-linear-gradient(90deg, rgba(83, 252, 24, 0.018) 0 1px, transparent 1px 42px),
       repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 42px);
   }
 
   .public-chrome {
-    background-color: rgba(8, 17, 8, 0.82);
+    background-color: rgba(8, 8, 8, 0.88);
     backdrop-filter: blur(14px);
   }
 
@@ -285,8 +285,22 @@
     opacity: 0.35;
     background-image:
       linear-gradient(180deg, rgba(242, 254, 215, 0.05) 0%, transparent 100%),
-      repeating-linear-gradient(135deg, rgba(178, 252, 21, 0.018) 0 1px, transparent 1px 30px);
+      repeating-linear-gradient(135deg, rgba(83, 252, 24, 0.018) 0 1px, transparent 1px 30px);
   }
+}
+
+/* Topographic ripple — slow expanding pulse behind hero logo */
+@keyframes topo-ripple {
+  0%, 100% { background-size: 100% 100%; opacity: 0.07; }
+  50%       { background-size: 160% 160%; opacity: 0.04; }
+}
+
+.topo-ripple {
+  animation: topo-ripple 10s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topo-ripple { animation: none; }
 }
 
 /* Logo entrance + shine (see docs/logo-animation-plan.md) */
@@ -506,5 +520,33 @@
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+}
+
+/* Social marquee animations */
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 60s linear infinite;
+  will-change: transform;
+  width: max-content;
+}
+.animate-marquee-right {
+  animation: marquee-right 60s linear infinite;
+  will-change: transform;
+  width: max-content;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none;
   }
 }

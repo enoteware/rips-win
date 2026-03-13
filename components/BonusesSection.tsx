@@ -42,7 +42,7 @@ export function BonusesSection({
     <section className={className}>
       <div className={containerClassName}>
         <div className="mb-12 text-center">
-          <TitleTag className="text-4xl font-black uppercase tracking-tighter italic md:text-5xl">{title}</TitleTag>
+          <TitleTag className="text-5xl font-black uppercase tracking-tighter italic md:text-7xl">{title}</TitleTag>
           {subtitle ? <p className="mt-3 text-lg text-muted-foreground">{subtitle}</p> : null}
         </div>
 

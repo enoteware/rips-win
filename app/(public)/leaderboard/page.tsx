@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { getMetadata, getLeaderboard } from '@/lib/db';
 import { getSiteSettingsWithFallback } from '@/lib/site-settings';
 import { MonolithLeaderboard } from '@/components/MonolithLeaderboard';
+import { LeaderboardCountdown } from '@/components/LeaderboardCountdown';
 
 export default async function LeaderboardPage() {
   const period = 'all_time';
@@ -45,11 +46,13 @@ export default async function LeaderboardPage() {
           </div>
           <div className="bg-card border border-border-dark p-5 rounded-xl col-span-2 md:col-span-1">
             <p className="text-muted-foreground text-xs font-bold uppercase tracking-widest mb-1">Period</p>
-            <p className="text-2xl font-bold text-foreground">All time</p>
+            <p className="text-2xl font-bold text-foreground">Monthly</p>
           </div>
         </div>
 
-        {/* Leaderboard table */}
+        {/* Countdown */}
+        <LeaderboardCountdown />
+
         {/* Leaderboard */}
         <MonolithLeaderboard entries={entries} />
       </div>

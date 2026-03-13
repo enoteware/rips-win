@@ -8,12 +8,13 @@ export interface HeroSectionProps {
   subtitle: string;
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
+  /** Anchor id of the next section for "Explore More" chevron */
+  exploreAnchor?: string;
   className?: string;
 }
 
 /**
- * Stitch-aligned hero: logo, headline, subtitle, two CTAs.
- * Uses theme tokens (primary, border-border-dark, bg-card, etc.) for reuse.
+ * Cabrzy-style full-viewport hero: giant logo, tagline, two CTAs, explore-more chevron.
  */
 export function HeroSection({
   logo,
@@ -21,41 +22,78 @@ export function HeroSection({
   subtitle,
   primaryCta,
   secondaryCta,
+  exploreAnchor = "leaderboard",
   className,
 }: HeroSectionProps) {
   return (
     <section
       className={cn(
-        "public-hero py-24 lg:py-32 border-b border-border-dark",
+        "public-hero min-h-[100dvh] flex flex-col border-b border-border-dark",
         className
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col items-center text-center">
-          <div className="mb-8 p-4 bg-primary/5 rounded-full border border-primary/20">
-            {logo}
-          </div>
-          <h1 className="font-display text-5xl md:text-7xl font-black tracking-tight mb-6 uppercase italic">
-            {title}
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mb-10">
-            {subtitle}
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href={primaryCta.href}
-              className="bg-primary text-primary-foreground px-10 py-4 rounded-xl font-black text-lg hover:scale-105 transition-transform glow-primary inline-block"
-            >
-              {primaryCta.label}
-            </Link>
-            <Link
-              href={secondaryCta.href}
-              className="bg-card border border-border-dark px-10 py-4 rounded-xl font-black text-lg hover:bg-border-dark transition-colors inline-block"
-            >
-              {secondaryCta.label}
-            </Link>
-          </div>
+      {/* Topographic contour lines overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.06]"
+        style={{
+          backgroundImage: `repeating-radial-gradient(ellipse at 50% 40%, transparent, transparent 48px, rgba(178,252,21,0.6) 48px, rgba(178,252,21,0.6) 49px)`,
+        }}
+      />
+
+      {/* sr-only h1 for SEO */}
+      <h1 className="sr-only">{title}</h1>
+
+      {/* Main content — centered */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 pt-16">
+        {/* Logo — large, no bubble */}
+        <div className="mb-8 drop-shadow-glow-logo">
+          {logo}
         </div>
+
+        {/* Tagline */}
+        <p className="font-mono text-xs md:text-sm uppercase tracking-[0.35em] text-muted-foreground mb-10">
+          {subtitle}
+        </p>
+
+        {/* CTAs */}
+        <div className="flex flex-wrap justify-center gap-4">
+          <Link
+            href={primaryCta.href}
+            className="bg-primary text-primary-foreground px-10 py-4 rounded-xl font-black text-base uppercase tracking-widest hover:scale-105 transition-transform shadow-glow-lg inline-block"
+          >
+            {primaryCta.label}
+          </Link>
+          <Link
+            href={secondaryCta.href}
+            className="bg-transparent border border-border-dark px-10 py-4 rounded-xl font-black text-base uppercase tracking-widest hover:bg-white/5 transition-colors inline-block"
+          >
+            {secondaryCta.label}
+          </Link>
+        </div>
+      </div>
+
+      {/* Explore More anchor */}
+      <div className="pb-10 flex flex-col items-center gap-2 relative z-10">
+        <a
+          href={`#${exploreAnchor}`}
+          className="flex flex-col items-center gap-1 group text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Explore More</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="animate-bounce"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </a>
       </div>
     </section>
   );

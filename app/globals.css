@@ -289,6 +289,20 @@
   }
 }
 
+/* Topographic ripple — slow expanding pulse behind hero logo */
+@keyframes topo-ripple {
+  0%, 100% { background-size: 100% 100%; opacity: 0.07; }
+  50%       { background-size: 160% 160%; opacity: 0.04; }
+}
+
+.topo-ripple {
+  animation: topo-ripple 10s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topo-ripple { animation: none; }
+}
+
 /* Logo entrance + shine (see docs/logo-animation-plan.md) */
 @keyframes logo-pop-in {
   from {

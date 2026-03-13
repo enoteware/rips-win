@@ -33,10 +33,11 @@ export function HeroSection({
       )}
     >
       {/* Topographic contour lines overlay */}
+      {/* Topographic contour lines — animated slow pulse */}
       <div
-        className="pointer-events-none absolute inset-0 z-0 opacity-[0.06]"
+        className="topo-ripple pointer-events-none absolute inset-0 z-0 opacity-[0.07]"
         style={{
-          backgroundImage: `repeating-radial-gradient(ellipse at 50% 40%, transparent, transparent 48px, rgba(178,252,21,0.6) 48px, rgba(178,252,21,0.6) 49px)`,
+          backgroundImage: `repeating-radial-gradient(ellipse at 50% 40%, transparent, transparent 48px, rgba(83,252,24,0.55) 48px, rgba(83,252,24,0.55) 49px)`,
         }}
       />
 

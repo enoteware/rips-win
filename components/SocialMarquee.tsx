@@ -76,25 +76,41 @@ function BrandTile({ title, hex, path }: { title: string; hex: string; path: str
   );
 }
 
-// 3 repeats of 8 icons = 24 icons = ~1632px, fills any viewport
-// Then doubled so -50% = exactly one set — perfectly seamless
-const SET = [...ICONS, ...ICONS, ...ICONS];
-const ROW1 = [...SET, ...SET];
-const ROW2 = [...[...ICONS].reverse(), ...[...ICONS].reverse(), ...[...ICONS].reverse(),
-              ...[...ICONS].reverse(), ...[...ICONS].reverse(), ...[...ICONS].reverse()];
+function buildRows(icons: typeof ICONS) {
+  // Need enough tiles to fill any viewport seamlessly.
+  // Duplicate until we have at least 16 tiles per set, then double for the seamless loop.
+  const minTiles = Math.max(16, icons.length);
+  const repeats = Math.ceil(minTiles / icons.length);
+  const set = Array.from({ length: repeats * 2 }, () => icons).flat();
+  const row1 = [...set, ...set];
+  const reversed = [...icons].reverse();
+  const setR = Array.from({ length: repeats * 2 }, () => reversed).flat();
+  const row2 = [...setR, ...setR];
+  return { row1, row2 };
+}
 
-export function SocialMarquee() {
+interface SocialMarqueeProps {
+  platforms?: string[]; // lowercase platform names from DB; if omitted, show all
+}
+
+export function SocialMarquee({ platforms }: SocialMarqueeProps) {
+  const visibleIcons = platforms && platforms.length > 0
+    ? ICONS.filter((icon) => platforms.includes(icon.title.toLowerCase()))
+    : ICONS;
+
+  const { row1, row2 } = buildRows(visibleIcons);
+
   return (
     <div className="w-full overflow-hidden py-2 space-y-3 select-none" aria-hidden>
       {/* Row 1 — scrolls left */}
       <div className="flex animate-marquee-left" style={{ width: 'max-content' }}>
-        {ROW1.map((icon, i) => (
+        {row1.map((icon, i) => (
           <BrandTile key={`r1-${i}`} {...icon} />
         ))}
       </div>
       {/* Row 2 — scrolls right */}
       <div className="flex animate-marquee-right" style={{ width: 'max-content' }}>
-        {ROW2.map((icon, i) => (
+        {row2.map((icon, i) => (
           <BrandTile key={`r2-${i}`} {...icon} />
         ))}
       </div>

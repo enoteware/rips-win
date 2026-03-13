@@ -45,6 +45,19 @@ export function SiteHeader() {
                 </Link>
               ))}
             </nav>
+            {/* LIVE NOW — spoofed, links to Kick stream */}
+            <a
+              href="https://kick.com/rips"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:inline-flex items-center gap-2 rounded-xl border-2 border-[#C62828] bg-[#E53935] text-white font-black text-sm uppercase tracking-wide px-4 py-2.5 transition-all hover:scale-[1.03]"
+            >
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
+              </span>
+              Live Now
+            </a>
             <Button asChild variant="site" className="hidden h-auto px-5 py-3 md:inline-flex">
               <Link href="/bonuses">CLAIM BONUSES</Link>
             </Button>

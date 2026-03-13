@@ -23,6 +23,10 @@ interface BonusesSectionProps {
   gridClassName?: string;
   emptyMessage?: string;
   showDisclaimer?: boolean;
+  /** When true, hides headline/description/badge below image — image carries the card */
+  compactCards?: boolean;
+  /** Render a stacked text list of all bonuses below the cards */
+  showTextList?: boolean;
 }
 
 export function BonusesSection({
@@ -35,6 +39,8 @@ export function BonusesSection({
   gridClassName = 'mx-auto grid max-w-4xl gap-8 md:grid-cols-2',
   emptyMessage = 'No bonuses available at the moment. Check back soon!',
   showDisclaimer = true,
+  compactCards = false,
+  showTextList = false,
 }: BonusesSectionProps) {
   const TitleTag = titleAs;
 
@@ -72,26 +78,28 @@ export function BonusesSection({
                   </div>
                 ) : null}
 
-                <div className="flex flex-1 flex-col p-6">
-                  {card.subtitle ? (
+                <div className="flex flex-1 flex-col p-4">
+                  {!compactCards && card.subtitle ? (
                     <p className="mb-1 text-xs font-bold uppercase tracking-widest text-muted-foreground">
                       {card.subtitle}
                     </p>
                   ) : null}
-                  <h3 className="text-2xl font-black uppercase italic tracking-tighter">{card.headline}</h3>
-                  {card.badgeText ? (
+                  {!compactCards ? (
+                    <h3 className="text-2xl font-black uppercase italic tracking-tighter">{card.headline}</h3>
+                  ) : null}
+                  {!compactCards && card.badgeText ? (
                     <span className="mt-2 inline-block w-fit rounded border border-primary/20 bg-primary/10 px-2 py-1 text-xs font-bold uppercase text-primary">
                       {card.badgeText}
                     </span>
                   ) : null}
                   {card.promoCode ? (
-                    <div className="mt-3 flex items-center gap-2">
+                    <div className="mt-2 flex items-center gap-2">
                       <span className="text-sm text-muted-foreground">Use Code:</span>
                       <span className="font-mono font-black text-primary">{card.promoCode}</span>
                     </div>
                   ) : null}
-                  {card.description ? <p className="mt-3 text-sm text-muted-foreground">{card.description}</p> : null}
-                  <div className="mt-auto pt-6">
+                  {!compactCards && card.description ? <p className="mt-3 text-sm text-muted-foreground">{card.description}</p> : null}
+                  <div className="mt-auto pt-4">
                     <span className="glow-primary block w-full rounded-xl bg-primary px-6 py-3 text-center font-black uppercase tracking-widest text-primary-foreground transition-transform group-hover:scale-105">
                       {card.ctaText}
                     </span>
@@ -101,6 +109,39 @@ export function BonusesSection({
             ))}
           </div>
         )}
+
+        {showTextList && cards.length > 0 ? (
+          <div className="mx-auto mt-16 max-w-3xl">
+            <h3 className="mb-6 text-center font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">All Bonuses</h3>
+            <div className="flex flex-col divide-y divide-border-dark">
+              {cards.map((card) => (
+                <a
+                  key={`list-${card.id}`}
+                  href={card.ctaLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between gap-4 py-5 transition-colors hover:bg-white/[0.02] px-4"
+                >
+                  <div className="flex flex-col gap-1">
+                    {card.subtitle ? (
+                      <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{card.subtitle}</span>
+                    ) : null}
+                    <span className="font-black uppercase italic tracking-tight text-lg">{card.headline}</span>
+                    {card.promoCode ? (
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-muted-foreground">Code:</span>
+                        <span className="font-mono font-black text-primary text-sm">{card.promoCode}</span>
+                      </div>
+                    ) : null}
+                  </div>
+                  <span className="shrink-0 rounded-xl border border-primary/30 bg-primary/10 px-4 py-2 font-black text-xs uppercase tracking-widest text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    {card.ctaText}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         {showDisclaimer ? (
           <p className="mt-10 text-center text-xs text-muted-foreground">

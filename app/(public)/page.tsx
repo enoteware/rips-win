@@ -98,8 +98,10 @@ export default async function Home() {
         title={<>Enjoy Exclusive <span className="text-primary">Bonuses</span></>}
         className="public-section py-20 border-t border-border-dark"
         containerClassName="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        gridClassName="mx-auto grid max-w-6xl gap-8 md:grid-cols-2 xl:grid-cols-3"
+        gridClassName="mx-auto flex flex-wrap justify-center max-w-6xl gap-8 [&>*]:w-full [&>*]:md:w-[calc(50%-1rem)] [&>*]:xl:w-[calc(33.333%-1.375rem)]"
         showDisclaimer={false}
+        compactCards
+        showTextList
       />
 
       <VideosSection clips={clips} />

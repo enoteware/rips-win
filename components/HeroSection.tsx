@@ -45,14 +45,14 @@ export function HeroSection({
       <h1 className="sr-only">{title}</h1>
 
       {/* Main content — centered */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 pt-16">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10 pb-[20vh]">
         {/* Logo — large, no bubble */}
-        <div className="mb-8 drop-shadow-glow-logo">
+        <div className="mb-6 drop-shadow-glow-logo">
           {logo}
         </div>
 
         {/* Tagline */}
-        <p className="font-mono text-xs md:text-sm uppercase tracking-[0.35em] text-muted-foreground mb-10">
+        <p className="font-mono text-xs md:text-sm uppercase tracking-[0.35em] text-muted-foreground mb-8">
           {subtitle}
         </p>
 

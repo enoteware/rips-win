@@ -8,6 +8,7 @@ import { getBonusCards } from '@/lib/bonuses';
 import { getClips } from '@/lib/clips';
 import { getSocialLinks } from '@/lib/social-links';
 import { getStakeContext } from '@/lib/market';
+import { getSiteSettingsWithFallback } from '@/lib/site-settings';
 import { resolveStakeUrlForMarket } from '@/lib/stake';
 import { BonusesSection } from '@/components/BonusesSection';
 import { HeroSection } from '@/components/HeroSection';
@@ -18,13 +19,14 @@ import { CommunitySection } from '@/components/CommunitySection';
 
 export default async function Home() {
   const period = 'all_time';
-  const [entries, metadata, bonusCards, clips, socialLinks, stakeContext] = await Promise.all([
+  const [entries, metadata, bonusCards, clips, socialLinks, stakeContext, site] = await Promise.all([
     getLeaderboard(period, true),
     getMetadata(period),
     getBonusCards(true),
     getClips(true),
     getSocialLinks(true),
     getStakeContext(),
+    getSiteSettingsWithFallback(),
   ]);
 
   const homepageBonusItems = bonusCards.map((card) => ({
@@ -66,9 +68,22 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
           <div className="flex flex-col items-center text-center relative z-10 gap-3">
             {/* Prize pool amount — Cabrzy-style giant neon number */}
-            <div className="font-display text-7xl md:text-9xl font-black text-primary drop-shadow-glow-logo leading-none tracking-tighter italic">
-              $1,000
-            </div>
+            {site.prize_pool && (
+              <span
+                className="font-display text-[4.5rem] sm:text-[7rem] md:text-[9rem] lg:text-[11rem] font-black text-primary inline-block leading-[0.9]"
+                style={{
+                  textShadow:
+                    '0 0 20px rgba(83, 252, 24, 0.9), ' +
+                    '0 0 60px rgba(83, 252, 24, 0.6), ' +
+                    '0 0 120px rgba(83, 252, 24, 0.4), ' +
+                    '0 0 200px rgba(83, 252, 24, 0.2), ' +
+                    '0 0 300px rgba(83, 252, 24, 0.1)',
+                  WebkitTextStroke: '1px rgba(83, 252, 24, 0.3)',
+                }}
+              >
+                {site.prize_pool}
+              </span>
+            )}
             <h2 className="font-display text-2xl md:text-4xl font-black uppercase tracking-widest italic text-foreground/90">
               Monthly Leaderboard
             </h2>

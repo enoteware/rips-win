@@ -1,18 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import { formatMoney } from "@/lib/utils";
 
 const PRIZES: Record<number, number> = {
-  1: 350,
-  2: 200,
-  3: 125,
-  4: 90,
-  5: 70,
-  6: 50,
-  7: 40,
-  8: 30,
-  9: 25,
-  10: 20,
+  1: 75000, 2: 25000, 3: 12500,
+  4: 3000, 5: 2500, 6: 2000, 7: 1750, 8: 1500, 9: 1250, 10: 1000,
+  11: 900, 12: 900, 13: 900, 14: 900, 15: 900,
+  16: 800, 17: 800,
+  18: 700, 19: 700, 20: 700, 21: 700, 22: 700,
+  23: 500, 24: 500, 25: 500, 26: 500, 27: 500, 28: 500,
+  29: 400, 30: 400, 31: 400, 32: 400, 33: 400, 34: 400, 35: 400, 36: 400, 37: 400, 38: 400,
+  39: 300, 40: 300, 41: 300, 42: 300, 43: 300, 44: 300, 45: 300,
+  46: 200, 47: 200, 48: 200, 49: 200, 50: 200, 51: 200,
+  52: 150, 53: 150, 54: 150, 55: 150, 56: 150, 57: 150, 58: 150, 59: 150, 60: 150, 61: 150,
+  62: 125, 63: 125, 64: 125, 65: 125, 66: 125, 67: 125, 68: 125, 69: 125, 70: 125, 71: 125,
+  72: 100, 73: 100, 74: 100, 75: 100, 76: 100, 77: 100, 78: 100, 79: 100, 80: 100, 81: 100,
+  82: 75, 83: 75, 84: 75, 85: 75, 86: 75, 87: 75, 88: 75, 89: 75, 90: 75, 91: 75,
+  92: 50, 93: 50, 94: 50, 95: 50, 96: 50, 97: 50, 98: 50, 99: 50, 100: 50, 101: 50,
 };
 
 interface Entry {
@@ -23,142 +28,138 @@ interface Entry {
   avatar_url?: string | null;
 }
 
+function PodiumCard({
+  entry,
+  rank,
+  size,
+}: {
+  entry: Entry | undefined;
+  rank: 1 | 2 | 3;
+  size: "lg" | "sm";
+}) {
+  const colors: Record<number, { text: string; glow: string; border: string }> = {
+    1: { text: "text-primary", glow: "shadow-[0_0_40px_rgba(83,252,24,0.15)]", border: "border-primary/40" },
+    2: { text: "text-[#C0C0C0]", glow: "", border: "border-[#C0C0C0]/30" },
+    3: { text: "text-[#CD7F32]", glow: "", border: "border-[#CD7F32]/30" },
+  };
+  const c = colors[rank];
+  const isLg = size === "lg";
+
+  return (
+    <div
+      className={`
+        relative flex flex-col items-center justify-end
+        bg-background-dark border ${c.border} rounded-lg
+        ${isLg ? "min-h-[280px] md:min-h-[340px] p-8 md:p-10" : "min-h-[220px] md:min-h-[280px] p-6 md:p-8"}
+        ${isLg ? c.glow : ""}
+        transition-transform duration-300 hover:-translate-y-1
+      `}
+    >
+      {/* Rank badge */}
+      <div className={`${isLg ? "mb-5" : "mb-4"}`}>
+        <Image
+          src={`/rank/rank-${rank}.svg`}
+          alt={`Rank ${rank}`}
+          width={isLg ? 64 : 48}
+          height={isLg ? 64 : 48}
+          className="drop-shadow-lg"
+        />
+      </div>
+
+      {/* Player name */}
+      <div className={`font-display font-bold text-center uppercase tracking-tight mb-1 ${isLg ? "text-xl md:text-2xl" : "text-lg md:text-xl"} ${rank === 1 ? c.text : "text-foreground"}`}>
+        {entry?.player_name || "---"}
+      </div>
+
+      {/* Wagered label + amount */}
+      <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-1">
+        Wagered
+      </div>
+      <div className="font-mono text-sm text-muted-foreground">
+        {entry ? formatMoney(entry.total_wagered) : "---"}
+      </div>
+
+      {/* Prize */}
+      {entry && PRIZES[rank] && (
+        <div className={`font-mono text-sm font-bold mt-3 ${c.text}`}>
+          ${PRIZES[rank].toLocaleString()}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function MonolithLeaderboard({ entries }: { entries: Entry[] }) {
   const top3 = entries.slice(0, 3);
   const rest = entries.slice(3);
-  const second = top3[1];
   const first = top3[0];
+  const second = top3[1];
   const third = top3[2];
 
-  // Mouse move effect for sheen
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const item = e.currentTarget;
-    const rect = item.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    const sheen = item.querySelector(".sheen") as HTMLElement;
-    if (sheen) {
-      sheen.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(13, 242, 13, 0.15) 0%, transparent 60%)`;
-    }
-  };
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    const item = e.currentTarget;
-    const sheen = item.querySelector(".sheen") as HTMLElement;
-    if (sheen) {
-      sheen.style.background = `linear-gradient(125deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%)`;
-    }
-  };
-
   return (
-    <div className="relative w-full max-w-5xl mx-auto flex flex-col gap-8">
-      {/* Background Grain */}
-      <div 
-        className="pointer-events-none absolute -inset-10 z-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-        }} 
-      />
-
-      {/* Podium */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 relative z-10 w-full animate-in fade-in slide-in-from-bottom-8 duration-700">
-        {/* Silver */}
-        <div 
-          className="bg-gradient-to-b from-surface-dark to-background-dark border border-border-dark p-6 md:p-10 relative flex flex-col items-center justify-end min-h-[220px] md:min-h-[280px] overflow-hidden transition-transform duration-400 hover:-translate-y-1 hover:border-white/10 group border-t-2 border-t-podium-2 md:order-1 order-2"
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          <div 
-            className="sheen absolute inset-0 pointer-events-none bg-[size:200%_200%]"
-            style={{ background: `linear-gradient(125deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%)` }}
-          />
-<span className="font-display text-5xl md:text-[4rem] font-light absolute top-4 left-6 md:-top-2 md:left-2 opacity-10">02</span>
-          
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 mb-3 z-10 text-podium-2 opacity-90"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-
-          <div className="font-display font-bold text-lg md:text-xl text-center mb-2 z-10 uppercase tracking-tight">{second?.player_name || '---'}</div>
-          <div className="font-mono text-muted-foreground text-sm z-10">{second ? formatMoney(second.total_wagered) : '---'}</div>
-          {second && <div className="font-mono text-xs font-bold text-podium-2 bg-podium-2/10 border border-podium-2/20 px-2 py-0.5 mt-2 z-10">${PRIZES[2]}</div>}
+    <div className="w-full max-w-5xl mx-auto flex flex-col gap-8">
+      {/* Top 3 Podium: 2nd - 1st - 3rd */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+        {/* 2nd place */}
+        <div className="md:order-1 order-2">
+          <PodiumCard entry={second} rank={2} size="sm" />
         </div>
-
-        {/* Gold */}
-        <div 
-          className="bg-gradient-to-b from-surface-dark to-background-dark border border-border-dark p-6 md:p-10 relative flex flex-col items-center justify-end min-h-[260px] md:min-h-[340px] md:-mt-[40px] overflow-hidden transition-transform duration-400 hover:-translate-y-1 hover:border-white/10 group border-t-2 border-t-primary shadow-glow-lg md:order-2 order-1"
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          <div 
-            className="sheen absolute inset-0 pointer-events-none bg-[size:200%_200%]"
-            style={{ background: `linear-gradient(125deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%)` }}
-          />
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-<span className="font-display text-5xl md:text-[4rem] font-light absolute top-4 left-6 md:-top-2 md:left-2 opacity-[0.15] text-primary">01</span>
-          
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 md:w-16 md:h-16 mb-4 z-10 text-primary drop-shadow-glow-logo"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
-
-          <div className="font-display font-black text-xl md:text-2xl text-center mb-2 z-10 text-primary drop-shadow-glow-logo uppercase tracking-tighter">{first?.player_name || '---'}</div>
-          <div className="font-mono text-muted-foreground text-sm z-10">{first ? formatMoney(first.total_wagered) : '---'}</div>
-          {first && <div className="font-mono text-xs font-bold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 mt-2 z-10">${PRIZES[1]}</div>}
+        {/* 1st place */}
+        <div className="md:order-2 order-1">
+          <PodiumCard entry={first} rank={1} size="lg" />
         </div>
-
-        {/* Bronze */}
-        <div 
-          className="bg-gradient-to-b from-surface-dark to-background-dark border border-border-dark p-6 md:p-10 relative flex flex-col items-center justify-end min-h-[220px] md:min-h-[240px] overflow-hidden transition-transform duration-400 hover:-translate-y-1 hover:border-white/10 group border-t-2 border-t-podium-3 md:order-3 order-3"
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          <div 
-            className="sheen absolute inset-0 pointer-events-none bg-[size:200%_200%]"
-            style={{ background: `linear-gradient(125deg, transparent 45%, rgba(255,255,255,0.03) 50%, transparent 55%)` }}
-          />
-<span className="font-display text-5xl md:text-[4rem] font-light absolute top-4 left-6 md:-top-2 md:left-2 opacity-10">03</span>
-          
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10 md:w-14 md:h-14 mb-3 z-10 text-podium-3 opacity-90"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-
-          <div className="font-display font-bold text-lg md:text-xl text-center mb-2 z-10 uppercase tracking-tight">{third?.player_name || '---'}</div>
-          <div className="font-mono text-muted-foreground text-sm z-10">{third ? formatMoney(third.total_wagered) : '---'}</div>
-          {third && <div className="font-mono text-xs font-bold text-podium-3 bg-podium-3/10 border border-podium-3/20 px-2 py-0.5 mt-2 z-10">${PRIZES[3]}</div>}
+        {/* 3rd place */}
+        <div className="md:order-3 order-3">
+          <PodiumCard entry={third} rank={3} size="sm" />
         </div>
       </section>
 
-      {/* List container */}
-      <section className="flex flex-col border border-border-dark bg-background-dark/50 relative z-10 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 fill-mode-both">
-        {rest.length === 0 ? (
-            <div className="p-8 text-center text-muted-foreground font-mono">No supplementary strata found.</div>
-        ) : rest.map((entry) => (
-            <div
-                key={entry.id}
-                className="grid grid-cols-[50px_1fr_auto_auto] md:grid-cols-[80px_1fr_auto_auto] items-center p-4 md:p-5 md:px-8 gap-x-3 md:gap-x-5 border-b border-border-dark last:border-b-0 transition-all duration-300 relative hover:bg-white/5 hover:pl-6 md:hover:pl-10 group"
-            >
-                {/* Hover Line */}
-                <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                {/* Rank */}
-                <span className="font-mono text-muted-foreground text-sm md:text-base">
-                    {entry.rank.toString().padStart(2, '0')}
-                </span>
-
-                {/* Player Name */}
-                <span className="font-display font-semibold text-base md:text-lg tracking-tight flex items-center gap-3 uppercase">
-                    {entry.player_name || 'Unknown'}
-                </span>
-
-                {/* Score */}
-                <span className="font-mono text-right text-sm md:text-base text-foreground font-medium">
+      {/* Table for rank 4+ */}
+      {rest.length > 0 && (
+        <section className="border border-border-dark rounded-lg overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-surface-dark/50 border-b border-border-dark">
+                <th className="text-left font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground py-3 px-4 md:px-6 w-16">
+                  Rank
+                </th>
+                <th className="text-left font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground py-3 px-4 md:px-6">
+                  User
+                </th>
+                <th className="text-right font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground py-3 px-4 md:px-6">
+                  Wagered
+                </th>
+                <th className="text-right font-mono text-xs font-bold uppercase tracking-widest text-muted-foreground py-3 px-4 md:px-6 w-24">
+                  Prize
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {rest.map((entry) => (
+                <tr
+                  key={entry.id}
+                  className="border-b border-border-dark last:border-b-0 hover:bg-white/[0.02] transition-colors"
+                >
+                  <td className="font-mono text-sm text-muted-foreground py-3 px-4 md:px-6">
+                    {entry.rank}
+                  </td>
+                  <td className="font-display font-semibold text-sm md:text-base text-foreground uppercase tracking-tight py-3 px-4 md:px-6">
+                    {entry.player_name || "Unknown"}
+                  </td>
+                  <td className="font-mono text-sm text-foreground text-right py-3 px-4 md:px-6">
                     {formatMoney(entry.total_wagered)}
-                </span>
-
-                {/* Prize */}
-                {PRIZES[entry.rank] ? (
-                    <span className="font-mono text-xs font-bold text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 whitespace-nowrap">
-                        ${PRIZES[entry.rank]}
-                    </span>
-                ) : (
-                    <span />
-                )}
-            </div>
-        ))}
-      </section>
+                  </td>
+                  <td className="font-mono text-sm font-bold text-primary text-right py-3 px-4 md:px-6">
+                    {PRIZES[entry.rank]
+                      ? `$${PRIZES[entry.rank].toLocaleString()}`
+                      : ""}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      )}
     </div>
   );
 }

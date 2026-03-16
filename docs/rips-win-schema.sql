@@ -152,3 +152,13 @@ VALUES
   ('RipsKing', 1, 125000.00, 15000.00, 12, 'both', 'all_time', true),
   ('StakeLegend', 2, 98000.00, 12500.00, 8, 'stake_com', 'all_time', true),
   ('CasinoWhale', 3, 87500.00, 11000.00, 5, 'stake_us', 'all_time', true);
+
+-- Migration: Add prize_pool to site_settings
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS prize_pool TEXT;
+
+-- Migration: Add month_key to leaderboard_entries for historical months
+ALTER TABLE leaderboard_entries ADD COLUMN IF NOT EXISTS month_key TEXT;
+CREATE INDEX IF NOT EXISTS idx_leaderboard_month_key ON leaderboard_entries(month_key, period, published);
+
+-- Backfill existing entries with current month
+UPDATE leaderboard_entries SET month_key = to_char(NOW(), 'YYYY-MM') WHERE month_key IS NULL;

@@ -20,6 +20,7 @@ export interface LeaderboardEntry {
   platform: 'stake_us' | 'stake_com' | 'both';
   period: 'daily' | 'weekly' | 'monthly' | 'all_time';
   published: boolean;
+  month_key?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -34,13 +35,29 @@ export interface LeaderboardMetadata {
 
 export async function getLeaderboard(
   period: string = 'all_time',
-  publishedOnly: boolean = true
+  publishedOnly: boolean = true,
+  monthKey?: string
 ): Promise<LeaderboardEntry[]> {
+  if (monthKey) {
+    const query = publishedOnly
+      ? `SELECT * FROM leaderboard_entries WHERE period = $1 AND published = true AND month_key = $2 ORDER BY rank ASC`
+      : `SELECT * FROM leaderboard_entries WHERE period = $1 AND month_key = $2 ORDER BY rank ASC`;
+    return await sql(query, [period, monthKey]) as LeaderboardEntry[];
+  }
+
   const query = publishedOnly
     ? `SELECT * FROM leaderboard_entries WHERE period = $1 AND published = true ORDER BY rank ASC`
     : `SELECT * FROM leaderboard_entries WHERE period = $1 ORDER BY rank ASC`;
-  
+
   return await sql(query, [period]) as LeaderboardEntry[];
+}
+
+export async function getAvailableMonths(period: string = 'all_time'): Promise<string[]> {
+  const result = await sql(
+    `SELECT DISTINCT month_key FROM leaderboard_entries WHERE period = $1 AND published = true AND month_key IS NOT NULL ORDER BY month_key DESC`,
+    [period]
+  ) as Array<{ month_key: string }>;
+  return result.map(r => r.month_key);
 }
 
 export async function getMetadata(period: string): Promise<LeaderboardMetadata | null> {
@@ -48,19 +65,19 @@ export async function getMetadata(period: string): Promise<LeaderboardMetadata |
     `SELECT * FROM leaderboard_metadata WHERE period = $1 LIMIT 1`,
     [period]
   ) as LeaderboardMetadata[];
-  
+
   return result[0] || null;
 }
 
 export async function updateMetadata(period: string, updatedBy: string): Promise<LeaderboardMetadata> {
   const result = await sql(
-    `UPDATE leaderboard_metadata 
-     SET last_updated = NOW(), last_updated_by = $1 
-     WHERE period = $2 
+    `UPDATE leaderboard_metadata
+     SET last_updated = NOW(), last_updated_by = $1
+     WHERE period = $2
      RETURNING *`,
     [updatedBy, period]
   ) as LeaderboardMetadata[];
-  
+
   return result[0];
 }
 
@@ -75,9 +92,9 @@ export async function createEntry(data: {
   avatar_url?: string;
 }): Promise<LeaderboardEntry> {
   const result = await sql(
-    `INSERT INTO leaderboard_entries 
-     (player_name, rank, total_wagered, biggest_win, current_streak, platform, period, avatar_url) 
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
+    `INSERT INTO leaderboard_entries
+     (player_name, rank, total_wagered, biggest_win, current_streak, platform, period, avatar_url)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
      RETURNING *`,
     [
       data.player_name,
@@ -90,7 +107,7 @@ export async function createEntry(data: {
       data.avatar_url || null,
     ]
   ) as LeaderboardEntry[];
-  
+
   return result[0];
 }
 
@@ -100,17 +117,17 @@ export async function updateEntry(
 ): Promise<LeaderboardEntry> {
   const fields = Object.keys(data).filter(k => k !== 'id');
   const values = fields.map(f => data[f as keyof typeof data]);
-  
+
   const setClause = fields.map((f, i) => `${f} = $${i + 1}`).join(', ');
-  
+
   const result = await sql(
-    `UPDATE leaderboard_entries 
-     SET ${setClause}, updated_at = NOW() 
-     WHERE id = $${fields.length + 1} 
+    `UPDATE leaderboard_entries
+     SET ${setClause}, updated_at = NOW()
+     WHERE id = $${fields.length + 1}
      RETURNING *`,
     [...values, id]
   ) as LeaderboardEntry[];
-  
+
   return result[0];
 }
 
@@ -124,7 +141,7 @@ export async function publishPeriod(period: string, updatedBy: string): Promise<
     `UPDATE leaderboard_entries SET published = true WHERE period = $1`,
     [period]
   );
-  
+
   // Update metadata
   await updateMetadata(period, updatedBy);
 }
@@ -151,8 +168,8 @@ export async function createEntries(
   let inserted = 0;
   for (const e of entries) {
     await sql(
-      `INSERT INTO leaderboard_entries 
-       (player_name, rank, total_wagered, biggest_win, current_streak, platform, period, avatar_url, published) 
+      `INSERT INTO leaderboard_entries
+       (player_name, rank, total_wagered, biggest_win, current_streak, platform, period, avatar_url, published)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
       [
         e.player_name,

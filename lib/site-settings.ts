@@ -14,13 +14,14 @@ export interface SiteSettings {
   rakeback_pct: string | null;
   stake_us_link: string | null;
   stake_com_link: string | null;
+  prize_pool: string | null;
   updated_at: string;
 }
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     const result = await sql(
-      `SELECT id, welcome_code, rakeback_pct, stake_us_link, stake_com_link, updated_at FROM site_settings WHERE id = 1 LIMIT 1`
+      `SELECT id, welcome_code, rakeback_pct, stake_us_link, stake_com_link, prize_pool, updated_at FROM site_settings WHERE id = 1 LIMIT 1`
     ) as SiteSettings[];
     const row = result[0] ?? null;
     if (row) {
@@ -44,6 +45,7 @@ export async function getSiteSettingsWithFallback(): Promise<{
   rakeback_pct: string;
   stake_us_link: string;
   stake_com_link: string;
+  prize_pool: string;
 }> {
   try {
     const row = await getSiteSettings();
@@ -52,6 +54,7 @@ export async function getSiteSettingsWithFallback(): Promise<{
       rakeback_pct: row?.rakeback_pct ?? process.env.NEXT_PUBLIC_RAKEBACK ?? '10',
       stake_us_link: row?.stake_us_link ?? process.env.NEXT_PUBLIC_STAKE_US_LINK ?? 'https://stake.us/',
       stake_com_link: row?.stake_com_link ?? process.env.NEXT_PUBLIC_STAKE_COM_LINK ?? 'https://stake.com/',
+      prize_pool: row?.prize_pool ?? '',
     };
   } catch (err) {
     console.error('[DB-ERROR] getSiteSettingsWithFallback', err);
@@ -60,6 +63,7 @@ export async function getSiteSettingsWithFallback(): Promise<{
       rakeback_pct: process.env.NEXT_PUBLIC_RAKEBACK ?? '10',
       stake_us_link: process.env.NEXT_PUBLIC_STAKE_US_LINK ?? 'https://stake.us/',
       stake_com_link: process.env.NEXT_PUBLIC_STAKE_COM_LINK ?? 'https://stake.com/',
+      prize_pool: '',
     };
   }
 }
@@ -69,6 +73,7 @@ export async function updateSiteSettings(data: {
   rakeback_pct?: string | null;
   stake_us_link?: string | null;
   stake_com_link?: string | null;
+  prize_pool?: string | null;
 }): Promise<SiteSettings> {
   try {
     const result = await sql(
@@ -77,14 +82,16 @@ export async function updateSiteSettings(data: {
            rakeback_pct = COALESCE($2, rakeback_pct),
            stake_us_link = COALESCE($3, stake_us_link),
            stake_com_link = COALESCE($4, stake_com_link),
+           prize_pool = COALESCE($5, prize_pool),
            updated_at = NOW()
        WHERE id = 1
-       RETURNING id, welcome_code, rakeback_pct, stake_us_link, stake_com_link, updated_at`,
+       RETURNING id, welcome_code, rakeback_pct, stake_us_link, stake_com_link, prize_pool, updated_at`,
       [
         data.welcome_code ?? null,
         data.rakeback_pct ?? null,
         data.stake_us_link ?? null,
         data.stake_com_link ?? null,
+        data.prize_pool ?? null,
       ]
     ) as SiteSettings[];
     const row = result[0];

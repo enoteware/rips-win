@@ -23,6 +23,7 @@ export const siteSettingsSchema = z.object({
   rakeback_pct: z.string().max(20).nullable(),
   stake_us_link: z.string().url().max(500).nullable().or(z.literal('')),
   stake_com_link: z.string().url().max(500).nullable().or(z.literal('')),
+  prize_pool: z.string().max(50).nullable(),
 });
 
 export const bonusCardSchema = z.object({

@@ -27,6 +27,7 @@ export async function updateSiteSettingsAction(
     rakeback_pct: input.rakeback_pct ?? '',
     stake_us_link: input.stake_us_link === '' ? null : input.stake_us_link,
     stake_com_link: input.stake_com_link === '' ? null : input.stake_com_link,
+    prize_pool: input.prize_pool ?? '',
   });
   if (!parsed.success) {
     const msg = parsed.error.flatten().fieldErrors;
@@ -39,9 +40,11 @@ export async function updateSiteSettingsAction(
       rakeback_pct: parsed.data.rakeback_pct || null,
       stake_us_link: parsed.data.stake_us_link || null,
       stake_com_link: parsed.data.stake_com_link || null,
+      prize_pool: parsed.data.prize_pool || null,
     });
     revalidatePath('/admin/site');
     revalidatePath('/');
+    revalidatePath('/leaderboard');
     return { ok: true };
   } catch (err) {
     console.error('[DB-ERROR] updateSiteSettingsAction', err);

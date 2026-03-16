@@ -14,6 +14,7 @@ type Props = {
     rakeback_pct: string;
     stake_us_link: string;
     stake_com_link: string;
+    prize_pool: string;
   };
 };
 
@@ -34,6 +35,7 @@ export function SiteSettingsForm({ initial }: Props) {
       rakeback_pct: get('rakeback_pct') || null,
       stake_us_link: get('stake_us_link') || null,
       stake_com_link: get('stake_com_link') || null,
+      prize_pool: get('prize_pool') || null,
     });
     setLoading(false);
     if (result.ok) {
@@ -87,6 +89,15 @@ export function SiteSettingsForm({ initial }: Props) {
               type="url"
               defaultValue={initial.stake_com_link}
               placeholder="https://stake.com/"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="prize_pool">Prize pool (e.g. $150,000)</Label>
+            <Input
+              id="prize_pool"
+              name="prize_pool"
+              defaultValue={initial.prize_pool}
+              placeholder="e.g. $150,000"
             />
           </div>
           {message && (

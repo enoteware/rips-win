@@ -21,6 +21,7 @@ export default async function AdminSitePage() {
           rakeback_pct: settings?.rakeback_pct ?? '',
           stake_us_link: settings?.stake_us_link ?? '',
           stake_com_link: settings?.stake_com_link ?? '',
+          prize_pool: settings?.prize_pool ?? '',
         }}
       />
     </div>

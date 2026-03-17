@@ -86,6 +86,7 @@ Agent-to-task mappings and usage: see **`.claude/CLAUDE.md`** (configured by set
 - Hero dead-space is controlled via `pb-[20vh]` on the content wrapper. Adjust there, not via padding/margin on individual elements.
 - Topographic ripple animation class is `.topo-ripple` in `globals.css` — 10s ease-in-out loop. Respects `prefers-reduced-motion`.
 - Leaderboard prizes are frontend-only (no DB column) — stored in the `PRIZES` constant in `MonolithLeaderboard.tsx`.
+- Leaderboard entries require `month_key` (YYYY-MM) to appear on the public page — the public leaderboard filters by month. Admin create form defaults to current month; always ensure `month_key` is set when creating entries programmatically.
 - Social CTA buttons in `CommunitySection` use `rounded-full` pill + `›` chevron — they are custom `<a>` tags, NOT the base `Button` component. Do not apply `rounded-xl border-2` to them.
 - Stats cards use `bg-transparent border border-border-dark` (no fill). Do not re-add `bg-surface-dark`.
 - `SocialMarquee` accepts `platforms?: string[]` — pass `socialLinks.map(l => l.platform.toLowerCase())` to filter marquee to DB-defined platforms only. Hardcoded icons: YouTube, Kick, TikTok, Twitch, X, Snapchat, Discord, Instagram (title-cased, matched case-insensitively).

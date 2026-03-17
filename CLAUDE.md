@@ -86,3 +86,11 @@ Agent-to-task mappings and usage: see **`.claude/CLAUDE.md`** (configured by set
 - Hero dead-space is controlled via `pb-[20vh]` on the content wrapper. Adjust there, not via padding/margin on individual elements.
 - Topographic ripple animation class is `.topo-ripple` in `globals.css` — 10s ease-in-out loop. Respects `prefers-reduced-motion`.
 - Leaderboard prizes are frontend-only (no DB column) — stored in the `PRIZES` constant in `MonolithLeaderboard.tsx`.
+- Social CTA buttons in `CommunitySection` use `rounded-full` pill + `›` chevron — they are custom `<a>` tags, NOT the base `Button` component. Do not apply `rounded-xl border-2` to them.
+- Stats cards use `bg-transparent border border-border-dark` (no fill). Do not re-add `bg-surface-dark`.
+- `SocialMarquee` accepts `platforms?: string[]` — pass `socialLinks.map(l => l.platform.toLowerCase())` to filter marquee to DB-defined platforms only. Hardcoded icons: YouTube, Kick, TikTok, Twitch, X, Snapchat, Discord, Instagram (title-cased, matched case-insensitively).
+- Community section marquee is a background layer: `absolute inset-0 overflow-hidden pointer-events-none`, `opacity-20 grayscale`, top/bottom/left/right gradient fades, content overlaid `relative z-10 py-24`.
+- Marquee animation speed: 60s (`animate-marquee-left` / `animate-marquee-right` in `globals.css`). Do not revert to 30s.
+- Footer is a minimal single bar (no multi-column PLATFORM/SUPPORT/LEGAL): Logo left | `Home · Leaderboard · Bonuses` center | social icons right. See `SiteFooter.tsx`.
+- `bg-radial-[ellipse_at_center]` is Tailwind v4 syntax — does NOT work in this project (Tailwind v3). Use stacked gradient divs for vignette effects instead.
+- The `zoom` tool in Claude-in-Chrome returns black on dark backgrounds — use full `screenshot` instead for visual review of dark-themed sections.

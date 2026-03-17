@@ -90,11 +90,12 @@ export async function createEntry(data: {
   platform: string;
   period: string;
   avatar_url?: string;
+  month_key?: string;
 }): Promise<LeaderboardEntry> {
   const result = await sql(
     `INSERT INTO leaderboard_entries
-     (player_name, rank, total_wagered, biggest_win, current_streak, platform, period, avatar_url)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+     (player_name, rank, total_wagered, biggest_win, current_streak, platform, period, avatar_url, month_key)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
      RETURNING *`,
     [
       data.player_name,
@@ -105,6 +106,7 @@ export async function createEntry(data: {
       data.platform,
       data.period,
       data.avatar_url || null,
+      data.month_key || null,
     ]
   ) as LeaderboardEntry[];
 

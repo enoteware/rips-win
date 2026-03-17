@@ -56,6 +56,13 @@ export function LeaderboardAdmin({
   const [deletePending, setDeletePending] = useState<LeaderboardEntry | null>(null);
   const [publishDialogOpen, setPublishDialogOpen] = useState(false);
 
+  function getCurrentMonthKey(): string {
+    const now = new Date();
+    const y = now.getUTCFullYear();
+    const m = String(now.getUTCMonth() + 1).padStart(2, '0');
+    return `${y}-${m}`;
+  }
+
   async function handleCreate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
@@ -68,6 +75,7 @@ export function LeaderboardAdmin({
       platform: (form.querySelector('[name="platform"]') as HTMLSelectElement).value as (typeof PLATFORMS)[number],
       period: initialPeriod as 'daily' | 'weekly' | 'monthly' | 'all_time',
       avatar_url: (form.querySelector('[name="avatar_url"]') as HTMLInputElement).value || undefined,
+      month_key: (form.querySelector('[name="month_key"]') as HTMLInputElement).value || undefined,
     };
     const result = await createEntryAction(initialPeriod, data);
     if (result.ok) {
@@ -91,6 +99,7 @@ export function LeaderboardAdmin({
       current_streak: Number((form.querySelector('[name="current_streak"]') as HTMLInputElement).value),
       platform: (form.querySelector('[name="platform"]') as HTMLSelectElement).value as (typeof PLATFORMS)[number],
       avatar_url: (form.querySelector('[name="avatar_url"]') as HTMLInputElement).value || undefined,
+      month_key: (form.querySelector('[name="month_key"]') as HTMLInputElement).value || undefined,
     };
     const result = await updateEntryAction(id, data);
     if (result.ok) {
@@ -253,9 +262,13 @@ export function LeaderboardAdmin({
                   ))}
                 </select>
               </div>
-              <div className="space-y-2 sm:col-span-2">
+              <div className="space-y-2">
                 <Label htmlFor="add_avatar_url">Avatar URL (optional)</Label>
                 <Input id="add_avatar_url" name="avatar_url" type="url" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="add_month_key">Month (YYYY-MM)</Label>
+                <Input id="add_month_key" name="month_key" placeholder="2026-03" defaultValue={getCurrentMonthKey()} />
               </div>
               <div className="flex items-end">
                 <Button type="submit">Add entry</Button>
@@ -280,6 +293,7 @@ export function LeaderboardAdmin({
                   <TableHead>Rank</TableHead>
                   <TableHead>Player</TableHead>
                   <TableHead className="text-right">Wagered</TableHead>
+                  <TableHead>Month</TableHead>
                   <TableHead>Published</TableHead>
                   <TableHead className="w-[120px]">Actions</TableHead>
                 </TableRow>
@@ -288,7 +302,7 @@ export function LeaderboardAdmin({
                 {initialEntries.map((entry) =>
                   editingId === entry.id ? (
                     <TableRow key={entry.id}>
-                      <TableCell colSpan={5}>
+                      <TableCell colSpan={6}>
                         <form
                           onSubmit={(e) => handleUpdate(e, entry.id)}
                           className="grid gap-4 rounded-xl border-2 border-border bg-card/50 p-4 sm:grid-cols-2 lg:grid-cols-4"
@@ -329,9 +343,13 @@ export function LeaderboardAdmin({
                               ))}
                             </select>
                           </div>
-                          <div className="space-y-2 sm:col-span-2">
+                          <div className="space-y-2">
                             <Label htmlFor={`edit-${entry.id}-avatar_url`}>Avatar URL (optional)</Label>
                             <Input id={`edit-${entry.id}-avatar_url`} name="avatar_url" type="url" defaultValue={entry.avatar_url ?? ''} />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor={`edit-${entry.id}-month_key`}>Month (YYYY-MM)</Label>
+                            <Input id={`edit-${entry.id}-month_key`} name="month_key" placeholder="2026-03" defaultValue={entry.month_key ?? ''} />
                           </div>
                           <div className="flex gap-2 sm:col-span-4">
                             <Button type="submit" size="sm">
@@ -355,6 +373,9 @@ export function LeaderboardAdmin({
                       <TableCell>{entry.player_name}</TableCell>
                       <TableCell className="text-right">
                         ${Number(entry.total_wagered).toLocaleString()}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground text-sm">
+                        {entry.month_key || '—'}
                       </TableCell>
                       <TableCell>
                         {entry.published ? (

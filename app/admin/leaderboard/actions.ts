@@ -46,6 +46,7 @@ export async function createEntryAction(
       ...parsed.data,
       period: parsed.data.period,
       avatar_url: parsed.data.avatar_url || undefined,
+      month_key: parsed.data.month_key || undefined,
     });
     revalidatePath('/admin/leaderboard');
     revalidatePath('/');
@@ -81,6 +82,7 @@ export async function updateEntryAction(
   if (rest.platform !== undefined) update.platform = rest.platform;
   if (rest.period !== undefined) update.period = rest.period;
   if (rest.avatar_url !== undefined) update.avatar_url = rest.avatar_url || null;
+  if (rest.month_key !== undefined) (update as Record<string, unknown>).month_key = rest.month_key || null;
   try {
     await updateEntry(id, update);
     revalidatePath('/admin/leaderboard');

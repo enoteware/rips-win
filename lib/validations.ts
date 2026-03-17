@@ -12,6 +12,7 @@ export const leaderboardEntrySchema = z.object({
   platform: platformEnum,
   period: periodEnum,
   avatar_url: z.string().url().optional().or(z.literal('')),
+  month_key: z.string().regex(/^\d{4}-\d{2}$/, 'Must be YYYY-MM format').optional().or(z.literal('')),
 });
 
 export const leaderboardUpdateSchema = leaderboardEntrySchema.partial().extend({

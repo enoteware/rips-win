@@ -35,20 +35,6 @@ export const authOptions: NextAuthOptions = {
   ],
   session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
   pages: { signIn: '/admin/login' },
-  cookies: {
-    sessionToken: {
-      name: process.env.NODE_ENV === 'production'
-        ? '__Secure-authjs.session-token'
-        : 'authjs.session-token',
-      options: {
-        httpOnly: true,
-        sameSite: 'lax' as const,
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 24 * 60 * 60, // 24h, aligned with session.maxAge
-      },
-    },
-  },
   callbacks: {
     jwt({ token, user }) {
       if (user) token.email = user.email;

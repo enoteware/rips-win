@@ -22,6 +22,7 @@ export default async function AdminSitePage() {
           stake_us_link: settings?.stake_us_link ?? '',
           stake_com_link: settings?.stake_com_link ?? '',
           prize_pool: settings?.prize_pool ?? '',
+          prizes: settings?.prizes ?? null,
         }}
       />
     </div>

@@ -104,10 +104,12 @@ function PodiumCard({
   entry,
   rank,
   size,
+  prizes,
 }: {
   entry: Entry | undefined;
   rank: 1 | 2 | 3;
   size: "lg" | "sm";
+  prizes: Record<number, number>;
 }) {
   const cfg = CARD_CONFIG[rank];
   const isLg = size === "lg";
@@ -151,10 +153,10 @@ function PodiumCard({
       </div>
 
       {/* Prize bar at bottom */}
-      {entry && PRIZES[rank] && (
+      {entry && prizes[rank] && (
         <div className={`w-full ${cfg.prizeBarBg} py-3 flex items-center justify-center`}>
           <span className={`font-display ${isLg ? "text-2xl md:text-3xl" : "text-xl md:text-2xl"} font-black ${cfg.prizeBarText}`}>
-            ${PRIZES[rank].toLocaleString()}
+            ${prizes[rank].toLocaleString()}
           </span>
         </div>
       )}
@@ -162,7 +164,8 @@ function PodiumCard({
   );
 }
 
-export function LeaderboardPodium({ entries }: { entries: Entry[] }) {
+export function LeaderboardPodium({ entries, prizes }: { entries: Entry[]; prizes?: Record<number, number> }) {
+  const prizeMap = prizes ?? PRIZES;
   const top3 = entries.slice(0, 3);
   const first = top3[0];
   const second = top3[1];
@@ -172,21 +175,22 @@ export function LeaderboardPodium({ entries }: { entries: Entry[] }) {
     <section className="grid grid-cols-1 md:grid-cols-3 gap-5 items-end w-full max-w-5xl mx-auto">
       {/* 2nd place */}
       <div className="md:order-1 order-2">
-        <PodiumCard entry={second} rank={2} size="sm" />
+        <PodiumCard entry={second} rank={2} size="sm" prizes={prizeMap} />
       </div>
       {/* 1st place */}
       <div className="md:order-2 order-1">
-        <PodiumCard entry={first} rank={1} size="lg" />
+        <PodiumCard entry={first} rank={1} size="lg" prizes={prizeMap} />
       </div>
       {/* 3rd place */}
       <div className="md:order-3 order-3">
-        <PodiumCard entry={third} rank={3} size="sm" />
+        <PodiumCard entry={third} rank={3} size="sm" prizes={prizeMap} />
       </div>
     </section>
   );
 }
 
-export function LeaderboardTable({ entries }: { entries: Entry[] }) {
+export function LeaderboardTable({ entries, prizes }: { entries: Entry[]; prizes?: Record<number, number> }) {
+  const prizeMap = prizes ?? PRIZES;
   const rest = entries.slice(3);
   if (rest.length === 0) return null;
 
@@ -225,8 +229,8 @@ export function LeaderboardTable({ entries }: { entries: Entry[] }) {
                 {formatMoney(entry.total_wagered)}
               </td>
               <td className="font-mono text-sm font-bold text-primary text-right py-3 px-4 md:px-6">
-                {PRIZES[entry.rank]
-                  ? `$${PRIZES[entry.rank].toLocaleString()}`
+                {prizeMap[entry.rank]
+                  ? `$${prizeMap[entry.rank].toLocaleString()}`
                   : ""}
               </td>
             </tr>
@@ -238,11 +242,11 @@ export function LeaderboardTable({ entries }: { entries: Entry[] }) {
 }
 
 /** @deprecated Use LeaderboardPodium + LeaderboardTable separately */
-export function MonolithLeaderboard({ entries }: { entries: Entry[] }) {
+export function MonolithLeaderboard({ entries, prizes }: { entries: Entry[]; prizes?: Record<number, number> }) {
   return (
     <div className="w-full max-w-5xl mx-auto flex flex-col gap-8">
-      <LeaderboardPodium entries={entries} />
-      <LeaderboardTable entries={entries} />
+      <LeaderboardPodium entries={entries} prizes={prizes} />
+      <LeaderboardTable entries={entries} prizes={prizes} />
     </div>
   );
 }

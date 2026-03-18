@@ -25,6 +25,7 @@ export const siteSettingsSchema = z.object({
   stake_us_link: z.string().url().max(500).nullable().or(z.literal('')),
   stake_com_link: z.string().url().max(500).nullable().or(z.literal('')),
   prize_pool: z.string().max(50).nullable(),
+  prizes: z.string().nullable().optional(),
 });
 
 export const bonusCardSchema = z.object({

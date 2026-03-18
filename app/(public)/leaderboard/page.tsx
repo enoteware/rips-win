@@ -60,7 +60,7 @@ export default async function LeaderboardPage({
         </h1>
 
         {/* 3. Podium cards (top 3) */}
-        <LeaderboardPodium entries={entries} />
+        <LeaderboardPodium entries={entries} prizes={site.prizes} />
 
         {/* 4. Divider */}
         <div className="my-10 border-t border-border-dark" />
@@ -88,7 +88,7 @@ export default async function LeaderboardPage({
         </div>
 
         {/* 7. Table (rank 4+) */}
-        <LeaderboardTable entries={entries} />
+        <LeaderboardTable entries={entries} prizes={site.prizes} />
 
         {/* 8. Disclaimer */}
         <div className="text-center max-w-2xl mx-auto mt-10">

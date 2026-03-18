@@ -1,27 +1,20 @@
-import { getToken } from 'next-auth/jwt';
+import { withAuth } from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
 const isLocalDev = process.env.NODE_ENV === 'development';
 
-export async function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
-  if (!path.startsWith('/admin')) return NextResponse.next();
-  if (path === '/admin/login') return NextResponse.next();
-
-  if (isLocalDev) return NextResponse.next();
-
-  // Let NextAuth auto-detect cookie name based on NEXTAUTH_URL / VERCEL env vars
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
-  if (!token) {
-    const login = new URL('/admin/login', request.url);
-    login.searchParams.set('callbackUrl', path);
-    return NextResponse.redirect(login);
+export default withAuth(
+  function middleware() {
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => isLocalDev || !!token,
+    },
+    pages: {
+      signIn: '/admin/login',
+    },
   }
-  return NextResponse.next();
-}
+);
 
 export const config = { matcher: ['/admin', '/admin/:path*'] };

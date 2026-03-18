@@ -95,7 +95,7 @@ export default async function Home() {
           </div>
 
           <LeaderboardCountdown />
-          <MonolithLeaderboard entries={entries.slice(0, 10)} />
+          <MonolithLeaderboard entries={entries.slice(0, 10)} prizes={site.prizes} />
 
           <div className="flex justify-center mt-8">
             <Link 

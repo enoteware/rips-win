@@ -15,7 +15,7 @@ async function requireAdmin() {
 export type ActionResult = { ok: true } | { ok: false; error: string };
 
 export async function updateSiteSettingsAction(
-  input: SiteSettingsInput
+  input: SiteSettingsInput & { prizes?: string | null }
 ): Promise<ActionResult> {
   try {
     await requireAdmin();
@@ -28,6 +28,7 @@ export async function updateSiteSettingsAction(
     stake_us_link: input.stake_us_link === '' ? null : input.stake_us_link,
     stake_com_link: input.stake_com_link === '' ? null : input.stake_com_link,
     prize_pool: input.prize_pool ?? '',
+    prizes: input.prizes ?? null,
   });
   if (!parsed.success) {
     const msg = parsed.error.flatten().fieldErrors;
@@ -41,6 +42,7 @@ export async function updateSiteSettingsAction(
       stake_us_link: parsed.data.stake_us_link || null,
       stake_com_link: parsed.data.stake_com_link || null,
       prize_pool: parsed.data.prize_pool || null,
+      prizes: parsed.data.prizes ?? null,
     });
     revalidatePath('/admin/site');
     revalidatePath('/');

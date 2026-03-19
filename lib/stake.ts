@@ -38,10 +38,13 @@ export function ensureAffiliateStakeUrl(rawUrl: string | null | undefined, fallb
   }
 }
 
+/** Returns Stake links from input only. No fallback: when URL is empty, returns ''. */
 export function getStakeLinkSet(input?: Partial<StakeLinkSet>): StakeLinkSet {
+  const us = input?.stakeUsUrl?.trim();
+  const com = input?.stakeComUrl?.trim();
   return {
-    stakeUsUrl: ensureAffiliateStakeUrl(input?.stakeUsUrl, DEFAULT_STAKE_US_URL),
-    stakeComUrl: ensureAffiliateStakeUrl(input?.stakeComUrl, DEFAULT_STAKE_COM_URL),
+    stakeUsUrl: us ? ensureAffiliateStakeUrl(us, us) : '',
+    stakeComUrl: com ? ensureAffiliateStakeUrl(com, com) : '',
   };
 }
 

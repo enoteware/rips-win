@@ -53,12 +53,8 @@ export default async function Home() {
             className="w-[60vw] md:w-[50vw] max-w-[600px] h-auto"
           />
         }
-        title={
-          <>
-            Live Casino <span className="text-primary">Action</span> & High Stakes Gambling
-          </>
-        }
-        subtitle="Official Website"
+        title={site.hero_title || 'Live Casino Action & High Stakes Gambling'}
+        subtitle={site.hero_subtitle || 'Official Website'}
         primaryCta={{ label: 'CLAIM BONUSES', href: '/bonuses' }}
         secondaryCta={{ label: 'VIEW LEADERBOARD', href: '/leaderboard' }}
       />
@@ -85,7 +81,7 @@ export default async function Home() {
               </span>
             )}
             <h2 className="font-display text-2xl md:text-4xl font-black uppercase tracking-widest italic text-foreground/90">
-              Monthly Leaderboard
+              {site.section_leaderboard_title || 'Monthly Leaderboard'}
             </h2>
             {metadata && (
               <span className="text-xs font-bold text-primary uppercase bg-primary/10 px-3 py-1 rounded-full border border-primary/20 whitespace-nowrap">
@@ -110,7 +106,7 @@ export default async function Home() {
 
       <BonusesSection
         cards={homepageBonusItems}
-        title={<>Enjoy Exclusive <span className="text-primary">Bonuses</span></>}
+        title={site.section_bonuses_title || 'Enjoy Exclusive Bonuses'}
         className="public-section py-20 border-t border-border-dark"
         containerClassName="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         gridClassName="mx-auto flex flex-wrap justify-center max-w-6xl gap-8 [&>*]:w-full [&>*]:md:w-[calc(50%-1rem)] [&>*]:xl:w-[calc(33.333%-1.375rem)]"
@@ -119,8 +115,13 @@ export default async function Home() {
         showTextList
       />
 
-      <VideosSection clips={clips} />
-      <CommunitySection socialLinks={socialLinks} />
+      <VideosSection clips={clips} title={site.section_clips_title || 'Watch Rips Clips'} />
+      <CommunitySection
+        socialLinks={socialLinks}
+        heading={site.section_community_heading || "Don't miss a RIPS update."}
+        subtext={site.section_community_subtext || 'Check out all of our social platforms to stay connected.'}
+        stats={site.community_stats}
+      />
     </main>
   );
 }

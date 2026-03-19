@@ -2,11 +2,12 @@ import Image from 'next/image';
 import { ICONS } from '@/lib/brand';
 import { SocialMarquee } from '@/components/SocialMarquee';
 import type { SocialLink } from '@/lib/social-links';
+import type { CommunityStat } from '@/lib/site-settings';
 
-const STATS = [
-  { value: "164k", label: "Community Members" },
-  { value: "5.2m", label: "Monthly Views" },
-] as const;
+const DEFAULT_STATS: { value: string; label: string }[] = [
+  { value: '164k', label: 'Community Members' },
+  { value: '5.2m', label: 'Monthly Views' },
+];
 
 const PLATFORM_STYLES: Record<string, { buttonClassName: string; label: string }> = {
   discord: {
@@ -33,10 +34,14 @@ const PLATFORM_STYLES: Record<string, { buttonClassName: string; label: string }
 
 interface CommunitySectionProps {
   socialLinks: SocialLink[];
+  heading?: string;
+  subtext?: string;
+  stats?: CommunityStat[];
 }
 
-export function CommunitySection({ socialLinks }: CommunitySectionProps) {
+export function CommunitySection({ socialLinks, heading = "Don't miss a RIPS update.", subtext = 'Check out all of our social platforms to stay connected.', stats }: CommunitySectionProps) {
   const platforms = socialLinks.map((l) => l.platform.toLowerCase());
+  const statsList = stats && stats.length > 0 ? stats : DEFAULT_STATS;
 
   return (
     <section
@@ -67,10 +72,10 @@ export function CommunitySection({ socialLinks }: CommunitySectionProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="font-display text-5xl md:text-6xl font-black mb-4 uppercase italic tracking-tighter">
-              Don&apos;t miss a <span className="text-primary">RIPS</span> update.
+              {heading}
             </h2>
             <p className="text-xl text-muted-foreground mb-8">
-              Check out all of our social platforms to stay connected.
+              {subtext}
             </p>
             <div className="flex flex-wrap gap-4">
               {socialLinks.map((link) => {
@@ -97,7 +102,7 @@ export function CommunitySection({ socialLinks }: CommunitySectionProps) {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-6">
-            {STATS.map((stat) => (
+            {statsList.map((stat) => (
               <div
                 key={stat.label}
                 className="bg-transparent p-8 rounded-2xl border border-border-dark flex flex-col items-center text-center"

@@ -26,6 +26,15 @@ export const siteSettingsSchema = z.object({
   stake_com_link: z.string().url().max(500).nullable().or(z.literal('')),
   prize_pool: z.string().max(50).nullable(),
   prizes: z.string().nullable().optional(),
+  hero_title: z.string().max(200).nullable(),
+  hero_subtitle: z.string().max(200).nullable(),
+  section_leaderboard_title: z.string().max(100).nullable(),
+  section_bonuses_title: z.string().max(100).nullable(),
+  section_clips_title: z.string().max(100).nullable(),
+  section_community_heading: z.string().max(200).nullable(),
+  section_community_subtext: z.string().max(500).nullable(),
+  community_stats: z.string().nullable().optional(), // JSON string for form submit
+  live_now_url: z.string().url().max(500).nullable().or(z.literal('')),
 });
 
 export const bonusCardSchema = z.object({

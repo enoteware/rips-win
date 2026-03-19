@@ -29,7 +29,7 @@ export default async function LeaderboardPage({
     getAvailableMonths(period),
   ]);
 
-  const stakeLink = site.stake_us_link || 'https://stake.us/?offer=rips&c=selling';
+  const stakeLink = site.stake_us_link;
 
   return (
     <main className="public-page min-h-screen">
@@ -56,7 +56,7 @@ export default async function LeaderboardPage({
 
         {/* 2. Subtitle */}
         <h1 className="text-center font-display text-xl md:text-2xl font-black uppercase italic tracking-tight text-foreground mb-10">
-          Monthly Leaderboard
+          {site.section_leaderboard_title || 'Monthly Leaderboard'}
         </h1>
 
         {/* 3. Podium cards (top 3) */}
@@ -70,17 +70,21 @@ export default async function LeaderboardPage({
 
         {/* 6. PLAY NOW + PREVIOUS buttons side by side */}
         <div className="flex items-center justify-center gap-4 mt-8 mb-10">
-          <a
-            href={stakeLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-display text-sm md:text-base font-bold uppercase tracking-wider px-8 py-3 rounded-xl border-2 border-primary hover:brightness-110 transition-all"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/>
-            </svg>
-            Play Now
-          </a>
+          {stakeLink ? (
+            <a
+              href={stakeLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-display text-sm md:text-base font-bold uppercase tracking-wider px-8 py-3 rounded-xl border-2 border-primary hover:brightness-110 transition-all"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/>
+              </svg>
+              Play Now
+            </a>
+          ) : (
+            <span className="font-mono text-destructive">Error</span>
+          )}
           <LeaderboardMonthNav
             currentMonth={monthKey}
             availableMonths={availableMonths}

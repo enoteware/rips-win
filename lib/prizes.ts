@@ -4,8 +4,7 @@
  */
 
 export const DEFAULT_PRIZES: Record<number, number> = {
-  1: 75000, 2: 25000, 3: 12500,
-  4: 3000, 5: 2500, 6: 2000, 7: 1750, 8: 1500, 9: 1250, 10: 1000,
+  1: 350, 2: 200, 3: 120, 4: 90, 5: 70, 6: 50, 7: 40, 8: 30, 9: 25, 10: 25,
   11: 900, 12: 900, 13: 900, 14: 900, 15: 900,
   16: 800, 17: 800,
   18: 700, 19: 700, 20: 700, 21: 700, 22: 700,
@@ -51,12 +50,12 @@ export const PRIZE_TIERS: PrizeTier[] = [
   { label: '92–101', ranks: [92, 93, 94, 95, 96, 97, 98, 99, 100, 101] },
 ];
 
-/** Parse prizes JSON from DB, falling back to DEFAULT_PRIZES on null/invalid */
-export function parsePrizes(raw: string | null | undefined): Record<number, number> {
-  if (!raw) return DEFAULT_PRIZES;
+/** Parse prizes JSON from DB. Returns null when missing or invalid (no fallback). */
+export function parsePrizes(raw: string | null | undefined): Record<number, number> | null {
+  if (!raw) return null;
   try {
     const parsed = JSON.parse(raw);
-    if (typeof parsed !== 'object' || Array.isArray(parsed) || parsed === null) return DEFAULT_PRIZES;
+    if (typeof parsed !== 'object' || Array.isArray(parsed) || parsed === null) return null;
     const result: Record<number, number> = {};
     for (const [k, v] of Object.entries(parsed)) {
       const rank = Number(k);
@@ -65,9 +64,9 @@ export function parsePrizes(raw: string | null | undefined): Record<number, numb
         result[rank] = prize;
       }
     }
-    return Object.keys(result).length > 0 ? result : DEFAULT_PRIZES;
+    return Object.keys(result).length > 0 ? result : null;
   } catch {
-    return DEFAULT_PRIZES;
+    return null;
   }
 }
 
@@ -88,7 +87,8 @@ export function serializeTierValues(tierValues: number[]): string {
   return JSON.stringify(result);
 }
 
-/** Convert a full prizes map into per-tier values for the UI (one value per tier group) */
-export function prizesToTierValues(prizes: Record<number, number>): number[] {
+/** Convert a full prizes map into per-tier values for the UI (one value per tier group). Accepts null (returns zeros). */
+export function prizesToTierValues(prizes: Record<number, number> | null): number[] {
+  if (!prizes) return PRIZE_TIERS.map(() => 0);
   return PRIZE_TIERS.map((tier) => prizes[tier.ranks[0]] ?? 0);
 }
